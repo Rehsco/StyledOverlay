@@ -87,7 +87,7 @@ public class StyledActionOverlay: StyledBase3Overlay {
         case .Encrypted:
             shapeName = "SOEncryptedImage_36pt"
         }
-        if let image = UIImage(named: shapeName)?.tint(self.contentTintColor) {
+        if let image = UIImage(named:shapeName, inBundle:NSBundle(forClass:StyledActionOverlay.classForCoder()), compatibleWithTraitCollection:nil)?.tint(self.contentTintColor) {
             self.actionShape = ImageShapeLayerFactory.createImageShape(CGRect(origin: CGPointZero, size: image.size), image: image, imageStyle: .Box)
             self.actionLayer.addSublayer(self.actionShape)
         }
