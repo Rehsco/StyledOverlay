@@ -31,32 +31,32 @@ import UIKit
 import StyledLabel
 
 public enum StyledActionType {
-    case Play
-    case Download
-    case Encrypted
+    case play
+    case download
+    case encrypted
 }
 
 @IBDesignable
-public class StyledActionOverlay: StyledBase3Overlay {
-    public var upperLabel = StyledLabel()
-    public var actionLayer = CALayer()
-    public var actionShape = CALayer()
-    public var lowerLabel = StyledLabel()
+open class StyledActionOverlay: StyledBase3Overlay {
+    open var upperLabel = StyledLabel()
+    open var actionLayer = CALayer()
+    open var actionShape = CALayer()
+    open var lowerLabel = StyledLabel()
     
-    public var actionImageSize: CGSize = CGSizeMake(36.0, 36.0) {
+    open var actionImageSize: CGSize = CGSize(width: 36.0, height: 36.0) {
         didSet {
             self.setNeedsLayout()
         }
     }
     
-    public var actionType: StyledActionType = .Play {
+    open var actionType: StyledActionType = .play {
         didSet {
             self.initActionLayer()
         }
     }
     
     @IBInspectable
-    public var contentTintColor: UIColor = .whiteColor() {
+    open var contentTintColor: UIColor = .white {
         didSet {
             self.setNeedsLayout()
         }
@@ -69,37 +69,37 @@ public class StyledActionOverlay: StyledBase3Overlay {
     
     func initLabels() {
         self.upperView.addSubview(self.upperLabel)
-        self.centerView.layer.insertSublayer(self.actionLayer, atIndex: 0)
+        self.centerView.layer.insertSublayer(self.actionLayer, at: 0)
         self.lowerView.addSubview(self.lowerLabel)
         
-        self.upperLabel.textAlignment = .Center
-        self.lowerLabel.textAlignment = .Center
+        self.upperLabel.textAlignment = .center
+        self.lowerLabel.textAlignment = .center
     }
     
     func initActionLayer() {
         self.actionLayer.sublayers?.removeAll()
         let shapeName: String
         switch self.actionType {
-        case .Play:
+        case .play:
             shapeName = "SOPlayImage_36pt"
-        case .Download:
+        case .download:
             shapeName = "SODownloadImage_36pt"
-        case .Encrypted:
+        case .encrypted:
             shapeName = "SOEncryptedImage_36pt"
         }
-        if let image = UIImage(named:shapeName, inBundle:NSBundle(forClass:StyledActionOverlay.classForCoder()), compatibleWithTraitCollection:nil)?.tint(self.contentTintColor) {
-            self.actionShape = ImageShapeLayerFactory.createImageShape(CGRect(origin: CGPointZero, size: image.size), image: image, imageStyle: .Box)
+        if let image = UIImage(named:shapeName, in:Bundle(for:StyledActionOverlay.classForCoder()), compatibleWith:nil)?.tint(self.contentTintColor) {
+            self.actionShape = ImageShapeLayerFactory.createImageShape(CGRect(origin: CGPoint.zero, size: image.size), image: image, imageStyle: .box)
             self.actionLayer.addSublayer(self.actionShape)
         }
     }
     
-    public override func layoutViews() {
+    open override func layoutViews() {
         super.layoutViews()
         self.upperLabel.frame = self.upperView.bounds
         self.actionLayer.frame = self.centerView.bounds
         self.lowerLabel.frame = self.lowerView.bounds
         let ox = (self.actionLayer.bounds.size.width - actionImageSize.width) * 0.5
         let oy = (self.actionLayer.bounds.size.height - actionImageSize.height) * 0.5
-        self.actionShape.frame = CGRectMake(ox, oy, actionImageSize.width, actionImageSize.height)
+        self.actionShape.frame = CGRect(x: ox, y: oy, width: actionImageSize.width, height: actionImageSize.height)
     }
 }

@@ -30,10 +30,10 @@
 import UIKit
 import StyledLabel
 
-public class StyledLabelsOverlay: StyledBase3Overlay {
-    public var upperLabel = StyledLabel()
-    public var centerLabel = StyledLabel()
-    public var lowerLabel = StyledLabel()
+open class StyledLabelsOverlay: StyledBase3Overlay {
+    open var upperLabel = StyledLabel()
+    open var centerLabel = StyledLabel()
+    open var lowerLabel = StyledLabel()
 
     override func initView() {
         super.initView()
@@ -45,12 +45,12 @@ public class StyledLabelsOverlay: StyledBase3Overlay {
         self.centerView.addSubview(self.centerLabel)
         self.lowerView.addSubview(self.lowerLabel)
         
-        self.upperLabel.textAlignment = .Center
-        self.centerLabel.textAlignment = .Center
-        self.lowerLabel.textAlignment = .Center
+        self.upperLabel.textAlignment = .center
+        self.centerLabel.textAlignment = .center
+        self.lowerLabel.textAlignment = .center
     }
     
-    public override func layoutViews() {
+    open override func layoutViews() {
         super.layoutViews()
         self.upperLabel.frame = self.upperView.bounds
         self.centerLabel.frame = self.centerView.bounds

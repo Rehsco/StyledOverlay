@@ -20,7 +20,7 @@ class ViewController: UIViewController {
         self.initOverlays()
     }
 
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
 
@@ -31,20 +31,20 @@ class ViewController: UIViewController {
         simpleOverlay.centerLabel.attributedText = NSAttributedString(string: "Center Label")
         simpleOverlay.lowerLabel.attributedText = NSAttributedString(string: "Lower Label")
         
-        simpleOverlay.upperLabel.textColor = .whiteColor()
-        simpleOverlay.centerLabel.textColor = .whiteColor()
-        simpleOverlay.lowerLabel.textColor = .whiteColor()
+        simpleOverlay.upperLabel.textColor = .white
+        simpleOverlay.centerLabel.textColor = .white
+        simpleOverlay.lowerLabel.textColor = .white
         
         self.initDefaultOverlay(self.downloadActionOverlay)
-        self.downloadActionOverlay.actionType = .Download
+        self.downloadActionOverlay.actionType = .download
         self.initDefaultOverlay(self.playActionOverlay)
-        self.playActionOverlay.actionType = .Play
+        self.playActionOverlay.actionType = .play
         self.initDefaultOverlay(self.encryptionActionOverlay)
-        self.encryptionActionOverlay.actionType = .Encrypted
+        self.encryptionActionOverlay.actionType = .encrypted
     }
     
-    func initDefaultOverlay(over: StyledBaseOverlay) {
-        over.style = .RoundedFixed(cornerRadius: 5)
+    func initDefaultOverlay(_ over: StyledBaseOverlay) {
+        over.style = .roundedFixed(cornerRadius: 5)
         over.styleColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.6)
     }
 }

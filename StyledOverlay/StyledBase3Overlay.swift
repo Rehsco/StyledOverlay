@@ -30,48 +30,48 @@
 import UIKit
 
 @IBDesignable
-public class StyledBase3Overlay: StyledBaseOverlay {
-    private var _upperView = UIView()
-    private var _centerView = UIView()
-    private var _lowerView = UIView()
+open class StyledBase3Overlay: StyledBaseOverlay {
+    fileprivate var _upperView = UIView()
+    fileprivate var _centerView = UIView()
+    fileprivate var _lowerView = UIView()
     
-    public var upperView: UIView {
+    open var upperView: UIView {
         get {
             return _upperView
         }
     }
-    public var centerView: UIView {
+    open var centerView: UIView {
         get {
             return _centerView
         }
     }
-    public var lowerView: UIView {
+    open var lowerView: UIView {
         get {
             return _lowerView
         }
     }
 
     @IBInspectable
-    public var upperViewWeight: CGFloat = 1 {
+    open var upperViewWeight: CGFloat = 1 {
         didSet {
             self.setNeedsLayout()
         }
     }
     @IBInspectable
-    public var centerViewWeight: CGFloat = 1 {
+    open var centerViewWeight: CGFloat = 1 {
         didSet {
             self.setNeedsLayout()
         }
     }
     @IBInspectable
-    public var lowerViewWeight: CGFloat = 1 {
+    open var lowerViewWeight: CGFloat = 1 {
         didSet {
             self.setNeedsLayout()
         }
     }
     
     /// The content view insets, also known as border margins.
-    @IBInspectable public var contentViewMargins: UIEdgeInsets? {
+    @IBInspectable open var contentViewMargins: UIEdgeInsets? {
         didSet {
             self.setNeedsLayout()
         }
@@ -86,13 +86,13 @@ public class StyledBase3Overlay: StyledBaseOverlay {
         self.addSubview(_lowerView)
     }
     
-    public override func layoutSubviews() {
+    open override func layoutSubviews() {
         super.layoutSubviews()
         self.layoutViews()
     }
     
-    public func layoutViews() {
-        let viewRect = self.marginsForRect(bounds, margins: self.contentViewMargins ?? UIEdgeInsetsZero)
+    open func layoutViews() {
+        let viewRect = self.marginsForRect(bounds, margins: self.contentViewMargins ?? UIEdgeInsets.zero)
         let totalViewWeight = self.upperViewWeight + self.centerViewWeight + self.lowerViewWeight
         
         let uvWeight = self.upperViewWeight / totalViewWeight
@@ -102,8 +102,8 @@ public class StyledBase3Overlay: StyledBaseOverlay {
         let cvYOffset = viewRect.origin.y + viewRect.size.height * uvWeight
         let lvYOffset = cvYOffset + viewRect.size.height * cvWeight
         
-        _upperView.frame = CGRectMake(viewRect.origin.x, viewRect.origin.y, viewRect.size.width, viewRect.size.height * uvWeight)
-        _centerView.frame = CGRectMake(viewRect.origin.x, cvYOffset, viewRect.size.width, viewRect.size.height * cvWeight)
-        _lowerView.frame = CGRectMake(viewRect.origin.x, lvYOffset, viewRect.size.width, viewRect.size.height * lvWeight)
+        _upperView.frame = CGRect(x: viewRect.origin.x, y: viewRect.origin.y, width: viewRect.size.width, height: viewRect.size.height * uvWeight)
+        _centerView.frame = CGRect(x: viewRect.origin.x, y: cvYOffset, width: viewRect.size.width, height: viewRect.size.height * cvWeight)
+        _lowerView.frame = CGRect(x: viewRect.origin.x, y: lvYOffset, width: viewRect.size.width, height: viewRect.size.height * lvWeight)
     }
 }
