@@ -30,7 +30,7 @@
 import UIKit
 import StyledLabel
 
-public class StyledBaseOverlay: UIView {
+open class StyledBaseOverlay: UIView {
     var styleLayer = CAShapeLayer()
 
     public override init(frame: CGRect) {
@@ -43,61 +43,61 @@ public class StyledBaseOverlay: UIView {
         self.initView()
     }
     
-    public override func layoutSubviews() {
+    open override func layoutSubviews() {
         super.layoutSubviews()
         self.layoutComponents()
     }
     
     func initView() {
-        self.backgroundColor = .clearColor()
+        self.backgroundColor = .clear
         if self.styleLayer.superlayer == nil {
-            self.layer.insertSublayer(self.styleLayer, atIndex: 0)
+            self.layer.insertSublayer(self.styleLayer, at: 0)
         }
     }
 
     // MARK: - Control Style
     
     /// The view's style.
-    @IBInspectable public var style: ShapeStyle? {
+    @IBInspectable open var style: ShapeStyle? {
         didSet {
             self.setNeedsLayout()
         }
     }
     /// Convenience for getting a valid style
-    public func getStyle() -> ShapeStyle {
+    open func getStyle() -> ShapeStyle {
         return self.style ?? overlayStyleAppearance.style
     }
     
     /// The view’s background color.
-    @IBInspectable public var styleColor: UIColor? {
+    @IBInspectable open var styleColor: UIColor? {
         didSet {
             self.setNeedsLayout()
         }
     }
     
     /// The view's border color.
-    @IBInspectable public var borderColor: UIColor? {
+    @IBInspectable open var borderColor: UIColor? {
         didSet {
             self.setNeedsLayout()
         }
     }
     
     /// The view's border width.
-    @IBInspectable public var borderWidth: CGFloat? {
+    @IBInspectable open var borderWidth: CGFloat? {
         didSet {
             self.setNeedsLayout()
         }
     }
     
     /// The view’s background color.
-    override public var backgroundColor: UIColor? {
+    override open var backgroundColor: UIColor? {
         didSet {
             self.setNeedsLayout()
         }
     }
     
     /// The controls background insets. These are margins for the inner background.
-    @IBInspectable public var backgroundInsets: UIEdgeInsets? {
+    @IBInspectable open var backgroundInsets: UIEdgeInsets? {
         didSet {
             self.setNeedsLayout()
         }
@@ -105,24 +105,24 @@ public class StyledBaseOverlay: UIView {
     
     // MARK: - Internal View
     
-    func marginsForRect(rect: CGRect, margins: UIEdgeInsets) -> CGRect {
-        return CGRectMake(rect.origin.x + margins.left, rect.origin.y + margins.top, rect.size.width - (margins.left + margins.right), rect.size.height - (margins.top + margins.bottom))
+    func marginsForRect(_ rect: CGRect, margins: UIEdgeInsets) -> CGRect {
+        return CGRect(x: rect.origin.x + margins.left, y: rect.origin.y + margins.top, width: rect.size.width - (margins.left + margins.right), height: rect.size.height - (margins.top + margins.bottom))
     }
     
     func layoutComponents() {
         self.applyStyle(self.getStyle())
     }
     
-    func createBorderLayer(style: ShapeStyle, layerRect: CGRect) -> CALayer? {
+    func createBorderLayer(_ style: ShapeStyle, layerRect: CGRect) -> CALayer? {
         let borderWidth = self.borderWidth ?? overlayStyleAppearance.borderWidth
         if borderWidth > 0 {
-            let bLayer = StyledShapeLayer.createShape(style, bounds: layerRect, color: .clearColor(), borderColor: borderColor ?? overlayStyleAppearance.borderColor, borderWidth: borderWidth)
+            let bLayer = StyledShapeLayer.createShape(style, bounds: layerRect, color: .clear, borderColor: borderColor ?? overlayStyleAppearance.borderColor, borderWidth: borderWidth)
             return bLayer
         }
         return nil
     }
     
-    func applyStyle(style: ShapeStyle) {
+    func applyStyle(_ style: ShapeStyle) {
         if self.styleLayer.superlayer == nil {
             self.layer.addSublayer(styleLayer)
         }

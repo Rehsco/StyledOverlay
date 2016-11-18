@@ -9,18 +9,18 @@
 import UIKit
 
 extension UIImage {
-    func tint(color: UIColor) -> UIImage {
+    func tint(_ color: UIColor) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
         color.setFill()
         
         let ctx = UIGraphicsGetCurrentContext()!
-        CGContextTranslateCTM(ctx, 0, self.size.height)
-        CGContextScaleCTM(ctx, 1.0, -1.0)
-        CGContextSetBlendMode(ctx, CGBlendMode.Normal)
+        ctx.translateBy(x: 0, y: self.size.height)
+        ctx.scaleBy(x: 1.0, y: -1.0)
+        ctx.setBlendMode(CGBlendMode.normal)
         
         let area = CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height)
-        CGContextClipToMask(ctx, area, self.CGImage!)
-        CGContextFillRect(ctx, area)
+        ctx.clip(to: area, mask: self.cgImage!)
+        ctx.fill(area)
         
         defer { UIGraphicsEndImageContext() }
         
