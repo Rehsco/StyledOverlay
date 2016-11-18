@@ -8,21 +8,21 @@ StyledOverlay is a UIView with styling options, extendable and preset action ove
 Here is a small example derived from the Demo project.
 
 ```swift
-	let overlay = StyledLabelsOverlay(frame: CGRectMake(0,0,100,100))
-        overlay.style = .RoundedFixed(cornerRadius: 5)
+	let overlay = StyledLabelsOverlay(frame: CGRect(x:0,y:0,width:100,height:100))
+        overlay.style = .roundedFixed(cornerRadius: 5)
         overlay.styleColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.6)
         overlay.centerLabel.attributedText = NSAttributedString(string: "Center Label")
-        overlay.centerLabel.textColor = .whiteColor()
+        overlay.centerLabel.textColor = .white
 	self.addSubview(overlay)
 ```
 
 The code shows the labels overlay. You can also use action overlays of type ```Download```, ```Play``` and ```Encrypted```:
 
 ```swift
-	let downloadActionOverlay = StyledActionOverlay(frame: CGRectMake(0,0,100,100))
-        downloadActionOverlay.style = .RoundedFixed(cornerRadius: 5)
+	let downloadActionOverlay = StyledActionOverlay(frame: CGRect(x:0,y:0,width:100,height:100))
+        downloadActionOverlay.style = .roundedFixed(cornerRadius: 5)
         downloadActionOverlay.styleColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.6)
-	downloadActionOverlay.actionType = .Download
+	downloadActionOverlay.actionType = .download
 	self.addSubview(downloadActionOverlay)
 ```
 
@@ -45,7 +45,7 @@ $ cd /path/to/MyProject
 $ touch Podfile
 $ edit Podfile
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, ‘9.0’
+platform :ios, ‘10.0’
 
 use_frameworks!
 pod ‘StyledOverlay’
