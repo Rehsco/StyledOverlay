@@ -34,6 +34,8 @@ public enum StyledActionType {
     case Play
     case Download
     case Encrypted
+    case busyLoop
+    case progressRing(progress: Float)
 }
 
 @IBDesignable
@@ -41,6 +43,7 @@ public class StyledActionOverlay: StyledBase3Overlay {
     public var upperLabel = StyledLabel()
     public var actionLayer = CALayer()
     public var actionShape = CALayer()
+    public var actionBGShape: CALayer?
     public var lowerLabel = StyledLabel()
     
     public var actionImageSize: CGSize = CGSizeMake(36.0, 36.0) {
@@ -58,10 +61,23 @@ public class StyledActionOverlay: StyledBase3Overlay {
     @IBInspectable
     public var contentTintColor: UIColor = .whiteColor() {
         didSet {
-            self.setNeedsLayout()
+            self.initActionLayer()
         }
     }
     
+    @IBInspectable
+    public var contentBackgroundTintColor: UIColor = UIColor.init(white: 0.3, alpha: 1.0) {
+        didSet {
+            self.initActionLayer()
+        }
+    }
+    
+    public var indicatorLineWidth: CGFloat = 1.5 {
+        didSet {
+            self.initActionLayer()
+        }
+    }
+
     override func initView() {
         super.initView()
         self.initLabels()
@@ -78,7 +94,7 @@ public class StyledActionOverlay: StyledBase3Overlay {
     
     func initActionLayer() {
         self.actionLayer.sublayers?.removeAll()
-        let shapeName: String
+        let shapeName: String?
         switch self.actionType {
         case .Play:
             shapeName = "SOPlayImage_36pt"
@@ -86,11 +102,29 @@ public class StyledActionOverlay: StyledBase3Overlay {
             shapeName = "SODownloadImage_36pt"
         case .Encrypted:
             shapeName = "SOEncryptedImage_36pt"
-        }
-        if let image = UIImage(named:shapeName, inBundle:NSBundle(forClass:StyledActionOverlay.classForCoder()), compatibleWithTraitCollection:nil)?.tint(self.contentTintColor) {
-            self.actionShape = ImageShapeLayerFactory.createImageShape(CGRect(origin: CGPointZero, size: image.size), image: image, imageStyle: .Box)
+        case .busyLoop:
+            shapeName = nil
+            let gradProgShape = WCGraintCircleLayer(bounds: CGRect(origin: CGPoint.zero, size: self.actionImageSize), position: CGPoint.zero, fromColor: self.contentTintColor.colorWithAlphaComponent(0.0), toColor: self.contentTintColor.colorWithAlphaComponent(1.0), linewidth: self.indicatorLineWidth, toValue: 0.99)
+            self.actionShape = gradProgShape
+            gradProgShape.animateCircleRotation(1.0)
+            self.actionLayer.addSublayer(self.actionShape)
+        case .progressRing(let progress):
+            shapeName = nil
+            let gradProgShape = WCGraintCircleLayer(bounds: CGRect(origin: CGPoint.zero, size: self.actionImageSize), position: CGPoint.zero, fromColor: self.contentTintColor.colorWithAlphaComponent(0.95), toColor: self.contentTintColor.colorWithAlphaComponent(1.0), linewidth: self.indicatorLineWidth, toValue: CGFloat(progress))
+            let bgShape = WCGraintCircleLayer(bounds: CGRect(origin: CGPoint.zero, size: self.actionImageSize), position: CGPoint.zero, fromColor: self.contentBackgroundTintColor, toColor: self.contentBackgroundTintColor, linewidth: self.indicatorLineWidth, toValue: 0.99)
+            self.actionBGShape = bgShape
+            self.actionShape = gradProgShape
+            self.actionLayer.addSublayer(bgShape)
             self.actionLayer.addSublayer(self.actionShape)
         }
+        if let shapeName = shapeName {
+            if let image = UIImage(named:shapeName, inBundle:NSBundle(forClass:StyledActionOverlay.classForCoder()), compatibleWithTraitCollection:nil)?.tint(self.contentTintColor) {
+                self.actionShape = ImageShapeLayerFactory.createImageShape(CGRect(origin: CGPoint.zero, size: image.size), image: image, imageStyle: .Box)
+                self.actionLayer.addSublayer(self.actionShape)
+            }
+        }
+        self.actionBGShape?.hidden = true
+        self.actionShape.hidden = true
     }
     
     public override func layoutViews() {
@@ -101,5 +135,8 @@ public class StyledActionOverlay: StyledBase3Overlay {
         let ox = (self.actionLayer.bounds.size.width - actionImageSize.width) * 0.5
         let oy = (self.actionLayer.bounds.size.height - actionImageSize.height) * 0.5
         self.actionShape.frame = CGRectMake(ox, oy, actionImageSize.width, actionImageSize.height)
+        self.actionBGShape?.frame = CGRectMake(ox, oy, actionImageSize.width, actionImageSize.height)
+        self.actionShape.hidden = false
+        self.actionBGShape?.hidden = false
     }
 }

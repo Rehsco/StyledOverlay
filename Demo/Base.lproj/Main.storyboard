@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,20 +22,32 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BGDemoImage" translatesAutoresizingMaskIntoConstraints="NO" id="brC-Xk-HPu"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BGDemoImage" translatesAutoresizingMaskIntoConstraints="NO" id="brC-Xk-HPu">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cdk-pN-CfY" customClass="StyledLabelsOverlay" customModule="Demo" customModuleProvider="target">
+                                <rect key="frame" x="98" y="110.5" width="179" height="104.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fRz-QU-Ol7" customClass="StyledActionOverlay" customModule="Demo" customModuleProvider="target">
+                                <rect key="frame" x="16" y="246.5" width="100" height="99.5"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fFD-R4-IOM" customClass="StyledActionOverlay" customModule="Demo" customModuleProvider="target">
+                                <rect key="frame" x="16" y="354" width="100" height="99.5"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GVv-oA-QyT" customClass="StyledActionOverlay" customModule="Demo" customModuleProvider="target">
+                                <rect key="frame" x="137" y="246.5" width="101" height="99.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zoo-AO-wUx" customClass="StyledActionOverlay" customModule="Demo" customModuleProvider="target">
+                                <rect key="frame" x="260" y="246.5" width="99" height="99.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Action Overlays" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A6a-cm-qSk">
+                                <rect key="frame" x="120.5" y="217" width="134" height="21.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="134" id="YdK-Du-1w2"/>
                                 </constraints>
@@ -43,6 +58,7 @@
                                 <size key="shadowOffset" width="1" height="1"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Text Overlays" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xkq-I9-Pqc">
+                                <rect key="frame" x="129" y="82" width="117" height="21.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="117" id="RXv-ye-zTI"/>
                                 </constraints>
@@ -52,6 +68,11 @@
                                 <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <size key="shadowOffset" width="1" height="1"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4jk-V8-wjv" customClass="StyledActionOverlay" customModule="Demo" customModuleProvider="target">
+                                <rect key="frame" x="138" y="354" width="100" height="99.5"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -82,9 +103,11 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="busyLoopActionOverlay" destination="4jk-V8-wjv" id="XfP-cR-9ig"/>
                         <outlet property="downloadActionOverlay" destination="fRz-QU-Ol7" id="doI-wo-ygx"/>
                         <outlet property="encryptionActionOverlay" destination="zoo-AO-wUx" id="JYe-lN-Mhy"/>
                         <outlet property="playActionOverlay" destination="GVv-oA-QyT" id="mwU-Go-gNm"/>
+                        <outlet property="progressActionOverlay" destination="fFD-R4-IOM" id="sE3-r1-csL"/>
                         <outlet property="simpleOverlay" destination="cdk-pN-CfY" id="OWo-1q-6su"/>
                     </connections>
                 </viewController>

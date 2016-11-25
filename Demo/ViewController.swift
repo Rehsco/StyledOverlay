@@ -14,7 +14,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var downloadActionOverlay: StyledActionOverlay!
     @IBOutlet weak var playActionOverlay: StyledActionOverlay!
     @IBOutlet weak var encryptionActionOverlay: StyledActionOverlay!
-
+    @IBOutlet weak var progressActionOverlay: StyledActionOverlay!
+    @IBOutlet weak var busyLoopActionOverlay: StyledActionOverlay!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initOverlays()
@@ -41,6 +43,11 @@ class ViewController: UIViewController {
         self.playActionOverlay.actionType = .Play
         self.initDefaultOverlay(self.encryptionActionOverlay)
         self.encryptionActionOverlay.actionType = .Encrypted
+        self.initDefaultOverlay(self.progressActionOverlay)
+        self.progressActionOverlay.actionType = .progressRing(progress: 0.42)
+        self.progressActionOverlay.indicatorLineWidth = 3
+        self.initDefaultOverlay(self.busyLoopActionOverlay)
+        self.busyLoopActionOverlay.actionType = .busyLoop
     }
     
     func initDefaultOverlay(over: StyledBaseOverlay) {
