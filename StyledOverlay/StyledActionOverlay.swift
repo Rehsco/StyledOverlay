@@ -125,6 +125,7 @@ open class StyledActionOverlay: StyledBase3Overlay {
         }
         self.actionBGShape?.isHidden = true
         self.actionShape.isHidden = true
+        self.setNeedsLayout()
     }
     
     open override func layoutViews() {

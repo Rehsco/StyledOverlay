@@ -79,6 +79,10 @@ class WCGraintCircleLayer: CALayer {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override init(layer: Any) {
+        super.init(layer: layer)
+    }
+    
     func layerWithWithBounds(bounds:CGRect, position:CGPoint, fromColor:UIColor, toColor:UIColor, linewidth : CGFloat,toValue:CGFloat) -> WCGraintCircleLayer {
         let layer = WCGraintCircleLayer(bounds: bounds,position: position,fromColor:fromColor, toColor: toColor,linewidth: linewidth,toValue:toValue )
         return layer
