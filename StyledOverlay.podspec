@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'StyledOverlay'
-  s.version          = '1.2.1'
+  s.version          = '1.2.2'
   s.license          = 'MIT'
   s.summary          = 'StyledOverlay is a UIView with styling options and preset action overlays'
   s.homepage         = 'https://github.com/Rehsco/StyledOverlay.git'

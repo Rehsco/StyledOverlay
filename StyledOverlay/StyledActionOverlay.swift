@@ -125,11 +125,18 @@ public class StyledActionOverlay: StyledBase3Overlay {
         }
         self.actionBGShape?.hidden = true
         self.actionShape.hidden = true
+        self.updateActionPosition()
         self.setNeedsLayout()
     }
     
     public override func layoutViews() {
         super.layoutViews()
+        self.updateActionPosition()
+        self.actionShape.hidden = false
+        self.actionBGShape?.hidden = false
+    }
+    
+    func updateActionPosition() {
         self.upperLabel.frame = self.upperView.bounds
         self.actionLayer.frame = self.centerView.bounds
         self.lowerLabel.frame = self.lowerView.bounds
@@ -137,7 +144,5 @@ public class StyledActionOverlay: StyledBase3Overlay {
         let oy = (self.actionLayer.bounds.size.height - actionImageSize.height) * 0.5
         self.actionShape.frame = CGRectMake(ox, oy, actionImageSize.width, actionImageSize.height)
         self.actionBGShape?.frame = CGRectMake(ox, oy, actionImageSize.width, actionImageSize.height)
-        self.actionShape.hidden = false
-        self.actionBGShape?.hidden = false
     }
 }
