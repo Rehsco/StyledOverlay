@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B0C8B4C1DE6F973007CE96D /* WCGradientCircleLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0C8B4B1DE6F973007CE96D /* WCGradientCircleLayer.swift */; };
+		5B0C8B4D1DE6F973007CE96D /* WCGradientCircleLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0C8B4B1DE6F973007CE96D /* WCGradientCircleLayer.swift */; };
 		5B6E85C81DBB62D200741153 /* StyledOverlay.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B6E85C61DBB62D200741153 /* StyledOverlay.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5B6E85D51DBB641C00741153 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6E85D41DBB641C00741153 /* AppDelegate.swift */; };
 		5B6E85D71DBB641C00741153 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6E85D61DBB641C00741153 /* ViewController.swift */; };
@@ -37,6 +39,7 @@
 
 /* Begin PBXFileReference section */
 		3614C1B21DDAD6774FEA21BC /* Pods_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B0C8B4B1DE6F973007CE96D /* WCGradientCircleLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WCGradientCircleLayer.swift; sourceTree = "<group>"; };
 		5B6E85C31DBB62D200741153 /* StyledOverlay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StyledOverlay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B6E85C61DBB62D200741153 /* StyledOverlay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StyledOverlay.h; sourceTree = "<group>"; };
 		5B6E85C71DBB62D200741153 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -94,6 +97,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		5B0C8B4A1DE6F952007CE96D /* Layer */ = {
+			isa = PBXGroup;
+			children = (
+				5B0C8B4B1DE6F973007CE96D /* WCGradientCircleLayer.swift */,
+			);
+			name = Layer;
+			sourceTree = "<group>";
+		};
 		5B6E85B91DBB62D200741153 = {
 			isa = PBXGroup;
 			children = (
@@ -143,6 +154,7 @@
 		5B6E85E71DBB6BEE00741153 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				5B0C8B4A1DE6F952007CE96D /* Layer */,
 				5B8C1CE01DBBD11300A761C6 /* Helper */,
 				5B8C1CD11DBB7D2500A761C6 /* Base */,
 				5B8C1CD21DBB7D2E00A761C6 /* Overlays */,
@@ -409,6 +421,7 @@
 				5B8C1CDB1DBB881200A761C6 /* UIImageExtension.swift in Sources */,
 				5B8C1CE51DBBD1AE00A761C6 /* CGRectHelper.swift in Sources */,
 				5B6E85ED1DBB795C00741153 /* StyledBase3Overlay.swift in Sources */,
+				5B0C8B4C1DE6F973007CE96D /* WCGradientCircleLayer.swift in Sources */,
 				5B8C1CE21DBBD11C00A761C6 /* ImageShapeLayerFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -418,6 +431,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B6E85EE1DBB795C00741153 /* StyledBase3Overlay.swift in Sources */,
+				5B0C8B4D1DE6F973007CE96D /* WCGradientCircleLayer.swift in Sources */,
 				5B8C1CE61DBBD1AE00A761C6 /* CGRectHelper.swift in Sources */,
 				5B8C1CE31DBBD11C00A761C6 /* ImageShapeLayerFactory.swift in Sources */,
 				5B8C1CDF1DBBD04000A761C6 /* StyledActionOverlay.swift in Sources */,

@@ -34,12 +34,15 @@ public enum StyledActionType {
     case play
     case download
     case encrypted
+    case busyLoop
+    case progressRing(progress: Float)
 }
 
 @IBDesignable
 open class StyledActionOverlay: StyledBase3Overlay {
     open var upperLabel = StyledLabel()
     open var actionLayer = CALayer()
+    open var actionBGShape: CALayer?
     open var actionShape = CALayer()
     open var lowerLabel = StyledLabel()
     
@@ -58,7 +61,20 @@ open class StyledActionOverlay: StyledBase3Overlay {
     @IBInspectable
     open var contentTintColor: UIColor = .white {
         didSet {
-            self.setNeedsLayout()
+            self.initActionLayer()
+        }
+    }
+
+    @IBInspectable
+    open var contentBackgroundTintColor: UIColor = UIColor.init(white: 0.3, alpha: 1.0) {
+        didSet {
+            self.initActionLayer()
+        }
+    }
+    
+    open var indicatorLineWidth: CGFloat = 1.5 {
+        didSet {
+            self.initActionLayer()
         }
     }
     
@@ -78,7 +94,7 @@ open class StyledActionOverlay: StyledBase3Overlay {
     
     func initActionLayer() {
         self.actionLayer.sublayers?.removeAll()
-        let shapeName: String
+        let shapeName: String?
         switch self.actionType {
         case .play:
             shapeName = "SOPlayImage_36pt"
@@ -86,11 +102,29 @@ open class StyledActionOverlay: StyledBase3Overlay {
             shapeName = "SODownloadImage_36pt"
         case .encrypted:
             shapeName = "SOEncryptedImage_36pt"
-        }
-        if let image = UIImage(named:shapeName, in:Bundle(for:StyledActionOverlay.classForCoder()), compatibleWith:nil)?.tint(self.contentTintColor) {
-            self.actionShape = ImageShapeLayerFactory.createImageShape(CGRect(origin: CGPoint.zero, size: image.size), image: image, imageStyle: .box)
+        case .busyLoop:
+            shapeName = nil
+            let gradProgShape = WCGraintCircleLayer(bounds: CGRect(origin: CGPoint.zero, size: self.actionImageSize), position: CGPoint.zero, fromColor: self.contentTintColor.withAlphaComponent(0.0), toColor: self.contentTintColor.withAlphaComponent(1.0), linewidth: self.indicatorLineWidth, toValue: 0.99)
+            self.actionShape = gradProgShape
+            gradProgShape.animateCircleRotation(duration: 1.0)
+            self.actionLayer.addSublayer(self.actionShape)
+        case .progressRing(let progress):
+            shapeName = nil
+            let gradProgShape = WCGraintCircleLayer(bounds: CGRect(origin: CGPoint.zero, size: self.actionImageSize), position: CGPoint.zero, fromColor: self.contentTintColor.withAlphaComponent(0.95), toColor: self.contentTintColor.withAlphaComponent(1.0), linewidth: self.indicatorLineWidth, toValue: CGFloat(progress))
+            let bgShape = WCGraintCircleLayer(bounds: CGRect(origin: CGPoint.zero, size: self.actionImageSize), position: CGPoint.zero, fromColor: self.contentBackgroundTintColor, toColor: self.contentBackgroundTintColor, linewidth: self.indicatorLineWidth, toValue: 0.99)
+            self.actionBGShape = bgShape
+            self.actionShape = gradProgShape
+            self.actionLayer.addSublayer(bgShape)
             self.actionLayer.addSublayer(self.actionShape)
         }
+        if let shapeName = shapeName {
+            if let image = UIImage(named:shapeName, in:Bundle(for:StyledActionOverlay.classForCoder()), compatibleWith:nil)?.tint(self.contentTintColor) {
+                self.actionShape = ImageShapeLayerFactory.createImageShape(CGRect(origin: CGPoint.zero, size: image.size), image: image, imageStyle: .box)
+                self.actionLayer.addSublayer(self.actionShape)
+            }
+        }
+        self.actionBGShape?.isHidden = true
+        self.actionShape.isHidden = true
     }
     
     open override func layoutViews() {
@@ -101,5 +135,8 @@ open class StyledActionOverlay: StyledBase3Overlay {
         let ox = (self.actionLayer.bounds.size.width - actionImageSize.width) * 0.5
         let oy = (self.actionLayer.bounds.size.height - actionImageSize.height) * 0.5
         self.actionShape.frame = CGRect(x: ox, y: oy, width: actionImageSize.width, height: actionImageSize.height)
+        self.actionBGShape?.frame = CGRect(x: ox, y: oy, width: actionImageSize.width, height: actionImageSize.height)
+        self.actionBGShape?.isHidden = false
+        self.actionShape.isHidden = false
     }
 }
