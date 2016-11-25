@@ -1,7 +1,7 @@
 
 StyledOverlay is a UIView with styling options, extendable and preset action overlays.
 
-![styledoverlayexample](https://cloud.githubusercontent.com/assets/476994/19624787/28af8570-9906-11e6-803f-7b5271993775.jpg)
+![styledoverlaydemo](https://cloud.githubusercontent.com/assets/476994/20619644/ea161f4a-b2f5-11e6-900a-03cecd10321e.jpg)
 
 # Usage
 
