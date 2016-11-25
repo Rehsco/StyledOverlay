@@ -34,8 +34,8 @@ public enum StyledActionType {
     case Play
     case Download
     case Encrypted
-    case busyLoop
-    case progressRing(progress: Float)
+    case BusyLoop
+    case ProgressRing(progress: Float)
 }
 
 @IBDesignable
@@ -102,13 +102,13 @@ public class StyledActionOverlay: StyledBase3Overlay {
             shapeName = "SODownloadImage_36pt"
         case .Encrypted:
             shapeName = "SOEncryptedImage_36pt"
-        case .busyLoop:
+        case .BusyLoop:
             shapeName = nil
             let gradProgShape = WCGraintCircleLayer(bounds: CGRect(origin: CGPoint.zero, size: self.actionImageSize), position: CGPoint.zero, fromColor: self.contentTintColor.colorWithAlphaComponent(0.0), toColor: self.contentTintColor.colorWithAlphaComponent(1.0), linewidth: self.indicatorLineWidth, toValue: 0.99)
             self.actionShape = gradProgShape
             gradProgShape.animateCircleRotation(1.0)
             self.actionLayer.addSublayer(self.actionShape)
-        case .progressRing(let progress):
+        case .ProgressRing(let progress):
             shapeName = nil
             let gradProgShape = WCGraintCircleLayer(bounds: CGRect(origin: CGPoint.zero, size: self.actionImageSize), position: CGPoint.zero, fromColor: self.contentTintColor.colorWithAlphaComponent(0.95), toColor: self.contentTintColor.colorWithAlphaComponent(1.0), linewidth: self.indicatorLineWidth, toValue: CGFloat(progress))
             let bgShape = WCGraintCircleLayer(bounds: CGRect(origin: CGPoint.zero, size: self.actionImageSize), position: CGPoint.zero, fromColor: self.contentBackgroundTintColor, toColor: self.contentBackgroundTintColor, linewidth: self.indicatorLineWidth, toValue: 0.99)

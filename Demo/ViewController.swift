@@ -44,10 +44,10 @@ class ViewController: UIViewController {
         self.initDefaultOverlay(self.encryptionActionOverlay)
         self.encryptionActionOverlay.actionType = .Encrypted
         self.initDefaultOverlay(self.progressActionOverlay)
-        self.progressActionOverlay.actionType = .progressRing(progress: 0.42)
+        self.progressActionOverlay.actionType = .ProgressRing(progress: 0.42)
         self.progressActionOverlay.indicatorLineWidth = 3
         self.initDefaultOverlay(self.busyLoopActionOverlay)
-        self.busyLoopActionOverlay.actionType = .busyLoop
+        self.busyLoopActionOverlay.actionType = .BusyLoop
     }
     
     func initDefaultOverlay(over: StyledBaseOverlay) {
