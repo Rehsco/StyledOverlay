@@ -174,13 +174,13 @@ class WCGraintCircleLayer: CALayer {
     func animateCircleRotation(duration: TimeInterval) {
         let circleMask = self
         if let rotationAtStart = circleMask.value(forKeyPath: "transform.rotation") as? NSNumber {
-            let myRotationTransform = CATransform3DRotate(circleMask.transform, CGFloat(M_PI * 2.0), 0.0, 0.0, 1.0)
+            let myRotationTransform = CATransform3DRotate(circleMask.transform, CGFloat(Double.pi * 2.0), 0.0, 0.0, 1.0)
             circleMask.transform = myRotationTransform
             let myAnimation = CABasicAnimation(keyPath: "transform.rotation")
             myAnimation.duration = duration
             myAnimation.repeatCount = .infinity
             myAnimation.fromValue = rotationAtStart
-            myAnimation.toValue = NSNumber(value: rotationAtStart.floatValue + Float(M_PI * 2.0))
+            myAnimation.toValue = NSNumber(value: rotationAtStart.floatValue + Float(Double.pi * 2.0))
             circleMask.add(myAnimation, forKey: "transform.rotation")
         }
     }

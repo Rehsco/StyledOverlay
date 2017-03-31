@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -26,30 +26,57 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cdk-pN-CfY" customClass="StyledLabelsOverlay" customModule="Demo" customModuleProvider="target">
-                                <rect key="frame" x="98" y="110.5" width="179" height="104.5"/>
+                                <rect key="frame" x="99" y="112" width="179" height="105"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="cdk-pN-CfY" secondAttribute="height" multiplier="179:105" id="HR1-Zg-dgh"/>
+                                    <constraint firstAttribute="width" constant="179" id="NbX-Mv-yaY"/>
+                                    <constraint firstAttribute="height" constant="105" id="sad-in-omC"/>
+                                </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Text Overlays" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xkq-I9-Pqc">
+                                <rect key="frame" x="130" y="82" width="117" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="117" id="CNw-I7-g9D"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <size key="shadowOffset" width="1" height="1"/>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fRz-QU-Ol7" customClass="StyledActionOverlay" customModule="Demo" customModuleProvider="target">
-                                <rect key="frame" x="16" y="246.5" width="100" height="99.5"/>
+                                <rect key="frame" x="19" y="334" width="94" height="94"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="fRz-QU-Ol7" secondAttribute="height" multiplier="1:1" id="tXw-Uh-bf4"/>
+                                </constraints>
                             </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Spv-c5-qNz" customClass="StyledActionOverlay" customModule="Demo" customModuleProvider="target">
-                                <rect key="frame" x="16" y="354" width="100" height="99.5"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Spv-c5-qNz" customClass="StyledActionOverlay" customModule="Demo" customModuleProvider="target">
+                                <rect key="frame" x="19" y="441" width="94" height="94"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Spv-c5-qNz" secondAttribute="height" multiplier="1:1" id="p8K-y7-06F"/>
+                                </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GVv-oA-QyT" customClass="StyledActionOverlay" customModule="Demo" customModuleProvider="target">
-                                <rect key="frame" x="137" y="246.5" width="101" height="99.5"/>
+                                <rect key="frame" x="141" y="333" width="94" height="94"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="GVv-oA-QyT" secondAttribute="height" multiplier="1:1" id="zPg-sE-6n2"/>
+                                </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zoo-AO-wUx" customClass="StyledActionOverlay" customModule="Demo" customModuleProvider="target">
-                                <rect key="frame" x="260" y="246.5" width="99" height="99.5"/>
+                                <rect key="frame" x="262" y="334" width="94" height="94"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="zoo-AO-wUx" secondAttribute="height" multiplier="1:1" id="lrJ-aV-BHP"/>
+                                </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Action Overlays" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A6a-cm-qSk">
-                                <rect key="frame" x="120.5" y="217" width="134" height="21.5"/>
+                                <rect key="frame" x="121" y="303" width="134" height="22"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="134" id="YdK-Du-1w2"/>
+                                    <constraint firstAttribute="width" constant="134" id="Xq6-VI-yKg"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -57,49 +84,41 @@
                                 <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <size key="shadowOffset" width="1" height="1"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Text Overlays" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xkq-I9-Pqc">
-                                <rect key="frame" x="129" y="82" width="117" height="21.5"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="117" id="RXv-ye-zTI"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                                <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <size key="shadowOffset" width="1" height="1"/>
-                            </label>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1cy-th-dYZ" customClass="StyledActionOverlay" customModule="Demo" customModuleProvider="target">
-                                <rect key="frame" x="138" y="354" width="100" height="99.5"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1cy-th-dYZ" customClass="StyledActionOverlay" customModule="Demo" customModuleProvider="target">
+                                <rect key="frame" x="141" y="441" width="94" height="94"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="1cy-th-dYZ" secondAttribute="height" multiplier="1:1" id="ech-gQ-wkh"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="brC-Xk-HPu" firstAttribute="centerX" secondItem="A6a-cm-qSk" secondAttribute="centerX" id="1bu-aQ-0yc"/>
-                            <constraint firstItem="fRz-QU-Ol7" firstAttribute="top" secondItem="GVv-oA-QyT" secondAttribute="top" id="5AX-3r-ovf"/>
-                            <constraint firstItem="zoo-AO-wUx" firstAttribute="leading" secondItem="GVv-oA-QyT" secondAttribute="trailing" constant="22" id="Eik-de-w2p"/>
-                            <constraint firstItem="fRz-QU-Ol7" firstAttribute="bottom" secondItem="GVv-oA-QyT" secondAttribute="bottom" id="H7E-JR-fB8"/>
-                            <constraint firstItem="GVv-oA-QyT" firstAttribute="top" secondItem="zoo-AO-wUx" secondAttribute="top" id="HG5-gE-Khl"/>
-                            <constraint firstItem="fRz-QU-Ol7" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Jbi-BQ-rqL"/>
-                            <constraint firstItem="GVv-oA-QyT" firstAttribute="leading" secondItem="fRz-QU-Ol7" secondAttribute="trailing" constant="21" id="LDP-ZZ-fga"/>
-                            <constraint firstItem="Xkq-I9-Pqc" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="62" id="Ock-bv-KJa"/>
-                            <constraint firstItem="cdk-pN-CfY" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="82" id="Uba-qy-DO3"/>
-                            <constraint firstItem="Xkq-I9-Pqc" firstAttribute="centerX" secondItem="cdk-pN-CfY" secondAttribute="centerX" id="W9F-iY-JJk"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="fRz-QU-Ol7" secondAttribute="bottom" constant="321" id="a7u-lU-yAC"/>
-                            <constraint firstItem="cdk-pN-CfY" firstAttribute="top" secondItem="Xkq-I9-Pqc" secondAttribute="bottom" constant="7" id="ay2-K4-hRd"/>
-                            <constraint firstItem="A6a-cm-qSk" firstAttribute="top" secondItem="cdk-pN-CfY" secondAttribute="bottom" constant="2" id="e1A-Kk-oB4"/>
-                            <constraint firstItem="zoo-AO-wUx" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="fyy-kY-LAu"/>
-                            <constraint firstItem="brC-Xk-HPu" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="gQd-Qq-trf"/>
-                            <constraint firstItem="GVv-oA-QyT" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="137" id="gdJ-ts-O9F"/>
-                            <constraint firstItem="brC-Xk-HPu" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="iVh-OG-sxz"/>
-                            <constraint firstItem="A6a-cm-qSk" firstAttribute="centerX" secondItem="GVv-oA-QyT" secondAttribute="centerX" id="jUm-Tl-5hg"/>
-                            <constraint firstItem="brC-Xk-HPu" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="jaG-cZ-Zng"/>
-                            <constraint firstItem="GVv-oA-QyT" firstAttribute="top" secondItem="A6a-cm-qSk" secondAttribute="bottom" constant="8" symbolic="YES" id="ptf-CA-0Jc"/>
-                            <constraint firstItem="GVv-oA-QyT" firstAttribute="bottom" secondItem="zoo-AO-wUx" secondAttribute="bottom" id="t9E-Uy-AN3"/>
-                            <constraint firstItem="A6a-cm-qSk" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="217" id="uwk-OM-vfG"/>
-                            <constraint firstAttribute="trailing" secondItem="brC-Xk-HPu" secondAttribute="trailing" id="v7Q-qd-QVi"/>
-                            <constraint firstItem="cdk-pN-CfY" firstAttribute="centerX" secondItem="A6a-cm-qSk" secondAttribute="centerX" id="wQO-Tz-0bO"/>
+                            <constraint firstItem="brC-Xk-HPu" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="1DC-yg-GVv"/>
+                            <constraint firstItem="brC-Xk-HPu" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="1ID-Td-dLC"/>
+                            <constraint firstItem="cdk-pN-CfY" firstAttribute="top" secondItem="Xkq-I9-Pqc" secondAttribute="bottom" constant="8" symbolic="YES" id="1KH-6g-bp2"/>
+                            <constraint firstItem="fRz-QU-Ol7" firstAttribute="trailing" secondItem="Spv-c5-qNz" secondAttribute="trailing" id="3N9-17-kPC"/>
+                            <constraint firstItem="zoo-AO-wUx" firstAttribute="leading" secondItem="GVv-oA-QyT" secondAttribute="trailing" constant="27" id="3kt-yE-AvC"/>
+                            <constraint firstItem="1cy-th-dYZ" firstAttribute="top" secondItem="GVv-oA-QyT" secondAttribute="bottom" constant="14" id="5yT-PP-jgv"/>
+                            <constraint firstItem="cdk-pN-CfY" firstAttribute="centerX" secondItem="A6a-cm-qSk" secondAttribute="centerX" id="Abb-dw-g6D"/>
+                            <constraint firstItem="brC-Xk-HPu" firstAttribute="centerX" secondItem="GVv-oA-QyT" secondAttribute="centerX" id="Bjb-Oo-Bek"/>
+                            <constraint firstItem="A6a-cm-qSk" firstAttribute="top" secondItem="cdk-pN-CfY" secondAttribute="bottom" constant="86" id="CqX-e1-KGp"/>
+                            <constraint firstItem="A6a-cm-qSk" firstAttribute="centerX" secondItem="GVv-oA-QyT" secondAttribute="centerX" id="Ftf-Yd-VfH"/>
+                            <constraint firstItem="GVv-oA-QyT" firstAttribute="top" secondItem="A6a-cm-qSk" secondAttribute="bottom" constant="8" symbolic="YES" id="Fw5-hG-Mw6"/>
+                            <constraint firstItem="fRz-QU-Ol7" firstAttribute="bottom" secondItem="zoo-AO-wUx" secondAttribute="bottom" id="Hh7-KB-xVQ"/>
+                            <constraint firstItem="GVv-oA-QyT" firstAttribute="trailing" secondItem="1cy-th-dYZ" secondAttribute="trailing" id="K91-A4-Xic"/>
+                            <constraint firstItem="fRz-QU-Ol7" firstAttribute="leading" secondItem="Spv-c5-qNz" secondAttribute="leading" id="MCj-53-XnY"/>
+                            <constraint firstItem="Spv-c5-qNz" firstAttribute="bottom" secondItem="1cy-th-dYZ" secondAttribute="bottom" id="OHr-ub-zOS"/>
+                            <constraint firstItem="fRz-QU-Ol7" firstAttribute="top" secondItem="zoo-AO-wUx" secondAttribute="top" id="QqT-T9-smA"/>
+                            <constraint firstItem="Spv-c5-qNz" firstAttribute="top" secondItem="fRz-QU-Ol7" secondAttribute="bottom" constant="13" id="SMr-dN-Wfi"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Spv-c5-qNz" secondAttribute="bottom" constant="132" id="a8H-y0-m6p"/>
+                            <constraint firstItem="Spv-c5-qNz" firstAttribute="top" secondItem="1cy-th-dYZ" secondAttribute="top" id="aQB-4b-Qak"/>
+                            <constraint firstItem="Xkq-I9-Pqc" firstAttribute="centerX" secondItem="cdk-pN-CfY" secondAttribute="centerX" id="bFk-gn-AjU"/>
+                            <constraint firstItem="brC-Xk-HPu" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="bP9-Yn-X3n"/>
+                            <constraint firstItem="Xkq-I9-Pqc" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="62" id="lYd-1B-NEB"/>
+                            <constraint firstItem="GVv-oA-QyT" firstAttribute="leading" secondItem="1cy-th-dYZ" secondAttribute="leading" id="pWj-D6-7tP"/>
+                            <constraint firstItem="GVv-oA-QyT" firstAttribute="leading" secondItem="fRz-QU-Ol7" secondAttribute="trailing" constant="28" id="pa5-I8-2Id"/>
+                            <constraint firstAttribute="trailing" secondItem="brC-Xk-HPu" secondAttribute="trailing" id="zFp-HW-7gw"/>
                         </constraints>
                     </view>
                     <connections>
