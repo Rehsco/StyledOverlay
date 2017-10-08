@@ -58,7 +58,7 @@ open class StyledBaseOverlay: UIView {
     // MARK: - Control Style
     
     /// The view's style.
-    @IBInspectable open var style: ShapeStyle? {
+    open var style: ShapeStyle? {
         didSet {
             self.setNeedsLayout()
         }
@@ -83,7 +83,7 @@ open class StyledBaseOverlay: UIView {
     }
     
     /// The view's border width.
-    @IBInspectable open var borderWidth: CGFloat? {
+    open var borderWidth: CGFloat? {
         didSet {
             self.setNeedsLayout()
         }
@@ -97,7 +97,7 @@ open class StyledBaseOverlay: UIView {
     }
     
     /// The controls background insets. These are margins for the inner background.
-    @IBInspectable open var backgroundInsets: UIEdgeInsets? {
+    open var backgroundInsets: UIEdgeInsets? {
         didSet {
             self.setNeedsLayout()
         }

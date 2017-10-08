@@ -71,7 +71,7 @@ open class StyledBase3Overlay: StyledBaseOverlay {
     }
     
     /// The content view insets, also known as border margins.
-    @IBInspectable open var contentViewMargins: UIEdgeInsets? {
+    open var contentViewMargins: UIEdgeInsets? {
         didSet {
             self.setNeedsLayout()
         }
