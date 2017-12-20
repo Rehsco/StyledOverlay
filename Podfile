@@ -1,13 +1,10 @@
 platform :ios, '10.0'
+use_frameworks!
+
+pod 'StyledLabel'
 
 target 'StyledOverlay' do
-  use_frameworks!
-
-  pod 'StyledLabel'
 end
 
 target 'Demo' do
-    use_frameworks!
-    
-    pod 'StyledLabel'
 end
