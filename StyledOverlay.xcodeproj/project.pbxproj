@@ -33,6 +33,8 @@
 		5B8C1CE31DBBD11C00A761C6 /* ImageShapeLayerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8C1CE11DBBD11C00A761C6 /* ImageShapeLayerFactory.swift */; };
 		5B8C1CE51DBBD1AE00A761C6 /* CGRectHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8C1CE41DBBD1AE00A761C6 /* CGRectHelper.swift */; };
 		5B8C1CE61DBBD1AE00A761C6 /* CGRectHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8C1CE41DBBD1AE00A761C6 /* CGRectHelper.swift */; };
+		5BBF35A11FF3D07500B5CEED /* BusyViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBF35A01FF3D07500B5CEED /* BusyViewFactory.swift */; };
+		5BBF35A21FF3D07500B5CEED /* BusyViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBF35A01FF3D07500B5CEED /* BusyViewFactory.swift */; };
 		9EBEB5634C0476282BA24D67 /* Pods_Demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3614C1B21DDAD6774FEA21BC /* Pods_Demo.framework */; };
 		FB1ECF0BF3664EDB14F17341 /* Pods_StyledOverlay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69878CEF6F1C1BD129BF0106 /* Pods_StyledOverlay.framework */; };
 /* End PBXBuildFile section */
@@ -59,6 +61,7 @@
 		5B8C1CDD1DBBD04000A761C6 /* StyledActionOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyledActionOverlay.swift; sourceTree = "<group>"; };
 		5B8C1CE11DBBD11C00A761C6 /* ImageShapeLayerFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageShapeLayerFactory.swift; sourceTree = "<group>"; };
 		5B8C1CE41DBBD1AE00A761C6 /* CGRectHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRectHelper.swift; sourceTree = "<group>"; };
+		5BBF35A01FF3D07500B5CEED /* BusyViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusyViewFactory.swift; sourceTree = "<group>"; };
 		69878CEF6F1C1BD129BF0106 /* Pods_StyledOverlay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StyledOverlay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		74D3269CD50E52C933C82B9F /* Pods-StyledOverlay.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StyledOverlay.release.xcconfig"; path = "Pods/Target Support Files/Pods-StyledOverlay/Pods-StyledOverlay.release.xcconfig"; sourceTree = "<group>"; };
 		7A6A080FD5B71F8F506CD9FD /* Pods-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Demo/Pods-Demo.release.xcconfig"; sourceTree = "<group>"; };
@@ -201,6 +204,7 @@
 			children = (
 				5B8C1CE41DBBD1AE00A761C6 /* CGRectHelper.swift */,
 				5B8C1CE11DBBD11C00A761C6 /* ImageShapeLayerFactory.swift */,
+				5BBF35A01FF3D07500B5CEED /* BusyViewFactory.swift */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -425,6 +429,7 @@
 			files = (
 				5B6E85E51DBB6BE600741153 /* StyledBaseOverlay.swift in Sources */,
 				5B6E85EA1DBB6D8600741153 /* OverlayStyleAppearance.swift in Sources */,
+				5BBF35A11FF3D07500B5CEED /* BusyViewFactory.swift in Sources */,
 				5B8C1CD41DBB7D6300A761C6 /* StyledLabelsOverlay.swift in Sources */,
 				5B8C1CDE1DBBD04000A761C6 /* StyledActionOverlay.swift in Sources */,
 				5B8C1CDB1DBB881200A761C6 /* UIImageExtension.swift in Sources */,
@@ -445,6 +450,7 @@
 				5B8C1CE31DBBD11C00A761C6 /* ImageShapeLayerFactory.swift in Sources */,
 				5B8C1CDF1DBBD04000A761C6 /* StyledActionOverlay.swift in Sources */,
 				5B6E85D71DBB641C00741153 /* ViewController.swift in Sources */,
+				5BBF35A21FF3D07500B5CEED /* BusyViewFactory.swift in Sources */,
 				5B8C1CDC1DBB881200A761C6 /* UIImageExtension.swift in Sources */,
 				5B6E85D51DBB641C00741153 /* AppDelegate.swift in Sources */,
 				5B6E85E61DBB6BE600741153 /* StyledBaseOverlay.swift in Sources */,

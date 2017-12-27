@@ -92,6 +92,20 @@ open class StyledActionOverlay: StyledBase3Overlay {
         self.lowerLabel.textAlignment = .center
     }
     
+    open func setLabels(_ upperString: String? = nil, lowerString: String? = nil) {
+        if let us = upperString {
+            self.upperLabel.attributedText = NSAttributedString(string: us)
+        }
+        if let ls = lowerString {
+            self.lowerLabel.attributedText = NSAttributedString(string: ls)
+        }
+    }
+    
+    open func clearLabels() {
+        self.upperLabel.attributedText = nil
+        self.lowerLabel.attributedText = nil
+    }
+    
     func initActionLayer() {
         self.actionLayer.sublayers?.removeAll()
         let shapeName: String?
