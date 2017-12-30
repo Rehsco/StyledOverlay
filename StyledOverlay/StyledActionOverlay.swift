@@ -92,12 +92,12 @@ open class StyledActionOverlay: StyledBase3Overlay {
         self.lowerLabel.textAlignment = .center
     }
     
-    open func setLabels(_ upperString: String? = nil, lowerString: String? = nil) {
+    open func setLabels(_ upperString: NSAttributedString? = nil, lowerString: NSAttributedString? = nil) {
         if let us = upperString {
-            self.upperLabel.attributedText = NSAttributedString(string: us)
+            self.upperLabel.attributedText = us
         }
         if let ls = lowerString {
-            self.lowerLabel.attributedText = NSAttributedString(string: ls)
+            self.lowerLabel.attributedText = ls
         }
     }
     

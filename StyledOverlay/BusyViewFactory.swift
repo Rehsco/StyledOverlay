@@ -35,6 +35,11 @@ open class BusyViewFactory {
     private static var progressBusyView: StyledActionOverlay?
     private static var isProgressing = false
 
+    public static var topLabelFont: UIFont? = nil
+    public static var bottomLabelFont: UIFont? = nil
+    public static var topLabelTextColor: UIColor = .white
+    public static var bottomLabelTextColor: UIColor = .white
+
     // MARK: - Busy View
     
     open class func showBusyOverlay(onView view: UIView? = nil, autoHideAfter: Int = 12, completionHandler: (() -> Void)? = nil) {
@@ -128,7 +133,9 @@ open class BusyViewFactory {
     
     open class func updateProgress(progress: Float, upperLabel: String, lowerLabel: String?) {
         DispatchQueue.main.async {
-            self.progressBusyView?.setLabels(upperLabel, lowerString: lowerLabel ?? "\(progress)%")
+            let upperAS = self.applyFontAndColorToString(self.topLabelFont ?? UIFont.systemFont(ofSize: 16), color: self.topLabelTextColor, text: upperLabel)
+            let lowerAS = self.applyFontAndColorToString(self.bottomLabelFont ?? UIFont.systemFont(ofSize: 14), color: self.bottomLabelTextColor, text: lowerLabel ?? "\(progress)%")
+            self.progressBusyView?.setLabels(upperAS, lowerString: lowerAS)
             self.progressBusyView?.actionType = .progressRing(progress: progress)
         }
     }
@@ -148,5 +155,13 @@ open class BusyViewFactory {
                 completionHandler?()
             })
         }
+    }
+    
+    static func applyFontAndColorToString(_ font: UIFont, color: UIColor, text: String) -> NSAttributedString {
+        let attributedString = NSAttributedString(string: text, attributes:
+            [   NSAttributedStringKey.font : font,
+                NSAttributedStringKey.foregroundColor: color
+            ])
+        return attributedString
     }
 }
