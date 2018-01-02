@@ -34,7 +34,10 @@ open class StyledMenuPopoverFactory {
 
     open class func showSimpleMenu(title: NSAttributedString, subTitle: NSAttributedString? = nil, items: [FlexCollectionItem]) {
         DispatchQueue.main.async {
-            let menu = StyledMenuPopover(frame: UIScreen.main.bounds)
+            let simpleConfig = StyledMenuPopoverConfiguration()
+            simpleConfig.menuItemSize = CGSize(width: 200, height: 40)
+            simpleConfig.displayType = .normal
+            let menu = StyledMenuPopover(frame: UIScreen.main.bounds, configuration: simpleConfig)
             for mi in items {
                 menu.addMenuItem(mi)
             }

@@ -38,6 +38,8 @@ open class StyledMenuPopover: UIView {
 
     open var minimumHeight: CGFloat = 150
     open var preferredSize: CGSize = CGSize(width: 320, height: 200)
+    /// The maximum allowed cells arranged horizontally
+    open var numCellsHorizontal = 4
     
     var title: NSAttributedString = NSAttributedString()
     var subTitle: NSAttributedString? = nil
@@ -88,6 +90,8 @@ open class StyledMenuPopover: UIView {
             menuView.footer.caption.labelTextColor = self.configuration.footerTextColor
             menuView.footerSize = self.configuration.footerHeight
             menuView.footer.styleColor = self.configuration.footerStyleColor
+            
+            menuView.centerCellsHorizontally = true
         }
     }
     
@@ -132,8 +136,41 @@ open class StyledMenuPopover: UIView {
     }
     
     open func calculateMenuSize() -> CGSize {
-        // TODO
-        return self.preferredSize
+        // TODO: Title must be considered also
+        
+        let size = self.preferredSize
+
+        let collMargins = self.menuView?.viewMargins ?? .zero
+        let totalCells = self.menuItems.count
+        let itemSize = self.configuration.menuItemSize
+        
+        let widthPerItem = itemSize.width + self.getHorizontalSectionInset()
+        let rowWidth = size.width - (collMargins.left + collMargins.right)
+        let numRowItems = Int(floor(rowWidth / widthPerItem))
+        let itemsHorizontally = max(min(self.numCellsHorizontal, numRowItems), 1)
+        
+        let totalWidth = CGFloat(itemsHorizontally) * widthPerItem + (collMargins.left + collMargins.right)
+        
+        let numRows = max(1, totalCells / numRowItems)
+        let rowHeight = itemSize.height + self.getVerticalSectionInset()
+        
+        let totalHeight = CGFloat(numRows) * rowHeight + (collMargins.top + collMargins.bottom) + self.configuration.headerHeight + self.configuration.footerHeight
+        
+        return CGSize(width: totalWidth, height: totalHeight)
+    }
+    
+    private func getHorizontalSectionInset() -> CGFloat {
+        if let inset = (self.menuView?.itemCollectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.sectionInset {
+            return inset.left + inset.right
+        }
+        return 0
+    }
+    
+    private func getVerticalSectionInset() -> CGFloat {
+        if let inset = (self.menuView?.itemCollectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.sectionInset {
+            return inset.top + inset.bottom
+        }
+        return 0
     }
     
     // MARK: - View Model
