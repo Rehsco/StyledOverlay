@@ -39,6 +39,9 @@ open class StyledMenuPopoverConfiguration {
     
     public init() {}
     
+    /// Features
+    open var tapOutsideViewToClose: Bool = true
+    
     /// General Styling
     open var backgroundTintColor: UIColor = UIColor.black.withAlphaComponent(0.6)
     
@@ -54,6 +57,7 @@ open class StyledMenuPopoverConfiguration {
     
     open var closeButtonEnabled: Bool = true
     open var closeButtonText: NSAttributedString = NSAttributedString(string: "Close")
+    open var closeButtonTextAlignment: NSTextAlignment = .center
 
     /// Header
     open var detachedHeader: Bool = false
@@ -70,5 +74,8 @@ open class StyledMenuPopoverConfiguration {
     open var footerTextAlignment: NSTextAlignment = .center
     open var footerStyleColor: UIColor = .lightGray
     open var footerHeight: CGFloat = 20
+
+    /// Menu item styling
+    open var menuItemTextAlignment: NSTextAlignment = .center
 
 }

@@ -30,6 +30,34 @@
 import UIKit
 import MJRFlexStyleComponents
 
+open class MenuItemStyler: FlexCellStyler {
+    public var configuration: StyledMenuPopoverConfiguration = StyledMenuPopoverConfiguration()
+
+    init(configuration: StyledMenuPopoverConfiguration) {
+        self.configuration = configuration
+    }
+    
+    open func applyStyle(toCell cell: FlexCollectionViewCell) {
+        if let baseCell = cell as? FlexBaseCollectionViewCell {
+            baseCell.textLabel?.labelTextAlignment = self.configuration.menuItemTextAlignment
+        }
+    }
+}
+
+open class CloseButtonStyler: FlexCellStyler {
+    public var configuration: StyledMenuPopoverConfiguration = StyledMenuPopoverConfiguration()
+    
+    init(configuration: StyledMenuPopoverConfiguration) {
+        self.configuration = configuration
+    }
+    
+    open func applyStyle(toCell cell: FlexCollectionViewCell) {
+        if let baseCell = cell as? FlexBaseCollectionViewCell {
+            baseCell.textLabel?.labelTextAlignment = self.configuration.closeButtonTextAlignment
+        }
+    }
+}
+
 open class StyledMenuPopover: UIView {
     public var configuration: StyledMenuPopoverConfiguration = StyledMenuPopoverConfiguration()
     open var menuItems: [FlexCollectionItem] = []
@@ -118,13 +146,25 @@ open class StyledMenuPopover: UIView {
             let rv = UIApplication.shared.keyWindow! as UIWindow
             self.backgroundColor = self.configuration.backgroundTintColor
             rv.addSubview(self)
-            
-            // TODO: Add tap gesture on "this" for potentional cancel viewing
+
+            if self.configuration.tapOutsideViewToClose {
+                let tgr = UITapGestureRecognizer(target: self, action: #selector(self.tappedOutsideHandler(_:)))
+                self.addGestureRecognizer(tgr)
+            }
         }
     }
 
+    @objc public func tappedOutsideHandler(_ sender: Any) {
+        self.hide()
+    }
+    
     open func hide() {
         self.animateOut()
+
+        // TODO: Remove this when animations are implemented
+        DispatchQueue.main.async {
+            self.removeFromSuperview()
+        }
     }
 
     // MARK: - Layout
@@ -141,7 +181,8 @@ open class StyledMenuPopover: UIView {
         let size = self.preferredSize
 
         let collMargins = self.menuView?.viewMargins ?? .zero
-        let totalCells = self.menuItems.count
+        // TODO: Consider using the actual count from the menuView
+        let totalCells = self.menuItems.count + (self.configuration.closeButtonEnabled ? 1 : 0) // TODO: plus title and subtitle I/A
         let itemSize = self.configuration.menuItemSize
         
         let widthPerItem = itemSize.width + self.getHorizontalSectionInset()
@@ -179,12 +220,25 @@ open class StyledMenuPopover: UIView {
         DispatchQueue.main.async {
             if let mv = self.menuView {
                 mv.removeAllSections()
-                // TODO: add close and title/subtitle items
+                // TODO: add title/subtitle items
+                
                 let msr = mv.addSection()
                 for mi in self.menuItems {
-                    mi.autoDeselectCellAfter = .milliseconds(250)
+                    mi.autoDeselectCellAfter = .milliseconds(200)
+                    mi.cellStyler = MenuItemStyler(configuration: self.configuration)
                     mv.addItem(msr, item: mi)
                 }
+                
+                if self.configuration.closeButtonEnabled {
+                    let closeMI = FlexBaseCollectionItem(reference: UUID().uuidString, text: self.configuration.closeButtonText)
+                    closeMI.itemSelectionActionHandler = {
+                        self.hide()
+                    }
+                    closeMI.autoDeselectCellAfter = .milliseconds(200)
+                    closeMI.cellStyler = CloseButtonStyler(configuration: self.configuration)
+                    mv.addItem(msr, item: closeMI)
+                }
+
                 mv.itemCollectionView.reloadData()
                 completion()
             }
