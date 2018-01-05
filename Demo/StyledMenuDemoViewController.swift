@@ -29,10 +29,19 @@ class StyledMenuDemoViewController: UIViewController {
             NSLog("Item 2 pressed.")
         }
         self.demoSimpleItems.append(item2)
+        let item3 = FlexBaseCollectionItem(reference: "item3", text: NSAttributedString(string: "item3"), icon: nil, accessoryImage: nil, title: nil, accessoryImageActionHandler: nil)
+        item3.itemSelectionActionHandler = {
+            NSLog("Item 3 pressed.")
+        }
+        self.demoSimpleItems.append(item3)
     }
     
     @IBAction func showSimpleMenu(_ sender: Any) {
-        StyledMenuPopoverFactory.showSimpleMenu(title: NSAttributedString(string: "Title"), items: self.demoSimpleItems)
+        StyledMenuPopoverFactory.showSimpleMenu(title: NSAttributedString(string: "Title"), subTitle: NSAttributedString(string: "Select any of the following options (Demo only)\nNew line just before!"), items: self.demoSimpleItems)
+//        StyledMenuPopoverFactory.showSimpleMenu(title: NSAttributedString(string: "Title"), items: self.demoSimpleItems)
     }
 
+    @IBAction func showMenuWithIcon(_ sender: Any) {
+        StyledMenuPopoverFactory.showMenuWithIcon(title: NSAttributedString(string: "Title"), subTitle: NSAttributedString(string: "Select any of the following options (Demo only)\nNew line just before!"), items: self.demoSimpleItems, icon: UIImage(named: "popMenuImage1")!)
+    }
 }

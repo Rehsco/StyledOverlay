@@ -66,8 +66,17 @@ open class StyledMenuPopoverConfiguration {
     open var headerTextAlignment: NSTextAlignment = .center
     open var headerStyleColor: UIColor = .gray
     open var headerHeight: CGFloat = 32
-    
+
+    /// Header Icon
+    open var headerIconPosition: NSTextAlignment = .center
+    open var headerIconRelativeOffset: CGPoint = CGPoint(x: 0, y: -0.5) // x is relative to icon width, y is relative to headerHeight
+    open var headerIconClipToBounds: Bool = true
+    open var headerIconBackgroundColor: UIColor = .lightGray
+    open var headerIconBorderColor: UIColor = .clear
+    open var headerIconBorderWidth: CGFloat = 0
+
     /// Footer
+    open var showFooter: Bool = false
     open var detachedFooter: Bool = false
     open var footerFont: UIFont? = nil
     open var footerTextColor: UIColor? = nil
@@ -77,5 +86,5 @@ open class StyledMenuPopoverConfiguration {
 
     /// Menu item styling
     open var menuItemTextAlignment: NSTextAlignment = .center
-
+    open var menuSubTitleTextAlignment: NSTextAlignment = .center
 }

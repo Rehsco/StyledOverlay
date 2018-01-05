@@ -30,28 +30,55 @@
 import UIKit
 import MJRFlexStyleComponents
 
-open class MenuItemStyler: FlexCellStyler {
-    public var configuration: StyledMenuPopoverConfiguration = StyledMenuPopoverConfiguration()
+class MenuItemStyler: FlexCellStyler {
+    var configuration: StyledMenuPopoverConfiguration = StyledMenuPopoverConfiguration()
 
     init(configuration: StyledMenuPopoverConfiguration) {
         self.configuration = configuration
     }
     
-    open func applyStyle(toCell cell: FlexCollectionViewCell) {
+    func prepareStyle(forCell cell: FlexCollectionViewCell) {
+    }
+    
+    func applyStyle(toCell cell: FlexCollectionViewCell) {
         if let baseCell = cell as? FlexBaseCollectionViewCell {
             baseCell.textLabel?.labelTextAlignment = self.configuration.menuItemTextAlignment
         }
     }
 }
 
-open class CloseButtonStyler: FlexCellStyler {
-    public var configuration: StyledMenuPopoverConfiguration = StyledMenuPopoverConfiguration()
+class TitleItemStyler: FlexCellStyler {
+    var configuration: StyledMenuPopoverConfiguration = StyledMenuPopoverConfiguration()
     
     init(configuration: StyledMenuPopoverConfiguration) {
         self.configuration = configuration
     }
     
-    open func applyStyle(toCell cell: FlexCollectionViewCell) {
+    func prepareStyle(forCell cell: FlexCollectionViewCell) {
+        if let tvCell = cell as? FlexTextViewCollectionViewCell {
+            tvCell.styleColor = .clear
+        }
+    }
+    
+    func applyStyle(toCell cell: FlexCollectionViewCell) {
+        if let tvCell = cell as? FlexTextViewCollectionViewCell {
+            tvCell.textLabel?.labelTextAlignment = self.configuration.menuItemTextAlignment
+            tvCell.textView?.textAlignment = self.configuration.menuSubTitleTextAlignment
+        }
+    }
+}
+
+class CloseButtonStyler: FlexCellStyler {
+    var configuration: StyledMenuPopoverConfiguration = StyledMenuPopoverConfiguration()
+    
+    init(configuration: StyledMenuPopoverConfiguration) {
+        self.configuration = configuration
+    }
+    
+    func prepareStyle(forCell cell: FlexCollectionViewCell) {
+    }
+    
+    func applyStyle(toCell cell: FlexCollectionViewCell) {
         if let baseCell = cell as? FlexBaseCollectionViewCell {
             baseCell.textLabel?.labelTextAlignment = self.configuration.closeButtonTextAlignment
         }
@@ -64,14 +91,18 @@ open class StyledMenuPopover: UIView {
     
     open var menuView: FlexCollectionView?
 
-    open var minimumHeight: CGFloat = 150
-    open var preferredSize: CGSize = CGSize(width: 320, height: 200)
+    open var minimumHeight: CGFloat = 100
+    open var preferredSize: CGSize = CGSize(width: 200, height: 200)
     /// The maximum allowed cells arranged horizontally
     open var numCellsHorizontal = 4
     
     var title: NSAttributedString = NSAttributedString()
     var subTitle: NSAttributedString? = nil
     
+    var headerSectionRef: String? = nil
+    var itemSectionRef: String? = nil
+    var headerItem: FlexCollectionItem? = nil
+
     // TODO: header icon
     // TODO: close action closure
 
@@ -129,7 +160,7 @@ open class StyledMenuPopover: UIView {
         self.menuItems.append(item)
     }
     
-    open func show(title: NSAttributedString, subTitle: NSAttributedString?, topLeftPoint: CGPoint? = nil) {
+    open func show(title: NSAttributedString, subTitle: NSAttributedString?, topLeftPoint: CGPoint? = nil, icon: UIImage? = nil) {
         self.title = title
         self.subTitle = subTitle
         self.populateMenu() {
@@ -138,10 +169,25 @@ open class StyledMenuPopover: UIView {
             // TODO: calculate correct offset in animation
             let ms = self.calculateMenuSize()
             let mo = CGPoint(x: (self.frame.width - ms.width) * 0.5, y: (self.frame.height - ms.height) * 0.5)
-            self.menuView?.frame = CGRect(origin: mo, size: ms)
-            self.menuView?.headerAttributedText = title
-            self.addSubview(self.menuView!)
-            self.animateIn()
+            if let mv = self.menuView {
+                mv.frame = CGRect(origin: mo, size: ms)
+                mv.headerAttributedText = title
+                if let icon = icon {
+                    mv.header.imageView.image = icon
+                    mv.header.imageViewPosition = self.configuration.headerIconPosition
+                    mv.header.imageViewOffset = CGPoint(x: self.configuration.headerIconRelativeOffset.x * icon.size.width, y: self.configuration.headerIconRelativeOffset.y * self.configuration.headerHeight)
+                    
+                    mv.header.imageView.layer.masksToBounds = self.configuration.headerIconClipToBounds
+                    mv.header.imageView.layer.cornerRadius = icon.size.width * 0.5
+                    mv.header.imageView.backgroundColor = self.configuration.headerIconBackgroundColor
+                    mv.header.imageView.layer.borderColor = self.configuration.headerIconBorderColor.cgColor
+                    mv.header.imageView.layer.borderWidth = self.configuration.headerIconBorderWidth
+                    
+                    mv.header.imageView.isHidden = false
+                }
+                self.addSubview(self.menuView!)
+                self.animateIn()
+            }
             
             let rv = UIApplication.shared.keyWindow! as UIWindow
             self.backgroundColor = self.configuration.backgroundTintColor
@@ -177,39 +223,53 @@ open class StyledMenuPopover: UIView {
     
     open func calculateMenuSize() -> CGSize {
         // TODO: Title must be considered also
-        
-        let size = self.preferredSize
-
-        let collMargins = self.menuView?.viewMargins ?? .zero
-        // TODO: Consider using the actual count from the menuView
-        let totalCells = self.menuItems.count + (self.configuration.closeButtonEnabled ? 1 : 0) // TODO: plus title and subtitle I/A
-        let itemSize = self.configuration.menuItemSize
-        
-        let widthPerItem = itemSize.width + self.getHorizontalSectionInset()
-        let rowWidth = size.width - (collMargins.left + collMargins.right)
-        let numRowItems = Int(floor(rowWidth / widthPerItem))
-        let itemsHorizontally = max(min(self.numCellsHorizontal, numRowItems), 1)
-        
-        let totalWidth = CGFloat(itemsHorizontally) * widthPerItem + (collMargins.left + collMargins.right)
-        
-        let numRows = max(1, totalCells / numRowItems)
-        let rowHeight = itemSize.height + self.getVerticalSectionInset()
-        
-        let totalHeight = CGFloat(numRows) * rowHeight + (collMargins.top + collMargins.bottom) + self.configuration.headerHeight + self.configuration.footerHeight
-        
-        return CGSize(width: totalWidth, height: totalHeight)
+        if let mv = self.menuView {
+            let size = self.preferredSize
+            let headerSize = self.getHeaderSectionSize()
+            
+            let collMargins = mv.viewMargins
+            let totalCells = mv.itemCollectionView.numberOfItems(inSection: 1)
+            let itemSize = self.configuration.menuItemSize
+            
+            let widthPerItem = itemSize.width + self.getHorizontalSectionInset()
+            let rowWidth = size.width - (collMargins.left + collMargins.right)
+            let numRowItems = max(Int(floor(rowWidth / widthPerItem)), 1)
+            let itemsHorizontally = max(min(self.numCellsHorizontal, numRowItems), 1)
+            
+            let totalWidth = max(CGFloat(itemsHorizontally) * widthPerItem, headerSize.width) + (collMargins.left + collMargins.right) + mv.itemCollectionView.contentInset.left + mv.itemCollectionView.contentInset.right
+            
+            let numRows = max(1, totalCells / numRowItems)
+            let rowHeight = itemSize.height + self.getVerticalSectionInset()
+            
+            let headerAndFooterHeight = self.configuration.headerHeight + (self.configuration.showFooter ? self.configuration.footerHeight : 0)
+            let totalHeight = CGFloat(numRows) * rowHeight + (collMargins.top + collMargins.bottom) + headerAndFooterHeight + headerSize.height
+            
+            return CGSize(width: totalWidth, height: totalHeight)
+        }
+        return self.preferredSize
+    }
+    
+    private func getHeaderSectionSize() -> CGSize {
+        let baseSize:CGSize = CGSize(width: self.getHorizontalSectionInset(), height: self.getVerticalSectionInset())
+        if let hi = self.headerItem {
+            let cs = hi.preferredCellSize ?? .zero
+            return CGSize(width: cs.width + baseSize.width, height: cs.height + baseSize.height)
+        }
+        return baseSize
     }
     
     private func getHorizontalSectionInset() -> CGFloat {
-        if let inset = (self.menuView?.itemCollectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.sectionInset {
-            return inset.left + inset.right
+        if let layout = self.menuView?.itemCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            let inset = layout.sectionInset
+            return inset.left + inset.right + layout.minimumInteritemSpacing
         }
         return 0
     }
     
     private func getVerticalSectionInset() -> CGFloat {
-        if let inset = (self.menuView?.itemCollectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.sectionInset {
-            return inset.top + inset.bottom
+        if let layout = self.menuView?.itemCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            let inset = layout.sectionInset
+            return inset.top + inset.bottom + layout.minimumLineSpacing
         }
         return 0
     }
@@ -220,23 +280,47 @@ open class StyledMenuPopover: UIView {
         DispatchQueue.main.async {
             if let mv = self.menuView {
                 mv.removeAllSections()
-                // TODO: add title/subtitle items
-                
-                let msr = mv.addSection()
-                for mi in self.menuItems {
-                    mi.autoDeselectCellAfter = .milliseconds(200)
-                    mi.cellStyler = MenuItemStyler(configuration: self.configuration)
-                    mv.addItem(msr, item: mi)
+                // TODO: add title item I/A
+
+                self.headerSectionRef = mv.addSection()
+                if let subTitle = self.subTitle, let hsr = self.headerSectionRef {
+                    let paragraph = NSMutableParagraphStyle()
+                    paragraph.alignment = self.configuration.menuSubTitleTextAlignment
+                    let attributes: [NSAttributedStringKey : Any] = [NSAttributedStringKey.paragraphStyle: paragraph]
+                    let nas = NSMutableAttributedString(attributedString: subTitle)
+                    nas.addAttributes(attributes, range: NSMakeRange(0, nas.length))
+                    let sti = FlexTextViewCollectionItem(reference: UUID().uuidString, text: nas, title: nil)
+                    let collMargins = mv.viewMargins
+                    let width = self.preferredSize.width - (collMargins.left + collMargins.top + mv.itemCollectionView.contentInset.left + mv.itemCollectionView.contentInset.right)
+                    let height = nas.heightWithConstrainedWidth(width)
+                    sti.preferredCellSize = CGSize(width: width, height: height + 10)
+                    sti.autoDeselectCellAfter = .milliseconds(200)
+                    sti.autodetectRTLTextAlignment = false
+                    sti.cellStyler = TitleItemStyler(configuration: self.configuration)
+                    sti.canMoveItem = false
+                    mv.addItem(hsr, item: sti)
+                    self.headerItem = sti
                 }
-                
-                if self.configuration.closeButtonEnabled {
-                    let closeMI = FlexBaseCollectionItem(reference: UUID().uuidString, text: self.configuration.closeButtonText)
-                    closeMI.itemSelectionActionHandler = {
-                        self.hide()
+
+                self.itemSectionRef = mv.addSection()
+                if let msr = self.itemSectionRef {
+                    for mi in self.menuItems {
+                        mi.autoDeselectCellAfter = .milliseconds(200)
+                        mi.cellStyler = MenuItemStyler(configuration: self.configuration)
+                        mi.canMoveItem = false
+                        mv.addItem(msr, item: mi)
                     }
-                    closeMI.autoDeselectCellAfter = .milliseconds(200)
-                    closeMI.cellStyler = CloseButtonStyler(configuration: self.configuration)
-                    mv.addItem(msr, item: closeMI)
+                    
+                    if self.configuration.closeButtonEnabled {
+                        let closeMI = FlexBaseCollectionItem(reference: UUID().uuidString, text: self.configuration.closeButtonText)
+                        closeMI.itemSelectionActionHandler = {
+                            self.hide()
+                        }
+                        closeMI.autoDeselectCellAfter = .milliseconds(200)
+                        closeMI.cellStyler = CloseButtonStyler(configuration: self.configuration)
+                        closeMI.canMoveItem = false
+                        mv.addItem(msr, item: closeMI)
+                    }
                 }
 
                 mv.itemCollectionView.reloadData()

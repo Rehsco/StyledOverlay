@@ -147,11 +147,23 @@
                                     <action selector="showSimpleMenu:" destination="4VR-ZP-WDq" eventType="touchUpInside" id="cNk-jQ-Ahw"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OAP-lj-3c4">
+                                <rect key="frame" x="16" y="110" width="146" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="146" id="lOa-LY-Tg5"/>
+                                </constraints>
+                                <state key="normal" title="With Icon Top Center"/>
+                                <connections>
+                                    <action selector="showMenuWithIcon:" destination="4VR-ZP-WDq" eventType="touchUpInside" id="t7Z-9w-z4D"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="OO7-fa-arO" firstAttribute="top" secondItem="KG8-Zd-6pf" secondAttribute="bottom" constant="8" symbolic="YES" id="KZR-Kg-bqc"/>
-                            <constraint firstItem="OO7-fa-arO" firstAttribute="leading" secondItem="TXt-yd-JlV" secondAttribute="leadingMargin" id="LcX-xx-eOy"/>
+                            <constraint firstItem="OO7-fa-arO" firstAttribute="leading" secondItem="TXt-yd-JlV" secondAttribute="leadingMargin" id="3Qr-k7-Uz9"/>
+                            <constraint firstItem="OO7-fa-arO" firstAttribute="top" secondItem="KG8-Zd-6pf" secondAttribute="bottom" constant="8" symbolic="YES" id="CS1-d0-vcC"/>
+                            <constraint firstItem="OO7-fa-arO" firstAttribute="leading" secondItem="OAP-lj-3c4" secondAttribute="leading" id="XqS-24-9bm"/>
+                            <constraint firstItem="OAP-lj-3c4" firstAttribute="top" secondItem="OO7-fa-arO" secondAttribute="bottom" constant="8" symbolic="YES" id="m1M-v8-YzU"/>
                         </constraints>
                     </view>
                 </viewController>
