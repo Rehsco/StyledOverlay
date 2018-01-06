@@ -57,12 +57,13 @@ class TitleItemStyler: FlexCellStyler {
     func prepareStyle(forCell cell: FlexCollectionViewCell) {
         if let tvCell = cell as? FlexTextViewCollectionViewCell {
             tvCell.styleColor = .clear
+            tvCell.textTitleHeight = self.configuration.titleHeightWhenNotInHeader
         }
     }
     
     func applyStyle(toCell cell: FlexCollectionViewCell) {
         if let tvCell = cell as? FlexTextViewCollectionViewCell {
-            tvCell.textLabel?.labelTextAlignment = self.configuration.menuItemTextAlignment
+            tvCell.textLabel?.labelTextAlignment = self.configuration.headerTextAlignment
             tvCell.textView?.textAlignment = self.configuration.menuSubTitleTextAlignment
         }
     }
@@ -171,7 +172,12 @@ open class StyledMenuPopover: UIView {
             let mo = CGPoint(x: (self.frame.width - ms.width) * 0.5, y: (self.frame.height - ms.height) * 0.5)
             if let mv = self.menuView {
                 mv.frame = CGRect(origin: mo, size: ms)
-                mv.headerAttributedText = title
+                if self.configuration.showTitleInHeader {
+                    mv.headerAttributedText = title
+                }
+                else if icon != nil {
+                    mv.headerAttributedText = NSAttributedString()
+                }
                 if let icon = icon {
                     mv.header.imageView.image = icon
                     mv.header.imageViewPosition = self.configuration.headerIconPosition
@@ -206,11 +212,6 @@ open class StyledMenuPopover: UIView {
     
     open func hide() {
         self.animateOut()
-
-        // TODO: Remove this when animations are implemented
-        DispatchQueue.main.async {
-            self.removeFromSuperview()
-        }
     }
 
     // MARK: - Layout
@@ -280,34 +281,43 @@ open class StyledMenuPopover: UIView {
         DispatchQueue.main.async {
             if let mv = self.menuView {
                 mv.removeAllSections()
-                // TODO: add title item I/A
 
                 self.headerSectionRef = mv.addSection()
-                if let subTitle = self.subTitle, let hsr = self.headerSectionRef {
-                    let paragraph = NSMutableParagraphStyle()
-                    paragraph.alignment = self.configuration.menuSubTitleTextAlignment
-                    let attributes: [NSAttributedStringKey : Any] = [NSAttributedStringKey.paragraphStyle: paragraph]
-                    let nas = NSMutableAttributedString(attributedString: subTitle)
-                    nas.addAttributes(attributes, range: NSMakeRange(0, nas.length))
-                    let sti = FlexTextViewCollectionItem(reference: UUID().uuidString, text: nas, title: nil)
-                    let collMargins = mv.viewMargins
-                    let width = self.preferredSize.width - (collMargins.left + collMargins.top + mv.itemCollectionView.contentInset.left + mv.itemCollectionView.contentInset.right)
-                    let height = nas.heightWithConstrainedWidth(width)
-                    sti.preferredCellSize = CGSize(width: width, height: height + 10)
-                    sti.autoDeselectCellAfter = .milliseconds(200)
-                    sti.autodetectRTLTextAlignment = false
-                    sti.cellStyler = TitleItemStyler(configuration: self.configuration)
-                    sti.canMoveItem = false
-                    mv.addItem(hsr, item: sti)
-                    self.headerItem = sti
+                if let hsr = self.headerSectionRef {
+                    if let subTitle = self.subTitle {
+                        let nas = subTitle.applyParagraphStyle(textAlignment: self.configuration.menuSubTitleTextAlignment)
+                        let sti = FlexTextViewCollectionItem(reference: UUID().uuidString, text: nas)
+                        sti.textTitle = self.configuration.showTitleInHeader ? nil : self.title
+                        let collMargins = mv.viewMargins
+                        let width = self.preferredSize.width - (collMargins.left + collMargins.top + mv.itemCollectionView.contentInset.left + mv.itemCollectionView.contentInset.right)
+                        let height = nas.heightWithConstrainedWidth(width) + (self.configuration.showTitleInHeader ? 0 : self.configuration.titleHeightWhenNotInHeader)
+                        sti.preferredCellSize = CGSize(width: width, height: height + 10)
+                        self.assignDefaultMenuItemSettings(sti)
+                        sti.autodetectRTLTextAlignment = false
+                        sti.cellStyler = TitleItemStyler(configuration: self.configuration)
+                        mv.addItem(hsr, item: sti)
+                        self.headerItem = sti
+                    }
+                    else if !self.configuration.showTitleInHeader {
+                        let sti = FlexTextViewCollectionItem(reference: UUID().uuidString, text: NSAttributedString())
+                        sti.textTitle = self.title
+                        let collMargins = mv.viewMargins
+                        let width = self.preferredSize.width - (collMargins.left + collMargins.top + mv.itemCollectionView.contentInset.left + mv.itemCollectionView.contentInset.right)
+                        let height = self.title.heightWithConstrainedWidth(width)
+                        sti.preferredCellSize = CGSize(width: width, height: height + 10)
+                        self.assignDefaultMenuItemSettings(sti)
+                        sti.autodetectRTLTextAlignment = false
+                        sti.cellStyler = TitleItemStyler(configuration: self.configuration)
+                        mv.addItem(hsr, item: sti)
+                        self.headerItem = sti
+                    }
                 }
 
                 self.itemSectionRef = mv.addSection()
                 if let msr = self.itemSectionRef {
                     for mi in self.menuItems {
-                        mi.autoDeselectCellAfter = .milliseconds(200)
+                        self.assignDefaultMenuItemSettings(mi)
                         mi.cellStyler = MenuItemStyler(configuration: self.configuration)
-                        mi.canMoveItem = false
                         mv.addItem(msr, item: mi)
                     }
                     
@@ -316,9 +326,8 @@ open class StyledMenuPopover: UIView {
                         closeMI.itemSelectionActionHandler = {
                             self.hide()
                         }
-                        closeMI.autoDeselectCellAfter = .milliseconds(200)
+                        self.assignDefaultMenuItemSettings(closeMI)
                         closeMI.cellStyler = CloseButtonStyler(configuration: self.configuration)
-                        closeMI.canMoveItem = false
                         mv.addItem(msr, item: closeMI)
                     }
                 }
@@ -329,16 +338,23 @@ open class StyledMenuPopover: UIView {
         }
     }
     
+    open func assignDefaultMenuItemSettings(_ menuItem: FlexCollectionItem) {
+        menuItem.autoDeselectCellAfter = .milliseconds(200)
+        menuItem.canMoveItem = false
+    }
+    
     // MARK: - Animations
     
     open func animateIn() {
-        // TODO
-
+        StyledOverlayAnimator.showAnimation(forView: self.menuView!, direction: .ingoing, animationStyle: self.configuration.appearAnimation, animationDuration: self.configuration.animationDuration)
     }
 
     open func animateOut() {
-        // TODO
-
+        StyledOverlayAnimator.showAnimation(forView: self.menuView!, direction: .outgoing, animationStyle: self.configuration.disappearAnimation, animationDuration: self.configuration.animationDuration) {
+            DispatchQueue.main.async {
+                self.removeFromSuperview()
+            }
+        }
     }
     
     // MARK: - Keyboard handling for input field popovers

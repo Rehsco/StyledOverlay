@@ -50,6 +50,7 @@ open class StyledMenuPopoverFactory {
             let simpleConfig = StyledMenuPopoverConfiguration()
             simpleConfig.menuItemSize = CGSize(width: 200, height: 40)
             simpleConfig.displayType = .normal
+            simpleConfig.showTitleInHeader = false
             let menu = StyledMenuPopover(frame: UIScreen.main.bounds, configuration: simpleConfig)
             for mi in items {
                 menu.addMenuItem(mi)

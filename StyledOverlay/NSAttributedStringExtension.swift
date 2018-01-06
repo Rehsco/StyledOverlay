@@ -52,4 +52,13 @@ extension NSAttributedString {
         let boundingBox = self.boundingRect(with: constraintRect, options: [.usesLineFragmentOrigin, .usesFontLeading], context: nil).integral
         return boundingBox.size
     }
+    
+    func applyParagraphStyle(textAlignment: NSTextAlignment) -> NSAttributedString {
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.alignment = textAlignment
+        let attributes: [NSAttributedStringKey : Any] = [NSAttributedStringKey.paragraphStyle: paragraph]
+        let nas = NSMutableAttributedString(attributedString: self)
+        nas.addAttributes(attributes, range: NSMakeRange(0, nas.length))
+        return nas
+    }
 }

@@ -31,10 +31,6 @@ import UIKit
 import StyledLabel
 import MJRFlexStyleComponents
 
-public enum StyledOverlayAnimationStyle {
-    case noAnimation, topToBottom, bottomToTop, leftToRight, rightToLeft, fadeInOut
-}
-
 open class StyledMenuPopoverConfiguration {
     
     public init() {}
@@ -52,9 +48,13 @@ open class StyledMenuPopoverConfiguration {
     open var menuItemSize: CGSize = CGSize(width: 64, height: 80)
     open var displayType: FlexCollectionCellDisplayMode = .iconified(size: CGSize(width: 64, height: 80))
 
-    open var appearAnimation: StyledOverlayAnimationStyle = .fadeInOut
+    open var appearAnimation: StyledOverlayAnimationStyle = .bottomToTop
     open var disappearAnimation: StyledOverlayAnimationStyle = .fadeInOut
-    
+    open var animationDuration: TimeInterval = 0.2
+
+    open var showTitleInHeader: Bool = true
+    open var titleHeightWhenNotInHeader: CGFloat = 26
+
     open var closeButtonEnabled: Bool = true
     open var closeButtonText: NSAttributedString = NSAttributedString(string: "Close")
     open var closeButtonTextAlignment: NSTextAlignment = .center
