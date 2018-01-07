@@ -164,7 +164,10 @@ open class StyledMenuPopover: UIView {
             menuView.style = self.configuration.style
             menuView.cellDisplayMode = self.configuration.displayType
 
-            // TODO: Borders
+            menuView.borderWidth = self.configuration.borderWidth
+            menuView.borderWidth = self.configuration.borderWidth
+
+            menuView.viewMargins = self.configuration.contentMargins
             
             menuView.header.caption.labelTextAlignment = self.configuration.headerTextAlignment
             menuView.header.caption.labelFont = self.configuration.headerFont
@@ -267,18 +270,17 @@ open class StyledMenuPopover: UIView {
             let totalCells = mv.itemCollectionView.numberOfItems(inSection: 1)
             let itemSize = self.configuration.menuItemSize
             
-            let widthPerItem = itemSize.width + self.getHorizontalSectionInset()
-            let rowWidth = size.width - (collMargins.left + collMargins.right)
+            let widthPerItem = itemSize.width + self.getInterItemSpacing()
+            let rowWidth = size.width - (collMargins.left + collMargins.right) - self.getInterItemSpacing()
             let numRowItems = max(Int(floor(rowWidth / widthPerItem)), 1)
             let itemsHorizontally = max(min(self.numCellsHorizontal, numRowItems), 1)
             
-            let totalWidth = max(CGFloat(itemsHorizontally) * widthPerItem, headerSize.width) + (collMargins.left + collMargins.right) + mv.itemCollectionView.contentInset.left + mv.itemCollectionView.contentInset.right
+            let totalWidth = max(CGFloat(itemsHorizontally) * itemSize.width + self.getHorizontalSectionInset(1), headerSize.width) + (collMargins.left + collMargins.right) + mv.itemCollectionView.contentInset.left + mv.itemCollectionView.contentInset.right
             
             let numRows = max(1, totalCells / numRowItems)
-            let rowHeight = itemSize.height + self.getVerticalSectionInset()
             
             let headerAndFooterHeight = self.configuration.headerHeight + (self.configuration.showFooter ? self.configuration.footerHeight : 0)
-            let totalHeight = CGFloat(numRows) * rowHeight + (collMargins.top + collMargins.bottom) + headerAndFooterHeight + headerSize.height
+            let totalHeight = (CGFloat(numRows) * (itemSize.height + self.getItemLineSpacing()) + (collMargins.top + collMargins.bottom) + headerAndFooterHeight + headerSize.height) - self.getItemLineSpacing() + self.getVerticalSectionInset(1)
             
             return CGSize(width: totalWidth, height: totalHeight)
         }
@@ -286,7 +288,7 @@ open class StyledMenuPopover: UIView {
     }
     
     private func getHeaderSectionSize() -> CGSize {
-        let baseSize:CGSize = CGSize(width: self.getHorizontalSectionInset(), height: self.getVerticalSectionInset())
+        let baseSize:CGSize = CGSize(width: self.getHorizontalSectionInset(0), height: self.getVerticalSectionInset(0))
         if let hi = self.headerItem {
             let cs = hi.preferredCellSize ?? .zero
             return CGSize(width: cs.width + baseSize.width, height: cs.height + baseSize.height)
@@ -294,22 +296,38 @@ open class StyledMenuPopover: UIView {
         return baseSize
     }
     
-    private func getHorizontalSectionInset() -> CGFloat {
-        if let layout = self.menuView?.itemCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+    private func getHorizontalSectionInset(_ sectionIdx: Int) -> CGFloat {
+        if let layout = self.menuView?.itemCollectionView.collectionViewLayout as? UICollectionViewFlowLayout, let section = self.menuView?.getSection(atIndex: sectionIdx) {
             let inset = layout.sectionInset
-            return inset.left + inset.right + layout.minimumInteritemSpacing
+            let sInset = section.insets
+            return inset.left + inset.right + sInset.left + sInset.right
         }
         return 0
     }
     
-    private func getVerticalSectionInset() -> CGFloat {
-        if let layout = self.menuView?.itemCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+    private func getVerticalSectionInset(_ sectionIdx: Int) -> CGFloat {
+        if let layout = self.menuView?.itemCollectionView.collectionViewLayout as? UICollectionViewFlowLayout, let section = self.menuView?.getSection(atIndex: sectionIdx) {
             let inset = layout.sectionInset
-            return inset.top + inset.bottom + layout.minimumLineSpacing
+            let sInset = section.insets
+            return inset.top + inset.bottom + sInset.top + sInset.bottom
         }
         return 0
     }
     
+    private func getItemLineSpacing() -> CGFloat {
+        if let layout = self.menuView?.itemCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            return layout.minimumLineSpacing
+        }
+        return 0
+    }
+
+    private func getInterItemSpacing() -> CGFloat {
+        if let layout = self.menuView?.itemCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            return layout.minimumInteritemSpacing
+        }
+        return 0
+    }
+
     // MARK: - View Model
     
     open func populateMenu(completion: @escaping (()->Void)) {
@@ -348,7 +366,7 @@ open class StyledMenuPopover: UIView {
                     }
                 }
 
-                self.itemSectionRef = mv.addSection()
+                self.itemSectionRef = mv.addSection(nil, height: nil, insets: self.configuration.menuItemSectionMargins)
                 if let msr = self.itemSectionRef {
                     for mi in self.menuItems {
                         self.assignDefaultMenuItemSettings(mi)

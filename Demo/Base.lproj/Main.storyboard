@@ -150,20 +150,32 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OAP-lj-3c4">
                                 <rect key="frame" x="16" y="110" width="146" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="146" id="lOa-LY-Tg5"/>
+                                    <constraint firstAttribute="width" constant="146" id="8mw-1V-5Yw"/>
                                 </constraints>
                                 <state key="normal" title="With Icon Top Center"/>
                                 <connections>
                                     <action selector="showMenuWithIcon:" destination="4VR-ZP-WDq" eventType="touchUpInside" id="t7Z-9w-z4D"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="78C-fQ-zRv">
+                                <rect key="frame" x="16" y="148" width="100" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="HPv-92-Zaq"/>
+                                </constraints>
+                                <state key="normal" title="Without Detail"/>
+                                <connections>
+                                    <action selector="showMenuWithoutDetail:" destination="4VR-ZP-WDq" eventType="touchUpInside" id="6nL-RN-JBU"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="OO7-fa-arO" firstAttribute="leading" secondItem="TXt-yd-JlV" secondAttribute="leadingMargin" id="3Qr-k7-Uz9"/>
-                            <constraint firstItem="OO7-fa-arO" firstAttribute="top" secondItem="KG8-Zd-6pf" secondAttribute="bottom" constant="8" symbolic="YES" id="CS1-d0-vcC"/>
-                            <constraint firstItem="OO7-fa-arO" firstAttribute="leading" secondItem="OAP-lj-3c4" secondAttribute="leading" id="XqS-24-9bm"/>
-                            <constraint firstItem="OAP-lj-3c4" firstAttribute="top" secondItem="OO7-fa-arO" secondAttribute="bottom" constant="8" symbolic="YES" id="m1M-v8-YzU"/>
+                            <constraint firstItem="78C-fQ-zRv" firstAttribute="top" secondItem="OAP-lj-3c4" secondAttribute="bottom" constant="8" symbolic="YES" id="17X-XH-cyh"/>
+                            <constraint firstItem="OO7-fa-arO" firstAttribute="top" secondItem="KG8-Zd-6pf" secondAttribute="bottom" constant="8" symbolic="YES" id="1IX-uM-WAj"/>
+                            <constraint firstItem="OO7-fa-arO" firstAttribute="leading" secondItem="OAP-lj-3c4" secondAttribute="leading" id="DuR-no-ixy"/>
+                            <constraint firstItem="OO7-fa-arO" firstAttribute="leading" secondItem="TXt-yd-JlV" secondAttribute="leadingMargin" id="TCS-pB-NH8"/>
+                            <constraint firstItem="OAP-lj-3c4" firstAttribute="leading" secondItem="78C-fQ-zRv" secondAttribute="leading" id="p4f-Dc-snJ"/>
+                            <constraint firstItem="OAP-lj-3c4" firstAttribute="top" secondItem="OO7-fa-arO" secondAttribute="bottom" constant="8" symbolic="YES" id="uxg-S0-eMo"/>
                         </constraints>
                     </view>
                 </viewController>

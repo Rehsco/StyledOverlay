@@ -45,6 +45,7 @@ open class StyledMenuPopoverConfiguration {
     open var styleColor: UIColor = .lightGray
     open var borderWidth: CGFloat = 0
     open var borderColor: UIColor = .black
+    open var contentMargins: UIEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 5)
     open var menuItemSize: CGSize = CGSize(width: 64, height: 80)
     open var displayType: FlexCollectionCellDisplayMode = .iconified(size: CGSize(width: 64, height: 80))
 
@@ -91,5 +92,6 @@ open class StyledMenuPopoverConfiguration {
     open var menuSubTitleTextAlignment: NSTextAlignment = .center
     open var menuItemStyle: FlexShapeStyle = FlexShapeStyle(style: .roundedFixed(cornerRadius: 10))
     open var menuItemStyleColor: UIColor = .gray
-    
+    open var menuItemSectionMargins: UIEdgeInsets = UIEdgeInsetsMake(5, 0, 5, 0)
+
 }
