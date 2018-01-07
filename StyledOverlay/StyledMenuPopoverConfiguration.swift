@@ -41,7 +41,7 @@ open class StyledMenuPopoverConfiguration {
     /// General Styling
     open var backgroundTintColor: UIColor = UIColor.black.withAlphaComponent(0.6)
     
-    open var style: FlexShapeStyle = FlexShapeStyle(style: .rounded)
+    open var style: FlexShapeStyle = FlexShapeStyle(style: .roundedFixed(cornerRadius: 10))
     open var styleColor: UIColor = .lightGray
     open var borderWidth: CGFloat = 0
     open var borderColor: UIColor = .black
@@ -58,6 +58,8 @@ open class StyledMenuPopoverConfiguration {
     open var closeButtonEnabled: Bool = true
     open var closeButtonText: NSAttributedString = NSAttributedString(string: "Close")
     open var closeButtonTextAlignment: NSTextAlignment = .center
+    open var closeButtonStyle: FlexShapeStyle = FlexShapeStyle(style: .roundedFixed(cornerRadius: 10))
+    open var closeButtonStyleColor: UIColor = .gray
 
     /// Header
     open var detachedHeader: Bool = false
@@ -87,4 +89,7 @@ open class StyledMenuPopoverConfiguration {
     /// Menu item styling
     open var menuItemTextAlignment: NSTextAlignment = .center
     open var menuSubTitleTextAlignment: NSTextAlignment = .center
+    open var menuItemStyle: FlexShapeStyle = FlexShapeStyle(style: .roundedFixed(cornerRadius: 10))
+    open var menuItemStyleColor: UIColor = .gray
+    
 }

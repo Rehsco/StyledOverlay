@@ -38,6 +38,10 @@ class MenuItemStyler: FlexCellStyler {
     }
     
     func prepareStyle(forCell cell: FlexCollectionViewCell) {
+        if let baseCell = cell as? FlexBaseCollectionViewCell {
+            baseCell.flexContentView?.style = self.configuration.menuItemStyle
+            baseCell.flexContentView?.styleColor = self.configuration.menuItemStyleColor
+        }
     }
     
     func applyStyle(toCell cell: FlexCollectionViewCell) {
@@ -77,6 +81,10 @@ class CloseButtonStyler: FlexCellStyler {
     }
     
     func prepareStyle(forCell cell: FlexCollectionViewCell) {
+        if let baseCell = cell as? FlexBaseCollectionViewCell {
+            baseCell.flexContentView?.style = self.configuration.closeButtonStyle
+            baseCell.flexContentView?.styleColor = self.configuration.closeButtonStyleColor
+        }
     }
     
     func applyStyle(toCell cell: FlexCollectionViewCell) {
@@ -97,16 +105,18 @@ open class StyledMenuPopover: UIView {
     /// The maximum allowed cells arranged horizontally
     open var numCellsHorizontal = 4
     
+    var menuInitializing = true
+    
     var title: NSAttributedString = NSAttributedString()
     var subTitle: NSAttributedString? = nil
+    var menuIcon: UIImage? = nil
     
     var headerSectionRef: String? = nil
     var itemSectionRef: String? = nil
     var headerItem: FlexCollectionItem? = nil
 
-    // TODO: header icon
     // TODO: close action closure
-
+    
     public override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupView()
@@ -123,13 +133,30 @@ open class StyledMenuPopover: UIView {
         self.setupView()
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+        UIDevice.current.endGeneratingDeviceOrientationNotifications()
+    }
+
     // MARK: - Initializations
     
     private func setupView() {
         self.menuView = FlexCollectionView(frame: CGRect(origin: .zero, size: self.preferredSize))
         self.setupCollectionView()
+        UIDevice.current.beginGeneratingDeviceOrientationNotifications()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(self.orientationChanged(notification:)),
+            name: NSNotification.Name.UIDeviceOrientationDidChange,
+            object: nil
+        )
     }
     
+    @objc func orientationChanged(notification: Notification) {
+        self.frame = UIScreen.main.bounds
+        self.setNeedsLayout()
+    }
+
     private func setupCollectionView() {
         if let menuView = self.menuView {
             menuView.defaultCellSize = self.configuration.menuItemSize
@@ -164,45 +191,21 @@ open class StyledMenuPopover: UIView {
     open func show(title: NSAttributedString, subTitle: NSAttributedString?, topLeftPoint: CGPoint? = nil, icon: UIImage? = nil) {
         self.title = title
         self.subTitle = subTitle
+        self.menuIcon = icon
+        let rv = UIApplication.shared.keyWindow! as UIWindow
+        self.backgroundColor = self.configuration.backgroundTintColor
+        self.alpha = 1
+        rv.addSubview(self)
+        
+        if self.configuration.tapOutsideViewToClose {
+            let tgr = UITapGestureRecognizer(target: self, action: #selector(self.tappedOutsideHandler(_:)))
+            self.addGestureRecognizer(tgr)
+        }
+        self.menuInitializing = true
         self.populateMenu() {
-            // TODO: change when animation is done
-            //        self.menuView?.alpha = 0
-            // TODO: calculate correct offset in animation
-            let ms = self.calculateMenuSize()
-            let mo = CGPoint(x: (self.frame.width - ms.width) * 0.5, y: (self.frame.height - ms.height) * 0.5)
-            if let mv = self.menuView {
-                mv.frame = CGRect(origin: mo, size: ms)
-                if self.configuration.showTitleInHeader {
-                    mv.headerAttributedText = title
-                }
-                else if icon != nil {
-                    mv.headerAttributedText = NSAttributedString()
-                }
-                if let icon = icon {
-                    mv.header.imageView.image = icon
-                    mv.header.imageViewPosition = self.configuration.headerIconPosition
-                    mv.header.imageViewOffset = CGPoint(x: self.configuration.headerIconRelativeOffset.x * icon.size.width, y: self.configuration.headerIconRelativeOffset.y * self.configuration.headerHeight)
-                    
-                    mv.header.imageView.layer.masksToBounds = self.configuration.headerIconClipToBounds
-                    mv.header.imageView.layer.cornerRadius = icon.size.width * 0.5
-                    mv.header.imageView.backgroundColor = self.configuration.headerIconBackgroundColor
-                    mv.header.imageView.layer.borderColor = self.configuration.headerIconBorderColor.cgColor
-                    mv.header.imageView.layer.borderWidth = self.configuration.headerIconBorderWidth
-                    
-                    mv.header.imageView.isHidden = false
-                }
-                self.addSubview(self.menuView!)
-                self.animateIn()
-            }
-            
-            let rv = UIApplication.shared.keyWindow! as UIWindow
-            self.backgroundColor = self.configuration.backgroundTintColor
-            rv.addSubview(self)
-
-            if self.configuration.tapOutsideViewToClose {
-                let tgr = UITapGestureRecognizer(target: self, action: #selector(self.tappedOutsideHandler(_:)))
-                self.addGestureRecognizer(tgr)
-            }
+            self.layoutMenuView()
+            self.addSubview(self.menuView!)
+            self.animateIn()
         }
     }
 
@@ -216,14 +219,46 @@ open class StyledMenuPopover: UIView {
 
     // MARK: - Layout
     
+    open func layoutMenuView() {
+        let ms = self.calculateMenuSize()
+        let mo = CGPoint(x: (self.frame.width - ms.width) * 0.5, y: (self.frame.height - ms.height) * 0.5)
+        if let mv = self.menuView {
+            mv.frame = CGRect(origin: mo, size: ms)
+            if self.configuration.showTitleInHeader {
+                mv.headerAttributedText = title
+            }
+            else if self.menuIcon != nil {
+                mv.headerAttributedText = NSAttributedString()
+            }
+            if let icon = self.menuIcon {
+                mv.header.imageView.image = icon
+                mv.header.imageViewPosition = self.configuration.headerIconPosition
+                mv.header.imageViewOffset = CGPoint(x: self.configuration.headerIconRelativeOffset.x * icon.size.width, y: self.configuration.headerIconRelativeOffset.y * self.configuration.headerHeight)
+                
+                mv.header.imageView.layer.masksToBounds = self.configuration.headerIconClipToBounds
+                mv.header.imageView.layer.cornerRadius = icon.size.width * 0.5
+                mv.header.imageView.backgroundColor = self.configuration.headerIconBackgroundColor
+                mv.header.imageView.layer.borderColor = self.configuration.headerIconBorderColor.cgColor
+                mv.header.imageView.layer.borderWidth = self.configuration.headerIconBorderWidth
+                
+                mv.header.imageView.isHidden = false
+            }
+        }
+    }
+    
     open override func layoutSubviews() {
         super.layoutSubviews()
-        
-        // TODO
+        if !self.menuInitializing {
+            self.populateMenu() {
+                self.layoutMenuView()
+            }
+        }
+        else {
+            self.menuInitializing = false
+        }
     }
     
     open func calculateMenuSize() -> CGSize {
-        // TODO: Title must be considered also
         if let mv = self.menuView {
             let size = self.preferredSize
             let headerSize = self.getHeaderSectionSize()
@@ -346,10 +381,17 @@ open class StyledMenuPopover: UIView {
     // MARK: - Animations
     
     open func animateIn() {
+        self.alpha = 0
+        UIView.animate(withDuration: self.configuration.animationDuration) {
+            self.alpha = 1
+        }
         StyledOverlayAnimator.showAnimation(forView: self.menuView!, direction: .ingoing, animationStyle: self.configuration.appearAnimation, animationDuration: self.configuration.animationDuration)
     }
 
     open func animateOut() {
+        UIView.animate(withDuration: self.configuration.animationDuration) {
+            self.alpha = 0
+        }
         StyledOverlayAnimator.showAnimation(forView: self.menuView!, direction: .outgoing, animationStyle: self.configuration.disappearAnimation, animationDuration: self.configuration.animationDuration) {
             DispatchQueue.main.async {
                 self.removeFromSuperview()
