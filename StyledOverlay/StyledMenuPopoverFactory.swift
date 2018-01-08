@@ -32,12 +32,13 @@ import MJRFlexStyleComponents
 
 open class StyledMenuPopoverFactory {
 
-    open class func showSimpleMenu(title: NSAttributedString, subTitle: NSAttributedString? = nil, items: [FlexCollectionItem]) {
+    open class func showSimpleMenu(title: NSAttributedString, subTitle: NSAttributedString? = nil, items: [FlexCollectionItem], preferredSize: CGSize = CGSize(width: 200, height: 200)) {
         DispatchQueue.main.async {
             let simpleConfig = StyledMenuPopoverConfiguration()
             simpleConfig.menuItemSize = CGSize(width: 200, height: 40)
             simpleConfig.displayType = .normal
             let menu = StyledMenuPopover(frame: UIScreen.main.bounds, configuration: simpleConfig)
+            menu.preferredSize = preferredSize
             for mi in items {
                 menu.addMenuItem(mi)
             }
@@ -45,17 +46,31 @@ open class StyledMenuPopoverFactory {
         }
     }
     
-    open class func showMenuWithIcon(title: NSAttributedString, subTitle: NSAttributedString? = nil, items: [FlexCollectionItem], icon: UIImage) {
+    open class func showMenuWithIcon(title: NSAttributedString, subTitle: NSAttributedString? = nil, items: [FlexCollectionItem], icon: UIImage, preferredSize: CGSize = CGSize(width: 200, height: 200)) {
         DispatchQueue.main.async {
             let simpleConfig = StyledMenuPopoverConfiguration()
             simpleConfig.menuItemSize = CGSize(width: 200, height: 40)
             simpleConfig.displayType = .normal
             simpleConfig.showTitleInHeader = false
             let menu = StyledMenuPopover(frame: UIScreen.main.bounds, configuration: simpleConfig)
+            menu.preferredSize = preferredSize
             for mi in items {
                 menu.addMenuItem(mi)
             }
             menu.show(title: title, subTitle: subTitle, icon: icon)
+        }
+    }
+
+    open class func showIconMenu(title: NSAttributedString, subTitle: NSAttributedString? = nil, items: [FlexCollectionItem], preferredSize: CGSize = CGSize(width: 200, height: 200)) {
+        DispatchQueue.main.async {
+            let simpleConfig = StyledMenuPopoverConfiguration()
+            simpleConfig.closeButtonEnabled = false
+            let menu = StyledMenuPopover(frame: UIScreen.main.bounds, configuration: simpleConfig)
+            menu.preferredSize = preferredSize
+            for mi in items {
+                menu.addMenuItem(mi)
+            }
+            menu.show(title: title, subTitle: subTitle)
         }
     }
 }

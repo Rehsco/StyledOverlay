@@ -41,6 +41,7 @@ class MenuItemStyler: FlexCellStyler {
         if let baseCell = cell as? FlexBaseCollectionViewCell {
             baseCell.flexContentView?.style = self.configuration.menuItemStyle
             baseCell.flexContentView?.styleColor = self.configuration.menuItemStyleColor
+            baseCell.flexContentView?.footer.caption.labelTextAlignment = self.configuration.menuItemTextAlignment
         }
     }
     
@@ -394,6 +395,9 @@ open class StyledMenuPopover: UIView {
     open func assignDefaultMenuItemSettings(_ menuItem: FlexCollectionItem) {
         menuItem.autoDeselectCellAfter = .milliseconds(200)
         menuItem.canMoveItem = false
+        if let bmi = menuItem as? FlexBaseCollectionItem {
+            bmi.contentInteractionWillSelectItem = true
+        }
     }
     
     // MARK: - Animations

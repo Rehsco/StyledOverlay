@@ -150,7 +150,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OAP-lj-3c4">
                                 <rect key="frame" x="16" y="110" width="146" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="146" id="8mw-1V-5Yw"/>
+                                    <constraint firstAttribute="width" constant="146" id="k0K-Sy-WDq"/>
                                 </constraints>
                                 <state key="normal" title="With Icon Top Center"/>
                                 <connections>
@@ -160,22 +160,31 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="78C-fQ-zRv">
                                 <rect key="frame" x="16" y="148" width="100" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="HPv-92-Zaq"/>
+                                    <constraint firstAttribute="width" constant="100" id="63Y-SN-axo"/>
                                 </constraints>
                                 <state key="normal" title="Without Detail"/>
                                 <connections>
                                     <action selector="showMenuWithoutDetail:" destination="4VR-ZP-WDq" eventType="touchUpInside" id="6nL-RN-JBU"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Tx-gu-L9e">
+                                <rect key="frame" x="16" y="186" width="72" height="30"/>
+                                <state key="normal" title="Icon Menu"/>
+                                <connections>
+                                    <action selector="showIconMenu:" destination="4VR-ZP-WDq" eventType="touchUpInside" id="GYp-qg-gR5"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="78C-fQ-zRv" firstAttribute="top" secondItem="OAP-lj-3c4" secondAttribute="bottom" constant="8" symbolic="YES" id="17X-XH-cyh"/>
-                            <constraint firstItem="OO7-fa-arO" firstAttribute="top" secondItem="KG8-Zd-6pf" secondAttribute="bottom" constant="8" symbolic="YES" id="1IX-uM-WAj"/>
-                            <constraint firstItem="OO7-fa-arO" firstAttribute="leading" secondItem="OAP-lj-3c4" secondAttribute="leading" id="DuR-no-ixy"/>
-                            <constraint firstItem="OO7-fa-arO" firstAttribute="leading" secondItem="TXt-yd-JlV" secondAttribute="leadingMargin" id="TCS-pB-NH8"/>
-                            <constraint firstItem="OAP-lj-3c4" firstAttribute="leading" secondItem="78C-fQ-zRv" secondAttribute="leading" id="p4f-Dc-snJ"/>
-                            <constraint firstItem="OAP-lj-3c4" firstAttribute="top" secondItem="OO7-fa-arO" secondAttribute="bottom" constant="8" symbolic="YES" id="uxg-S0-eMo"/>
+                            <constraint firstItem="OO7-fa-arO" firstAttribute="leading" secondItem="OAP-lj-3c4" secondAttribute="leading" id="Fbm-NP-QYC"/>
+                            <constraint firstItem="OO7-fa-arO" firstAttribute="leading" secondItem="TXt-yd-JlV" secondAttribute="leadingMargin" id="Hep-ho-bqq"/>
+                            <constraint firstItem="78C-fQ-zRv" firstAttribute="leading" secondItem="5Tx-gu-L9e" secondAttribute="leading" id="Ioh-iQ-9BG"/>
+                            <constraint firstItem="OAP-lj-3c4" firstAttribute="leading" secondItem="78C-fQ-zRv" secondAttribute="leading" id="KQg-l0-Hls"/>
+                            <constraint firstItem="5Tx-gu-L9e" firstAttribute="top" secondItem="78C-fQ-zRv" secondAttribute="bottom" constant="8" symbolic="YES" id="UzD-kd-ozf"/>
+                            <constraint firstItem="OO7-fa-arO" firstAttribute="top" secondItem="KG8-Zd-6pf" secondAttribute="bottom" constant="8" symbolic="YES" id="XVN-b5-U8O"/>
+                            <constraint firstItem="78C-fQ-zRv" firstAttribute="top" secondItem="OAP-lj-3c4" secondAttribute="bottom" constant="8" symbolic="YES" id="ahn-6V-eCs"/>
+                            <constraint firstItem="OAP-lj-3c4" firstAttribute="top" secondItem="OO7-fa-arO" secondAttribute="bottom" constant="8" symbolic="YES" id="ch1-6M-7UH"/>
                         </constraints>
                     </view>
                 </viewController>

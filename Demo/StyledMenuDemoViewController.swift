@@ -12,39 +12,64 @@ import MJRFlexStyleComponents
 
 class StyledMenuDemoViewController: UIViewController {
     var demoSimpleItems: [FlexCollectionItem] = []
-    
+    var demoIconItems: [FlexCollectionItem] = []
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.createDemoMenuItems()
     }
 
     func createDemoMenuItems() {
-        let item1 = FlexBaseCollectionItem(reference: "item1", text: NSAttributedString(string: "item1"), icon: nil, accessoryImage: nil, title: nil, accessoryImageActionHandler: nil)
+        let item1 = FlexBaseCollectionItem(reference: "item1", text: NSAttributedString(string: "Item 1"))
         item1.itemSelectionActionHandler = {
             NSLog("Item 1 pressed.")
         }
         self.demoSimpleItems.append(item1)
-        let item2 = FlexBaseCollectionItem(reference: "item2", text: NSAttributedString(string: "item2"), icon: nil, accessoryImage: nil, title: nil, accessoryImageActionHandler: nil)
+        let item2 = FlexBaseCollectionItem(reference: "item2", text: NSAttributedString(string: "Item 2"))
         item2.itemSelectionActionHandler = {
             NSLog("Item 2 pressed.")
         }
         self.demoSimpleItems.append(item2)
-        let item3 = FlexBaseCollectionItem(reference: "item3", text: NSAttributedString(string: "item3"), icon: nil, accessoryImage: nil, title: nil, accessoryImageActionHandler: nil)
+        let item3 = FlexBaseCollectionItem(reference: "item3", text: NSAttributedString(string: "Item 3"))
         item3.itemSelectionActionHandler = {
             NSLog("Item 3 pressed.")
         }
         self.demoSimpleItems.append(item3)
+        
+        let icitem1 = FlexBaseCollectionItem(reference: "item1", icon: UIImage(named: "testIcon1"))
+        icitem1.subTitle = NSAttributedString(string: "Item 1")
+        icitem1.itemSelectionActionHandler = {
+            NSLog("Item 1 pressed.")
+        }
+        self.demoIconItems.append(icitem1)
+        let icitem2 = FlexBaseCollectionItem(reference: "item2", icon: UIImage(named: "testIcon2"))
+        icitem2.subTitle = NSAttributedString(string: "Item 2")
+        icitem2.itemSelectionActionHandler = {
+            NSLog("Item 2 pressed.")
+        }
+        self.demoIconItems.append(icitem2)
+        let icitem3 = FlexBaseCollectionItem(reference: "item3", icon: UIImage(named: "testIcon3"))
+        icitem3.subTitle = NSAttributedString(string: "Item 3")
+        icitem3.itemSelectionActionHandler = {
+            NSLog("Item 3 pressed.")
+        }
+        self.demoIconItems.append(icitem3)
+
     }
     
     @IBAction func showSimpleMenu(_ sender: Any) {
-        StyledMenuPopoverFactory.showSimpleMenu(title: NSAttributedString(string: "Title"), subTitle: NSAttributedString(string: "Select any of the following options (Demo only)\nNew line just before!"), items: self.demoSimpleItems)
+        StyledMenuPopoverFactory.showSimpleMenu(title: NSAttributedString(string: "Simple Menu"), subTitle: NSAttributedString(string: "Select any of the following options (Demo only)\nNew line just before!"), items: self.demoSimpleItems)
     }
 
     @IBAction func showMenuWithIcon(_ sender: Any) {
-        StyledMenuPopoverFactory.showMenuWithIcon(title: NSAttributedString(string: "Title"), subTitle: NSAttributedString(string: "Select any of the following options (Demo only)\nNew line just before!"), items: self.demoSimpleItems, icon: UIImage(named: "popMenuImage1")!)
+        StyledMenuPopoverFactory.showMenuWithIcon(title: NSAttributedString(string: "Menu With Icon"), subTitle: NSAttributedString(string: "Select any of the following options (Demo only)\nNew line just before!"), items: self.demoSimpleItems, icon: UIImage(named: "popMenuImage1")!)
     }
     
     @IBAction func showMenuWithoutDetail(_ sender: Any) {
-        StyledMenuPopoverFactory.showSimpleMenu(title: NSAttributedString(string: "Title"), items: self.demoSimpleItems)
+        StyledMenuPopoverFactory.showSimpleMenu(title: NSAttributedString(string: "No Details"), items: self.demoSimpleItems)
+    }
+    
+    @IBAction func showIconMenu(_ sender: Any) {
+        StyledMenuPopoverFactory.showIconMenu(title: NSAttributedString(string: "Icon"), items: self.demoIconItems, preferredSize: CGSize(width: 320, height: 200))
     }
 }
