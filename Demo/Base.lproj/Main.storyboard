@@ -150,7 +150,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OAP-lj-3c4">
                                 <rect key="frame" x="16" y="110" width="146" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="146" id="k0K-Sy-WDq"/>
+                                    <constraint firstAttribute="width" constant="146" id="SPA-2o-gHq"/>
                                 </constraints>
                                 <state key="normal" title="With Icon Top Center"/>
                                 <connections>
@@ -160,7 +160,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="78C-fQ-zRv">
                                 <rect key="frame" x="16" y="148" width="100" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="63Y-SN-axo"/>
+                                    <constraint firstAttribute="width" constant="100" id="0kK-5W-hvi"/>
                                 </constraints>
                                 <state key="normal" title="Without Detail"/>
                                 <connections>
@@ -174,17 +174,29 @@
                                     <action selector="showIconMenu:" destination="4VR-ZP-WDq" eventType="touchUpInside" id="GYp-qg-gR5"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I0B-fn-A7n">
+                                <rect key="frame" x="16" y="224" width="82" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="82" id="3pY-X2-kH4"/>
+                                </constraints>
+                                <state key="normal" title="Input Menu"/>
+                                <connections>
+                                    <action selector="showInputMenu:" destination="4VR-ZP-WDq" eventType="touchUpInside" id="0RK-fd-dDo"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="OO7-fa-arO" firstAttribute="leading" secondItem="OAP-lj-3c4" secondAttribute="leading" id="Fbm-NP-QYC"/>
-                            <constraint firstItem="OO7-fa-arO" firstAttribute="leading" secondItem="TXt-yd-JlV" secondAttribute="leadingMargin" id="Hep-ho-bqq"/>
-                            <constraint firstItem="78C-fQ-zRv" firstAttribute="leading" secondItem="5Tx-gu-L9e" secondAttribute="leading" id="Ioh-iQ-9BG"/>
-                            <constraint firstItem="OAP-lj-3c4" firstAttribute="leading" secondItem="78C-fQ-zRv" secondAttribute="leading" id="KQg-l0-Hls"/>
-                            <constraint firstItem="5Tx-gu-L9e" firstAttribute="top" secondItem="78C-fQ-zRv" secondAttribute="bottom" constant="8" symbolic="YES" id="UzD-kd-ozf"/>
-                            <constraint firstItem="OO7-fa-arO" firstAttribute="top" secondItem="KG8-Zd-6pf" secondAttribute="bottom" constant="8" symbolic="YES" id="XVN-b5-U8O"/>
-                            <constraint firstItem="78C-fQ-zRv" firstAttribute="top" secondItem="OAP-lj-3c4" secondAttribute="bottom" constant="8" symbolic="YES" id="ahn-6V-eCs"/>
-                            <constraint firstItem="OAP-lj-3c4" firstAttribute="top" secondItem="OO7-fa-arO" secondAttribute="bottom" constant="8" symbolic="YES" id="ch1-6M-7UH"/>
+                            <constraint firstItem="OO7-fa-arO" firstAttribute="top" secondItem="KG8-Zd-6pf" secondAttribute="bottom" constant="8" symbolic="YES" id="5TP-yw-DOV"/>
+                            <constraint firstItem="OO7-fa-arO" firstAttribute="leading" secondItem="TXt-yd-JlV" secondAttribute="leadingMargin" id="5no-fG-B2p"/>
+                            <constraint firstItem="OO7-fa-arO" firstAttribute="leading" secondItem="OAP-lj-3c4" secondAttribute="leading" id="7s6-H0-IrH"/>
+                            <constraint firstItem="78C-fQ-zRv" firstAttribute="leading" secondItem="5Tx-gu-L9e" secondAttribute="leading" id="QJe-3Q-huP"/>
+                            <constraint firstItem="I0B-fn-A7n" firstAttribute="top" secondItem="5Tx-gu-L9e" secondAttribute="bottom" constant="8" symbolic="YES" id="ZRP-wN-EPz"/>
+                            <constraint firstItem="OAP-lj-3c4" firstAttribute="leading" secondItem="78C-fQ-zRv" secondAttribute="leading" id="buc-FP-QOY"/>
+                            <constraint firstItem="78C-fQ-zRv" firstAttribute="top" secondItem="OAP-lj-3c4" secondAttribute="bottom" constant="8" symbolic="YES" id="cDH-DR-bDA"/>
+                            <constraint firstItem="5Tx-gu-L9e" firstAttribute="top" secondItem="78C-fQ-zRv" secondAttribute="bottom" constant="8" symbolic="YES" id="eGe-4y-BYA"/>
+                            <constraint firstItem="OAP-lj-3c4" firstAttribute="top" secondItem="OO7-fa-arO" secondAttribute="bottom" constant="8" symbolic="YES" id="oS4-DI-vg9"/>
+                            <constraint firstItem="5Tx-gu-L9e" firstAttribute="leading" secondItem="I0B-fn-A7n" secondAttribute="leading" id="wua-rB-C9z"/>
                         </constraints>
                     </view>
                 </viewController>

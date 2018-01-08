@@ -41,8 +41,8 @@ open class StyledMenuPopoverConfiguration {
     /// General Styling
     open var backgroundTintColor: UIColor = UIColor.black.withAlphaComponent(0.6)
     
-    open var style: FlexShapeStyle = FlexShapeStyle(style: .roundedFixed(cornerRadius: 10))
-    open var styleColor: UIColor = .lightGray
+    open var style: FlexShapeStyle = FlexShapeStyle(style: .roundedFixed(cornerRadius: 5))
+    open var styleColor: UIColor = .white
     open var borderWidth: CGFloat = 0
     open var borderColor: UIColor = .black
     open var contentMargins: UIEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 5)
@@ -59,7 +59,7 @@ open class StyledMenuPopoverConfiguration {
     open var closeButtonEnabled: Bool = true
     open var closeButtonText: NSAttributedString = NSAttributedString(string: "Close")
     open var closeButtonTextAlignment: NSTextAlignment = .center
-    open var closeButtonStyle: FlexShapeStyle = FlexShapeStyle(style: .roundedFixed(cornerRadius: 10))
+    open var closeButtonStyle: FlexShapeStyle = FlexShapeStyle(style: .roundedFixed(cornerRadius: 5))
     open var closeButtonStyleColor: UIColor = .gray
 
     /// Header
@@ -67,16 +67,16 @@ open class StyledMenuPopoverConfiguration {
     open var headerFont: UIFont? = nil
     open var headerTextColor: UIColor? = nil
     open var headerTextAlignment: NSTextAlignment = .center
-    open var headerStyleColor: UIColor = .gray
+    open var headerStyleColor: UIColor = .lightGray
     open var headerHeight: CGFloat = 32
 
     /// Header Icon
     open var headerIconPosition: NSTextAlignment = .center
     open var headerIconRelativeOffset: CGPoint = CGPoint(x: 0, y: -0.5) // x is relative to icon width, y is relative to headerHeight
     open var headerIconClipToBounds: Bool = true
-    open var headerIconBackgroundColor: UIColor = .lightGray
-    open var headerIconBorderColor: UIColor = .clear
-    open var headerIconBorderWidth: CGFloat = 0
+    open var headerIconBackgroundColor: UIColor = .white
+    open var headerIconBorderColor: UIColor = .lightGray
+    open var headerIconBorderWidth: CGFloat = 2.5
 
     /// Footer
     open var showFooter: Bool = false
@@ -90,8 +90,8 @@ open class StyledMenuPopoverConfiguration {
     /// Menu item styling
     open var menuItemTextAlignment: NSTextAlignment = .center
     open var menuSubTitleTextAlignment: NSTextAlignment = .center
-    open var menuItemStyle: FlexShapeStyle = FlexShapeStyle(style: .roundedFixed(cornerRadius: 10))
-    open var menuItemStyleColor: UIColor = .gray
-    open var menuItemSectionMargins: UIEdgeInsets = UIEdgeInsetsMake(5, 0, 5, 0)
+    open var menuItemStyle: FlexShapeStyle = FlexShapeStyle(style: .roundedFixed(cornerRadius: 5))
+    open var menuItemStyleColor: UIColor = .lightGray
+    open var menuItemSectionMargins: UIEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 5)
 
 }

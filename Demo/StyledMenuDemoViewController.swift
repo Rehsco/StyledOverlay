@@ -13,6 +13,7 @@ import MJRFlexStyleComponents
 class StyledMenuDemoViewController: UIViewController {
     var demoSimpleItems: [FlexCollectionItem] = []
     var demoIconItems: [FlexCollectionItem] = []
+    var demoInputItems: [FlexCollectionItem] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,6 +56,14 @@ class StyledMenuDemoViewController: UIViewController {
         }
         self.demoIconItems.append(icitem3)
 
+        let imenu = FlexTextFieldCollectionItem(reference: "textInput", text: NSAttributedString(string: ""))
+        imenu.placeholderText = NSAttributedString(string: "Text")
+        imenu.textFieldShouldReturn = {
+            _ in
+            return true
+        }
+        imenu.textIsMutable = true
+        self.demoInputItems.append(imenu)
     }
     
     @IBAction func showSimpleMenu(_ sender: Any) {
@@ -71,5 +80,9 @@ class StyledMenuDemoViewController: UIViewController {
     
     @IBAction func showIconMenu(_ sender: Any) {
         StyledMenuPopoverFactory.showIconMenu(title: NSAttributedString(string: "Icon"), items: self.demoIconItems, preferredSize: CGSize(width: 320, height: 200))
+    }
+    
+    @IBAction func showInputMenu(_ sender: Any) {
+        StyledMenuPopoverFactory.showSimpleMenu(title: NSAttributedString(string: "Input Text"), subTitle: NSAttributedString(string: "Enter some text below"), items: self.demoInputItems)
     }
 }

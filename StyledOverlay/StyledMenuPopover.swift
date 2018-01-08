@@ -30,71 +30,6 @@
 import UIKit
 import MJRFlexStyleComponents
 
-class MenuItemStyler: FlexCellStyler {
-    var configuration: StyledMenuPopoverConfiguration = StyledMenuPopoverConfiguration()
-
-    init(configuration: StyledMenuPopoverConfiguration) {
-        self.configuration = configuration
-    }
-    
-    func prepareStyle(forCell cell: FlexCollectionViewCell) {
-        if let baseCell = cell as? FlexBaseCollectionViewCell {
-            baseCell.flexContentView?.style = self.configuration.menuItemStyle
-            baseCell.flexContentView?.styleColor = self.configuration.menuItemStyleColor
-            baseCell.flexContentView?.footer.caption.labelTextAlignment = self.configuration.menuItemTextAlignment
-        }
-    }
-    
-    func applyStyle(toCell cell: FlexCollectionViewCell) {
-        if let baseCell = cell as? FlexBaseCollectionViewCell {
-            baseCell.textLabel?.labelTextAlignment = self.configuration.menuItemTextAlignment
-        }
-    }
-}
-
-class TitleItemStyler: FlexCellStyler {
-    var configuration: StyledMenuPopoverConfiguration = StyledMenuPopoverConfiguration()
-    
-    init(configuration: StyledMenuPopoverConfiguration) {
-        self.configuration = configuration
-    }
-    
-    func prepareStyle(forCell cell: FlexCollectionViewCell) {
-        if let tvCell = cell as? FlexTextViewCollectionViewCell {
-            tvCell.styleColor = .clear
-            tvCell.textTitleHeight = self.configuration.titleHeightWhenNotInHeader
-        }
-    }
-    
-    func applyStyle(toCell cell: FlexCollectionViewCell) {
-        if let tvCell = cell as? FlexTextViewCollectionViewCell {
-            tvCell.textLabel?.labelTextAlignment = self.configuration.headerTextAlignment
-            tvCell.textView?.textAlignment = self.configuration.menuSubTitleTextAlignment
-        }
-    }
-}
-
-class CloseButtonStyler: FlexCellStyler {
-    var configuration: StyledMenuPopoverConfiguration = StyledMenuPopoverConfiguration()
-    
-    init(configuration: StyledMenuPopoverConfiguration) {
-        self.configuration = configuration
-    }
-    
-    func prepareStyle(forCell cell: FlexCollectionViewCell) {
-        if let baseCell = cell as? FlexBaseCollectionViewCell {
-            baseCell.flexContentView?.style = self.configuration.closeButtonStyle
-            baseCell.flexContentView?.styleColor = self.configuration.closeButtonStyleColor
-        }
-    }
-    
-    func applyStyle(toCell cell: FlexCollectionViewCell) {
-        if let baseCell = cell as? FlexBaseCollectionViewCell {
-            baseCell.textLabel?.labelTextAlignment = self.configuration.closeButtonTextAlignment
-        }
-    }
-}
-
 open class StyledMenuPopover: UIView {
     public var configuration: StyledMenuPopoverConfiguration = StyledMenuPopoverConfiguration()
     open var menuItems: [FlexCollectionItem] = []
@@ -106,6 +41,10 @@ open class StyledMenuPopover: UIView {
     /// The maximum allowed cells arranged horizontally
     open var numCellsHorizontal = 4
     
+    public var titleItemStyler: StyledOverlayCellStyler?
+    public var menuItemStyler: StyledOverlayCellStyler?
+    public var closeButtonStyler: StyledOverlayCellStyler?
+
     var menuInitializing = true
     
     var title: NSAttributedString = NSAttributedString()
@@ -135,6 +74,8 @@ open class StyledMenuPopover: UIView {
     }
     
     deinit {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         NotificationCenter.default.removeObserver(self)
         UIDevice.current.endGeneratingDeviceOrientationNotifications()
     }
@@ -142,6 +83,10 @@ open class StyledMenuPopover: UIView {
     // MARK: - Initializations
     
     private func setupView() {
+        self.titleItemStyler = TitleItemStyler(configuration: self.configuration)
+        self.menuItemStyler = MenuItemStyler(configuration: self.configuration)
+        self.closeButtonStyler = CloseButtonStyler(configuration: self.configuration)
+
         self.menuView = FlexCollectionView(frame: CGRect(origin: .zero, size: self.preferredSize))
         self.setupCollectionView()
         UIDevice.current.beginGeneratingDeviceOrientationNotifications()
@@ -151,6 +96,9 @@ open class StyledMenuPopover: UIView {
             name: NSNotification.Name.UIDeviceOrientationDidChange,
             object: nil
         )
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(_:)), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(_:)), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     @objc func orientationChanged(notification: Notification) {
@@ -348,7 +296,7 @@ open class StyledMenuPopover: UIView {
                         sti.preferredCellSize = CGSize(width: width, height: height + 10)
                         self.assignDefaultMenuItemSettings(sti)
                         sti.autodetectRTLTextAlignment = false
-                        sti.cellStyler = TitleItemStyler(configuration: self.configuration)
+                        sti.cellStyler = self.titleItemStyler
                         mv.addItem(hsr, item: sti)
                         self.headerItem = sti
                     }
@@ -361,7 +309,7 @@ open class StyledMenuPopover: UIView {
                         sti.preferredCellSize = CGSize(width: width, height: height + 10)
                         self.assignDefaultMenuItemSettings(sti)
                         sti.autodetectRTLTextAlignment = false
-                        sti.cellStyler = TitleItemStyler(configuration: self.configuration)
+                        sti.cellStyler = self.titleItemStyler
                         mv.addItem(hsr, item: sti)
                         self.headerItem = sti
                     }
@@ -371,7 +319,7 @@ open class StyledMenuPopover: UIView {
                 if let msr = self.itemSectionRef {
                     for mi in self.menuItems {
                         self.assignDefaultMenuItemSettings(mi)
-                        mi.cellStyler = MenuItemStyler(configuration: self.configuration)
+                        mi.cellStyler = self.menuItemStyler
                         mv.addItem(msr, item: mi)
                     }
                     
@@ -381,7 +329,7 @@ open class StyledMenuPopover: UIView {
                             self.hide()
                         }
                         self.assignDefaultMenuItemSettings(closeMI)
-                        closeMI.cellStyler = CloseButtonStyler(configuration: self.configuration)
+                        closeMI.cellStyler = self.closeButtonStyler
                         mv.addItem(msr, item: closeMI)
                     }
                 }
@@ -422,5 +370,40 @@ open class StyledMenuPopover: UIView {
     }
     
     // MARK: - Keyboard handling for input field popovers
+    
+    var tmpContentViewFrameOrigin: CGPoint?
+    var keyboardHasBeenShown:Bool = false
+    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        keyboardHasBeenShown = true
+        
+        guard let userInfo = (notification as NSNotification).userInfo else {return}
+        guard let endKeyBoardFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.minY else {return}
+        guard let menuView = self.menuView else { return }
+        
+        if tmpContentViewFrameOrigin == nil {
+            tmpContentViewFrameOrigin = menuView.frame.origin
+        }
+        
+        var newContentViewFrameY = menuView.frame.maxY - endKeyBoardFrame
+        if newContentViewFrameY < 0 {
+            newContentViewFrameY = 0
+        }
+        
+        menuView.frame.origin.y -= newContentViewFrameY
+    }
+    
+    @objc func keyboardWillHide(_ notification: Notification) {
+        guard let menuView = self.menuView else { return }
+
+        if(keyboardHasBeenShown){//This could happen on the simulator (keyboard will be hidden)
+            if let fOrigin = self.tmpContentViewFrameOrigin {
+                menuView.frame.origin.y = fOrigin.y
+                self.tmpContentViewFrameOrigin = nil
+            }
+            
+            keyboardHasBeenShown = false
+        }
+    }
     
 }

@@ -43,6 +43,14 @@
 		5BC11A401FFA477400681B78 /* StyledMenuPopoverConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC11A3E1FFA477400681B78 /* StyledMenuPopoverConfiguration.swift */; };
 		5BC2CA781FFFB5BE006AC6CB /* StyledOverlayAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC2CA771FFFB5BE006AC6CB /* StyledOverlayAnimator.swift */; };
 		5BC2CA791FFFB5BE006AC6CB /* StyledOverlayAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC2CA771FFFB5BE006AC6CB /* StyledOverlayAnimator.swift */; };
+		5BD066E6200393D500AD6C80 /* StyledOverlayCellStyler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD066E5200393D500AD6C80 /* StyledOverlayCellStyler.swift */; };
+		5BD066E7200393D500AD6C80 /* StyledOverlayCellStyler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD066E5200393D500AD6C80 /* StyledOverlayCellStyler.swift */; };
+		5BD066EA2003954400AD6C80 /* MenuItemStyler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD066E92003954400AD6C80 /* MenuItemStyler.swift */; };
+		5BD066EB2003954400AD6C80 /* MenuItemStyler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD066E92003954400AD6C80 /* MenuItemStyler.swift */; };
+		5BD066ED2003955600AD6C80 /* TitleItemStyler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD066EC2003955600AD6C80 /* TitleItemStyler.swift */; };
+		5BD066EE2003955600AD6C80 /* TitleItemStyler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD066EC2003955600AD6C80 /* TitleItemStyler.swift */; };
+		5BD066F02003956800AD6C80 /* CloseButtonStyler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD066EF2003956800AD6C80 /* CloseButtonStyler.swift */; };
+		5BD066F12003956800AD6C80 /* CloseButtonStyler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD066EF2003956800AD6C80 /* CloseButtonStyler.swift */; };
 		5BE07AD31FFBB60600A0FFA2 /* StyledMenuDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE07AD21FFBB60600A0FFA2 /* StyledMenuDemoViewController.swift */; };
 		5BE07AD51FFBB6E600A0FFA2 /* StyledMenuPopoverFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE07AD41FFBB6E600A0FFA2 /* StyledMenuPopoverFactory.swift */; };
 		5BE07AD61FFBB6E600A0FFA2 /* StyledMenuPopoverFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE07AD41FFBB6E600A0FFA2 /* StyledMenuPopoverFactory.swift */; };
@@ -77,6 +85,10 @@
 		5BC11A3B1FFA45C900681B78 /* StyledMenuPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledMenuPopover.swift; sourceTree = "<group>"; };
 		5BC11A3E1FFA477400681B78 /* StyledMenuPopoverConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledMenuPopoverConfiguration.swift; sourceTree = "<group>"; };
 		5BC2CA771FFFB5BE006AC6CB /* StyledOverlayAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledOverlayAnimator.swift; sourceTree = "<group>"; };
+		5BD066E5200393D500AD6C80 /* StyledOverlayCellStyler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledOverlayCellStyler.swift; sourceTree = "<group>"; };
+		5BD066E92003954400AD6C80 /* MenuItemStyler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemStyler.swift; sourceTree = "<group>"; };
+		5BD066EC2003955600AD6C80 /* TitleItemStyler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleItemStyler.swift; sourceTree = "<group>"; };
+		5BD066EF2003956800AD6C80 /* CloseButtonStyler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButtonStyler.swift; sourceTree = "<group>"; };
 		5BE07AD21FFBB60600A0FFA2 /* StyledMenuDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledMenuDemoViewController.swift; sourceTree = "<group>"; };
 		5BE07AD41FFBB6E600A0FFA2 /* StyledMenuPopoverFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledMenuPopoverFactory.swift; sourceTree = "<group>"; };
 		69878CEF6F1C1BD129BF0106 /* Pods_StyledOverlay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StyledOverlay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -175,9 +187,10 @@
 		5B6E85E71DBB6BEE00741153 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				5B8C1CD11DBB7D2500A761C6 /* Base */,
+				5BD066E8200394F300AD6C80 /* Styling */,
 				5B0C8B4A1DE6F952007CE96D /* Layer */,
 				5B8C1CE01DBBD11300A761C6 /* Helper */,
-				5B8C1CD11DBB7D2500A761C6 /* Base */,
 				5B8C1CD21DBB7D2E00A761C6 /* Overlays */,
 			);
 			name = UI;
@@ -230,6 +243,17 @@
 				5BBF35A01FF3D07500B5CEED /* BusyViewFactory.swift */,
 			);
 			name = Helper;
+			sourceTree = "<group>";
+		};
+		5BD066E8200394F300AD6C80 /* Styling */ = {
+			isa = PBXGroup;
+			children = (
+				5BD066E5200393D500AD6C80 /* StyledOverlayCellStyler.swift */,
+				5BD066E92003954400AD6C80 /* MenuItemStyler.swift */,
+				5BD066EC2003955600AD6C80 /* TitleItemStyler.swift */,
+				5BD066EF2003956800AD6C80 /* CloseButtonStyler.swift */,
+			);
+			name = Styling;
 			sourceTree = "<group>";
 		};
 		9F5CD199B32C75F14969E06A /* Frameworks */ = {
@@ -456,6 +480,8 @@
 			files = (
 				5B6E85E51DBB6BE600741153 /* StyledBaseOverlay.swift in Sources */,
 				5BC2CA781FFFB5BE006AC6CB /* StyledOverlayAnimator.swift in Sources */,
+				5BD066E6200393D500AD6C80 /* StyledOverlayCellStyler.swift in Sources */,
+				5BD066EA2003954400AD6C80 /* MenuItemStyler.swift in Sources */,
 				5BC11A3C1FFA45C900681B78 /* StyledMenuPopover.swift in Sources */,
 				5B6E85EA1DBB6D8600741153 /* OverlayStyleAppearance.swift in Sources */,
 				5BBE1BD51FFE2D1E00AA1F79 /* NSAttributedStringExtension.swift in Sources */,
@@ -464,6 +490,8 @@
 				5B8C1CD41DBB7D6300A761C6 /* StyledLabelsOverlay.swift in Sources */,
 				5B8C1CDE1DBBD04000A761C6 /* StyledActionOverlay.swift in Sources */,
 				5B8C1CDB1DBB881200A761C6 /* UIImageExtension.swift in Sources */,
+				5BD066ED2003955600AD6C80 /* TitleItemStyler.swift in Sources */,
+				5BD066F02003956800AD6C80 /* CloseButtonStyler.swift in Sources */,
 				5B8C1CE51DBBD1AE00A761C6 /* CGRectHelper.swift in Sources */,
 				5B6E85ED1DBB795C00741153 /* StyledBase3Overlay.swift in Sources */,
 				5BE07AD51FFBB6E600A0FFA2 /* StyledMenuPopoverFactory.swift in Sources */,
@@ -482,9 +510,12 @@
 				5B8C1CE31DBBD11C00A761C6 /* ImageShapeLayerFactory.swift in Sources */,
 				5BC2CA791FFFB5BE006AC6CB /* StyledOverlayAnimator.swift in Sources */,
 				5BC11A3D1FFA45C900681B78 /* StyledMenuPopover.swift in Sources */,
+				5BD066EB2003954400AD6C80 /* MenuItemStyler.swift in Sources */,
 				5B8C1CDF1DBBD04000A761C6 /* StyledActionOverlay.swift in Sources */,
 				5B6E85D71DBB641C00741153 /* ViewController.swift in Sources */,
+				5BD066E7200393D500AD6C80 /* StyledOverlayCellStyler.swift in Sources */,
 				5BE07AD31FFBB60600A0FFA2 /* StyledMenuDemoViewController.swift in Sources */,
+				5BD066F12003956800AD6C80 /* CloseButtonStyler.swift in Sources */,
 				5BBE1BD41FFE2D1E00AA1F79 /* NSAttributedStringExtension.swift in Sources */,
 				5BBF35A21FF3D07500B5CEED /* BusyViewFactory.swift in Sources */,
 				5BC11A401FFA477400681B78 /* StyledMenuPopoverConfiguration.swift in Sources */,
@@ -492,6 +523,7 @@
 				5B6E85D51DBB641C00741153 /* AppDelegate.swift in Sources */,
 				5B6E85E61DBB6BE600741153 /* StyledBaseOverlay.swift in Sources */,
 				5B8C1CD51DBB7D6300A761C6 /* StyledLabelsOverlay.swift in Sources */,
+				5BD066EE2003955600AD6C80 /* TitleItemStyler.swift in Sources */,
 				5B6E85EB1DBB6D8600741153 /* OverlayStyleAppearance.swift in Sources */,
 				5BE07AD61FFBB6E600A0FFA2 /* StyledMenuPopoverFactory.swift in Sources */,
 			);
