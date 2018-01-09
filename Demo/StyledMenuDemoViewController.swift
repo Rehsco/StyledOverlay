@@ -85,4 +85,22 @@ class StyledMenuDemoViewController: UIViewController {
     @IBAction func showInputMenu(_ sender: Any) {
         StyledMenuPopoverFactory.showSimpleMenu(title: NSAttributedString(string: "Input Text"), subTitle: NSAttributedString(string: "Enter some text below"), items: self.demoInputItems)
     }
+    
+    @IBAction func showMenuWithoutHeader(_ sender: Any) {
+        let conf = StyledMenuPopoverConfiguration()
+        conf.showHeader = false
+        conf.menuItemSize = CGSize(width: 200, height: 40)
+        conf.displayType = .normal
+        conf.showTitleInHeader = false
+        StyledMenuPopoverFactory.showCustomMenu(title: NSAttributedString(string: "No Header"), configuration: conf, items: self.demoSimpleItems)
+    }
+    
+    @IBAction func showMenuWithIconsAndWithoutHeader(_ sender: Any) {
+        let conf = StyledMenuPopoverConfiguration()
+        conf.showHeader = false
+        conf.menuItemSize = CGSize(width: 200, height: 40)
+        conf.displayType = .normal
+        conf.showTitleInHeader = false
+        StyledMenuPopoverFactory.showCustomMenu(title: NSAttributedString(string: "With Icon, No Header"), configuration: conf, items: self.demoSimpleItems, icon: UIImage(named: "popMenuImage1")!)
+    }
 }

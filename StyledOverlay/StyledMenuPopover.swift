@@ -122,7 +122,12 @@ open class StyledMenuPopover: UIView {
             menuView.header.caption.labelFont = self.configuration.headerFont
             menuView.header.caption.labelTextColor = self.configuration.headerTextColor
             menuView.headerSize = self.configuration.headerHeight
-            menuView.header.styleColor = self.configuration.headerStyleColor
+            if self.configuration.showHeader {
+                menuView.header.styleColor = self.configuration.headerStyleColor
+            }
+            else {
+                menuView.header.styleColor = .clear
+            }
 
             menuView.footer.caption.labelTextAlignment = self.configuration.footerTextAlignment
             menuView.footer.caption.labelFont = self.configuration.footerFont
@@ -146,7 +151,7 @@ open class StyledMenuPopover: UIView {
         self.menuIcon = icon
         let rv = UIApplication.shared.keyWindow! as UIWindow
         self.backgroundColor = self.configuration.backgroundTintColor
-        self.alpha = 1
+        self.alpha = 0
         rv.addSubview(self)
         
         if self.configuration.tapOutsideViewToClose {
@@ -176,7 +181,7 @@ open class StyledMenuPopover: UIView {
         let mo = CGPoint(x: (self.frame.width - ms.width) * 0.5, y: (self.frame.height - ms.height) * 0.5)
         if let mv = self.menuView {
             mv.frame = CGRect(origin: mo, size: ms)
-            if self.configuration.showTitleInHeader {
+            if self.configuration.showTitleInHeader && self.configuration.showHeader {
                 mv.headerAttributedText = title
             }
             else if self.menuIcon != nil {
@@ -228,7 +233,7 @@ open class StyledMenuPopover: UIView {
             
             let numRows = max(1, totalCells / numRowItems)
             
-            let headerAndFooterHeight = self.configuration.headerHeight + (self.configuration.showFooter ? self.configuration.footerHeight : 0)
+            let headerAndFooterHeight = (self.configuration.showHeader || self.menuIcon != nil ? self.configuration.headerHeight : 0) + (self.configuration.showFooter ? self.configuration.footerHeight : 0)
             let totalHeight = (CGFloat(numRows) * (itemSize.height + self.getItemLineSpacing()) + (collMargins.top + collMargins.bottom) + headerAndFooterHeight + headerSize.height) - self.getItemLineSpacing() + self.getVerticalSectionInset(1)
             
             return CGSize(width: totalWidth, height: totalHeight)

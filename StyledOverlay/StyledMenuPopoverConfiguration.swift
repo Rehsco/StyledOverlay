@@ -63,7 +63,8 @@ open class StyledMenuPopoverConfiguration {
     open var closeButtonStyleColor: UIColor = .gray
 
     /// Header
-    open var detachedHeader: Bool = false
+    open var showHeader: Bool = true
+    open var detachedHeader: Bool = false // TODO
     open var headerFont: UIFont? = nil
     open var headerTextColor: UIColor? = nil
     open var headerTextAlignment: NSTextAlignment = .center
@@ -80,7 +81,7 @@ open class StyledMenuPopoverConfiguration {
 
     /// Footer
     open var showFooter: Bool = false
-    open var detachedFooter: Bool = false
+    open var detachedFooter: Bool = false // TODO
     open var footerFont: UIFont? = nil
     open var footerTextColor: UIColor? = nil
     open var footerTextAlignment: NSTextAlignment = .center
