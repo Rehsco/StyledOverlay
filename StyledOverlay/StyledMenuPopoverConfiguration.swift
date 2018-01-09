@@ -73,6 +73,7 @@ open class StyledMenuPopoverConfiguration {
 
     /// Header Icon
     open var headerIconPosition: NSTextAlignment = .center
+    open var headerIconSize: CGSize? = nil // Override, if the size should not use the icon size
     open var headerIconRelativeOffset: CGPoint = CGPoint(x: 0, y: -0.5) // x is relative to icon width, y is relative to headerHeight
     open var headerIconClipToBounds: Bool = true
     open var headerIconBackgroundColor: UIColor = .white

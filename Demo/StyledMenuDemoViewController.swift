@@ -103,4 +103,14 @@ class StyledMenuDemoViewController: UIViewController {
         conf.showTitleInHeader = false
         StyledMenuPopoverFactory.showCustomMenu(title: NSAttributedString(string: "With Icon, No Header"), configuration: conf, items: self.demoSimpleItems, icon: UIImage(named: "popMenuImage1")!)
     }
+
+    @IBAction func showMenuWithLargeIcon(_ sender: Any) {
+        let conf = StyledMenuPopoverConfiguration()
+        conf.showHeader = false
+        conf.menuItemSize = CGSize(width: 200, height: 40)
+        conf.displayType = .normal
+        conf.showTitleInHeader = false
+        conf.headerIconSize = CGSize(width: 64, height: 64)
+        StyledMenuPopoverFactory.showCustomMenu(title: NSAttributedString(string: "With Large Icon"), configuration: conf, items: self.demoSimpleItems, icon: UIImage(named: "popMenuImage1")!)
+    }
 }

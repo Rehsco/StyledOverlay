@@ -188,12 +188,15 @@ open class StyledMenuPopover: UIView {
                 mv.headerAttributedText = NSAttributedString()
             }
             if let icon = self.menuIcon {
+                let iconSize = self.configuration.headerIconSize ?? icon.size
+                mv.header.imageViewSize = iconSize
                 mv.header.imageView.image = icon
+                mv.header.imageView.contentMode = .center
                 mv.header.imageViewPosition = self.configuration.headerIconPosition
-                mv.header.imageViewOffset = CGPoint(x: self.configuration.headerIconRelativeOffset.x * icon.size.width, y: self.configuration.headerIconRelativeOffset.y * self.configuration.headerHeight)
+                mv.header.imageViewOffset = CGPoint(x: self.configuration.headerIconRelativeOffset.x * iconSize.width, y: self.configuration.headerIconRelativeOffset.y * self.configuration.headerHeight)
                 
                 mv.header.imageView.layer.masksToBounds = self.configuration.headerIconClipToBounds
-                mv.header.imageView.layer.cornerRadius = icon.size.width * 0.5
+                mv.header.imageView.layer.cornerRadius = iconSize.width * 0.5
                 mv.header.imageView.backgroundColor = self.configuration.headerIconBackgroundColor
                 mv.header.imageView.layer.borderColor = self.configuration.headerIconBorderColor.cgColor
                 mv.header.imageView.layer.borderWidth = self.configuration.headerIconBorderWidth
