@@ -61,4 +61,11 @@ extension NSAttributedString {
         nas.addAttributes(attributes, range: NSMakeRange(0, nas.length))
         return nas
     }
+    
+    convenience init(font: UIFont, color: UIColor, text: String) {
+        self.init(string: text, attributes:
+            [   NSAttributedStringKey.font : font,
+                NSAttributedStringKey.foregroundColor: color
+            ])
+    }
 }

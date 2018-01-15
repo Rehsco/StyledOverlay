@@ -32,6 +32,8 @@ import MJRFlexStyleComponents
 
 open class StyledMenuPopoverFactory {
 
+    // MARK: - Simple Menu Creations
+    
     open class func showSimpleMenu(title: NSAttributedString, subTitle: NSAttributedString? = nil, items: [FlexCollectionItem], preferredSize: CGSize = CGSize(width: 200, height: 200)) {
         DispatchQueue.main.async {
             let simpleConfig = StyledMenuPopoverConfiguration()
@@ -74,9 +76,103 @@ open class StyledMenuPopoverFactory {
         }
     }
 
-    open class func showCustomMenu(title: NSAttributedString, subTitle: NSAttributedString? = nil, configuration: StyledMenuPopoverConfiguration = StyledMenuPopoverConfiguration(), items: [FlexCollectionItem], icon: UIImage? = nil, preferredSize: CGSize = CGSize(width: 200, height: 200)) {
+    // MARK: - Convenience Menu Creations
+    
+    open class func confirmation(title: String, subTitle: String, buttonText: String, iconName: String = "helpIcon_48pt", configuration: StyledMenuPopoverConfiguration = StyledMenuPopoverConfiguration(), confirmationResult: @escaping ((Bool) -> Void)) {
+        Thread.ensureOnAsyncMainThread {
+            let image = (UIImage(named: iconName, in: Bundle(for: StyledMenuPopoverFactory.self), compatibleWith: nil) ?? UIImage(named: iconName))?.tint(configuration.headerIconTintColor)
+            let thumbnailImage = image?.resized(newSize: image?.size)
+            let popover = StyledMenuPopover(frame: UIScreen.main.bounds, configuration: configuration)
+            self.addStandardButton(popover: popover, text: buttonText, configuration: configuration, tapHandler: {
+                popover.hide()
+                confirmationResult(true)
+            })
+            self.addStandardCancelButton(popover: popover, configuration: configuration) {
+                confirmationResult(false)
+            }
+            let atitle = NSAttributedString(font: configuration.headerFont, color: configuration.headerTextColor, text: title)
+            let asubtitle = NSAttributedString(font: configuration.menuSubtitleFont, color: configuration.menuSubtitleTextColor, text: subTitle)
+            popover.show(title: atitle, subTitle: asubtitle, topLeftPoint: nil, icon: thumbnailImage)
+        }
+    }
+    
+    open class func showSettingsRequest(title: String, message: String, iconName: String = "CloseView_36pt", configuration: StyledMenuPopoverConfiguration = StyledMenuPopoverConfiguration()) {
+        Thread.ensureOnAsyncMainThread {
+            let popover = StyledMenuPopover(frame: UIScreen.main.bounds, configuration: configuration)
+            self.addStandardButton(popover: popover, text: NSLocalizedString("Open Settings", comment: ""), configuration: configuration, tapHandler: {
+                popover.hide()
+                if let url = URL(string:UIApplicationOpenSettingsURLString) {
+                    UIApplication.shared.open(url)
+                }
+            })
+            let image = (UIImage(named: iconName, in: Bundle(for: StyledMenuPopoverFactory.self), compatibleWith: nil) ?? UIImage(named: iconName))?.tint(configuration.headerIconTintColor)
+            let thumbnailImage = image?.resized(newSize: image?.size)
+            let atitle = NSAttributedString(font: configuration.headerFont, color: configuration.headerTextColor, text: title)
+            let asubtitle = NSAttributedString(font: configuration.menuSubtitleFont, color: configuration.menuSubtitleTextColor, text: message)
+            popover.show(title: atitle, subTitle: asubtitle, topLeftPoint: nil, icon: thumbnailImage)
+        }
+    }
+    
+    open class func showFailAlert(title: String, message: String, iconName: String, configuration: StyledMenuPopoverConfiguration = StyledMenuPopoverConfiguration(), okHandler: (() -> Void)? = nil) {
+        Thread.ensureOnAsyncMainThread {
+            let image = (UIImage(named: iconName, in: Bundle(for: StyledMenuPopoverFactory.self), compatibleWith: nil) ?? UIImage(named: iconName))?.tint(configuration.headerIconTintColor)
+            let thumbnailImage = image?.resized(newSize: image?.size)
+            let alertView = StyledMenuPopover(frame: UIScreen.main.bounds, configuration: configuration)
+            self.addStandardButton(popover: alertView, text: NSLocalizedString("Ok", comment: ""), configuration: configuration, tapHandler: {
+                alertView.hide()
+                okHandler?()
+            })
+            let atitle = NSAttributedString(font: configuration.headerFont, color: configuration.headerTextColor, text: title)
+            let asubtitle = NSAttributedString(font: configuration.menuSubtitleFont, color: configuration.menuSubtitleTextColor, text: message)
+            alertView.show(title: atitle, subTitle: asubtitle, topLeftPoint: nil, icon: thumbnailImage)
+        }
+    }
+    
+    open class func queryForItemName(title: String, subtitle: String, textPlaceholder: String, iconName: String, configuration: StyledMenuPopoverConfiguration = StyledMenuPopoverConfiguration(), completionHandler: @escaping ((String, Bool) -> Void)) {
+        if let image = (UIImage(named: iconName, in: Bundle(for: StyledMenuPopoverFactory.self), compatibleWith: nil) ?? UIImage(named: iconName))?.tint(configuration.headerIconTintColor) {
+            self.queryForItemName(title: title, subtitle: subtitle, textPlaceholder: textPlaceholder, image: image, configuration: configuration, completionHandler: completionHandler)
+        }
+        else {
+            NSLog("You did not provide a correct name: \(iconName)")
+        }
+    }
+    
+    open class func queryForItemName(title: String, subtitle: String, textPlaceholder: String, image: UIImage, configuration: StyledMenuPopoverConfiguration = StyledMenuPopoverConfiguration(), completionHandler: @escaping ((String, Bool) -> Void)) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .milliseconds(50)) {
+            let thumbnailImage = image.resized(newSize: configuration.headerIconSize)
+            let popover = StyledMenuPopover(frame: UIScreen.main.bounds, configuration: configuration)
+            
+            let imenu = FlexTextFieldCollectionItem(reference: "textInput", text: NSAttributedString(string: ""))
+            imenu.placeholderText = NSAttributedString(string: NSLocalizedString("Name", comment: ""))
+            imenu.textFieldShouldReturn = {
+                _ in
+                return true
+            }
+            imenu.textIsMutable = true
+            popover.addMenuItem(imenu)
+            
+            self.addStandardButton(popover: popover, text: NSLocalizedString("Done", comment: ""), configuration: configuration, tapHandler: {
+                if let text = imenu.text?.string, text != "" {
+                    completionHandler(text, true)
+                }
+                else {
+                    completionHandler(textPlaceholder, true)
+                }
+            })
+            addStandardCancelButton(popover: popover, configuration: configuration) {
+                completionHandler("", false)
+            }
+            let atitle = NSAttributedString(font: configuration.headerFont, color: configuration.headerTextColor, text: title)
+            let asubtitle = NSAttributedString(font: configuration.menuSubtitleFont, color: configuration.menuSubtitleTextColor, text: subtitle)
+            popover.show(title: atitle, subTitle: asubtitle, topLeftPoint: nil, icon: thumbnailImage)
+        }
+    }
+    
+    // MARK: - Full Custom Menu Creation
+    
+    open class func showCustomMenu(title: NSAttributedString, subTitle: NSAttributedString? = nil, configuration: StyledMenuPopoverConfiguration = StyledMenuPopoverConfiguration(), items: [FlexCollectionItem], icon: UIImage? = nil, preferredSize: CGSize = CGSize(width: 200, height: 200), inFrame frame: CGRect = UIScreen.main.bounds) {
         DispatchQueue.main.async {
-            let menu = StyledMenuPopover(frame: UIScreen.main.bounds, configuration: configuration)
+            let menu = StyledMenuPopover(frame: frame, configuration: configuration)
             menu.preferredSize = preferredSize
             for mi in items {
                 menu.addMenuItem(mi)
@@ -85,4 +181,28 @@ open class StyledMenuPopoverFactory {
         }
     }
     
+    // MARK: - Helper for Buttons
+    
+    open class func addStandardButton(popover: StyledMenuPopover, text: String, configuration: StyledMenuPopoverConfiguration, tapHandler: (() -> Void)? = nil) {
+        let abt = NSAttributedString(font: configuration.menuItemFont, color: configuration.menuItemTextColor, text: text)
+        let button = FlexBaseCollectionItem(reference: UUID().uuidString, text: abt)
+        button.itemSelectionActionHandler = {
+            if tapHandler != nil {
+                tapHandler?()
+            }
+            popover.hide()
+        }
+        popover.addMenuItem(button)
+    }
+    
+    open class func addStandardCancelButton(popover: StyledMenuPopover, configuration: StyledMenuPopoverConfiguration, tapHandler: (() -> Void)? = nil) {
+        let abt = NSAttributedString(font: configuration.closeButtonFont, color: configuration.closeButtonTextColor, text: "Cancel")
+        let closeButton = FlexBaseCollectionItem(reference: UUID().uuidString, text: abt)
+        closeButton.itemSelectionActionHandler = {
+            if tapHandler != nil {
+                tapHandler?()
+            }
+            popover.hide()
+        }
+    }
 }

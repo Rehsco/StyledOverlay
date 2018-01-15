@@ -133,8 +133,8 @@ open class BusyViewFactory {
     
     open class func updateProgress(progress: Float, upperLabel: String, lowerLabel: String?) {
         DispatchQueue.main.async {
-            let upperAS = self.applyFontAndColorToString(self.topLabelFont ?? UIFont.systemFont(ofSize: 16), color: self.topLabelTextColor, text: upperLabel)
-            let lowerAS = self.applyFontAndColorToString(self.bottomLabelFont ?? UIFont.systemFont(ofSize: 14), color: self.bottomLabelTextColor, text: lowerLabel ?? "\(progress)%")
+            let upperAS = NSAttributedString(font: self.topLabelFont ?? UIFont.systemFont(ofSize: 16), color: self.topLabelTextColor, text: upperLabel)
+            let lowerAS = NSAttributedString(font: self.bottomLabelFont ?? UIFont.systemFont(ofSize: 14), color: self.bottomLabelTextColor, text: lowerLabel ?? "\(progress)%")
             self.progressBusyView?.setLabels(upperAS, lowerString: lowerAS)
             self.progressBusyView?.actionType = .progressRing(progress: progress)
         }
@@ -155,13 +155,5 @@ open class BusyViewFactory {
                 completionHandler?()
             })
         }
-    }
-    
-    static func applyFontAndColorToString(_ font: UIFont, color: UIColor, text: String) -> NSAttributedString {
-        let attributedString = NSAttributedString(string: text, attributes:
-            [   NSAttributedStringKey.font : font,
-                NSAttributedStringKey.foregroundColor: color
-            ])
-        return attributedString
     }
 }

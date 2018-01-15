@@ -65,8 +65,8 @@ open class StyledMenuPopoverConfiguration {
     /// Header
     open var showHeader: Bool = true
     open var detachedHeader: Bool = false // TODO
-    open var headerFont: UIFont? = nil
-    open var headerTextColor: UIColor? = nil
+    open var headerFont: UIFont = UIFont.systemFont(ofSize: 18)
+    open var headerTextColor: UIColor = .black
     open var headerTextAlignment: NSTextAlignment = .center
     open var headerStyleColor: UIColor = .lightGray
     open var headerHeight: CGFloat = 32
@@ -95,5 +95,14 @@ open class StyledMenuPopoverConfiguration {
     open var menuItemStyle: FlexShapeStyle = FlexShapeStyle(style: .roundedFixed(cornerRadius: 5))
     open var menuItemStyleColor: UIColor = .lightGray
     open var menuItemSectionMargins: UIEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 5)
+
+    /// Fonts and Colors used in Popover factory
+    open var menuItemFont: UIFont = UIFont.systemFont(ofSize: 14)
+    open var closeButtonFont: UIFont = UIFont.systemFont(ofSize: 14)
+    open var menuItemTextColor: UIColor = .white
+    open var closeButtonTextColor: UIColor = .white
+    open var headerIconTintColor: UIColor = .gray
+    open var menuSubtitleFont: UIFont = UIFont.systemFont(ofSize: 12)
+    open var menuSubtitleTextColor: UIColor = .black
 
 }
