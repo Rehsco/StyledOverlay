@@ -78,7 +78,7 @@ open class StyledMenuPopoverFactory {
 
     // MARK: - Convenience Menu Creations
     
-    open class func confirmation(title: String, subTitle: String, buttonText: String, iconName: String = "helpIcon_48pt", configuration: StyledMenuPopoverConfiguration = StyledMenuPopoverConfiguration(), confirmationResult: @escaping ((Bool) -> Void)) {
+    open class func confirmation(title: String, subTitle: String, buttonText: String, iconName: String = "helpIcon_48pt", configuration: StyledMenuPopoverConfiguration = StyledMenuPopoverFactory.defaultConvenienceMenuConfiguration(), confirmationResult: @escaping ((Bool) -> Void)) {
         Thread.ensureOnAsyncMainThread {
             let image = (UIImage(named: iconName, in: Bundle(for: StyledMenuPopoverFactory.self), compatibleWith: nil) ?? UIImage(named: iconName))?.tint(configuration.headerIconTintColor)
             let thumbnailImage = image?.resized(newSize: image?.size)
@@ -96,7 +96,7 @@ open class StyledMenuPopoverFactory {
         }
     }
     
-    open class func showSettingsRequest(title: String, message: String, iconName: String = "CloseView_36pt", configuration: StyledMenuPopoverConfiguration = StyledMenuPopoverConfiguration()) {
+    open class func showSettingsRequest(title: String, message: String, iconName: String = "CloseView_36pt", configuration: StyledMenuPopoverConfiguration = StyledMenuPopoverFactory.defaultConvenienceMenuConfiguration()) {
         Thread.ensureOnAsyncMainThread {
             let popover = StyledMenuPopover(frame: UIScreen.main.bounds, configuration: configuration)
             self.addStandardButton(popover: popover, text: NSLocalizedString("Open Settings", comment: ""), configuration: configuration, tapHandler: {
@@ -113,7 +113,7 @@ open class StyledMenuPopoverFactory {
         }
     }
     
-    open class func showFailAlert(title: String, message: String, iconName: String, configuration: StyledMenuPopoverConfiguration = StyledMenuPopoverConfiguration(), okHandler: (() -> Void)? = nil) {
+    open class func showFailAlert(title: String, message: String, iconName: String, configuration: StyledMenuPopoverConfiguration = StyledMenuPopoverFactory.defaultConvenienceMenuConfiguration(), okHandler: (() -> Void)? = nil) {
         Thread.ensureOnAsyncMainThread {
             let image = (UIImage(named: iconName, in: Bundle(for: StyledMenuPopoverFactory.self), compatibleWith: nil) ?? UIImage(named: iconName))?.tint(configuration.headerIconTintColor)
             let thumbnailImage = image?.resized(newSize: image?.size)
@@ -128,7 +128,7 @@ open class StyledMenuPopoverFactory {
         }
     }
     
-    open class func queryForItemName(title: String, subtitle: String, textPlaceholder: String, iconName: String, configuration: StyledMenuPopoverConfiguration = StyledMenuPopoverConfiguration(), completionHandler: @escaping ((String, Bool) -> Void)) {
+    open class func queryForItemName(title: String, subtitle: String, textPlaceholder: String, iconName: String, configuration: StyledMenuPopoverConfiguration = StyledMenuPopoverFactory.defaultConvenienceMenuConfiguration(), completionHandler: @escaping ((String, Bool) -> Void)) {
         if let image = (UIImage(named: iconName, in: Bundle(for: StyledMenuPopoverFactory.self), compatibleWith: nil) ?? UIImage(named: iconName))?.tint(configuration.headerIconTintColor) {
             self.queryForItemName(title: title, subtitle: subtitle, textPlaceholder: textPlaceholder, image: image, configuration: configuration, completionHandler: completionHandler)
         }
@@ -137,7 +137,7 @@ open class StyledMenuPopoverFactory {
         }
     }
     
-    open class func queryForItemName(title: String, subtitle: String, textPlaceholder: String, image: UIImage, configuration: StyledMenuPopoverConfiguration = StyledMenuPopoverConfiguration(), completionHandler: @escaping ((String, Bool) -> Void)) {
+    open class func queryForItemName(title: String, subtitle: String, textPlaceholder: String, image: UIImage, configuration: StyledMenuPopoverConfiguration = StyledMenuPopoverFactory.defaultConvenienceMenuConfiguration(), completionHandler: @escaping ((String, Bool) -> Void)) {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .milliseconds(50)) {
             let thumbnailImage = image.resized(newSize: configuration.headerIconSize)
             let popover = StyledMenuPopover(frame: UIScreen.main.bounds, configuration: configuration)
@@ -182,6 +182,24 @@ open class StyledMenuPopoverFactory {
     }
     
     // MARK: - Helper for Buttons
+
+    open class func defaultConvenienceMenuConfiguration() -> StyledMenuPopoverConfiguration {
+        let mc = StyledMenuPopoverConfiguration()
+        mc.menuItemSize = CGSize(width: 200, height: 40)
+        mc.displayType = .normal
+        mc.showTitleInHeader = false
+        mc.headerStyleColor = .clear
+        mc.styleColor = .white
+        mc.closeButtonTextColor = .white
+        mc.headerIconBorderColor = .white
+        mc.closeButtonEnabled = false
+        mc.headerIconBackgroundColor = .lightGray
+        mc.headerIconTintColor = .black
+        mc.headerIconSize = CGSize(width: 56, height: 56)
+        return mc
+    }
+    
+    // MARK: - Helper for Buttons
     
     open class func addStandardButton(popover: StyledMenuPopover, text: String, configuration: StyledMenuPopoverConfiguration, tapHandler: (() -> Void)? = nil) {
         let abt = NSAttributedString(font: configuration.menuItemFont, color: configuration.menuItemTextColor, text: text)
@@ -204,5 +222,6 @@ open class StyledMenuPopoverFactory {
             }
             popover.hide()
         }
+        popover.addMenuItem(closeButton)
     }
 }

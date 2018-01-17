@@ -113,4 +113,14 @@ class StyledMenuDemoViewController: UIViewController {
         conf.headerIconSize = CGSize(width: 64, height: 64)
         StyledMenuPopoverFactory.showCustomMenu(title: NSAttributedString(string: "With Large Icon"), configuration: conf, items: self.demoSimpleItems, icon: UIImage(named: "popMenuImage1")!)
     }
+    @IBAction func confirmMenu(_ sender: Any) {
+        StyledMenuPopoverFactory.confirmation(title: "Confirm", subTitle: "Please confirm this", buttonText: "Confirm") { confirmed in
+            if confirmed {
+                NSLog("You confirmed!")
+            }
+            else {
+                NSLog("You did not confirm!")
+            }
+        }
+    }
 }
