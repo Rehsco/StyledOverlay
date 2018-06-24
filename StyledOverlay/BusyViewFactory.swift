@@ -48,14 +48,14 @@ open class BusyViewFactory {
         }
         self.isBusy = true
         
-        let dView: UIView
-        if view == nil {
-            dView = UIApplication.shared.keyWindow!
-        }
-        else {
-            dView = view!
-        }
         DispatchQueue.main.async {
+            let dView: UIView
+            if view == nil {
+                dView = UIApplication.shared.keyWindow!
+            }
+            else {
+                dView = view!
+            }
             let infoWidth:CGFloat = 100
             let infoHeight:CGFloat = 100
             let origin = CGPoint(x: (dView.bounds.width - infoWidth) * 0.5, y: (dView.bounds.height - infoHeight) * 0.5)
@@ -104,14 +104,14 @@ open class BusyViewFactory {
         }
         self.isProgressing = true
         
-        let dView: UIView
-        if view == nil {
-            dView = UIApplication.shared.keyWindow!
-        }
-        else {
-            dView = view!
-        }
         DispatchQueue.main.async {
+            let dView: UIView
+            if view == nil {
+                dView = UIApplication.shared.keyWindow!
+            }
+            else {
+                dView = view!
+            }
             let infoWidth:CGFloat = 220
             let infoHeight:CGFloat = 150
             let origin = CGPoint(x: (dView.bounds.width - infoWidth) * 0.5, y: (dView.bounds.height - infoHeight) * 0.5)
