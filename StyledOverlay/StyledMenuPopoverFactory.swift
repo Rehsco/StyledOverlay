@@ -101,7 +101,7 @@ open class StyledMenuPopoverFactory {
             let popover = StyledMenuPopover(frame: UIScreen.main.bounds, configuration: configuration)
             self.addStandardButton(popover: popover, text: NSLocalizedString("Open Settings", comment: ""), configuration: configuration, tapHandler: {
                 popover.hide()
-                if let url = URL(string:UIApplicationOpenSettingsURLString) {
+                if let url = URL(string:UIApplication.openSettingsURLString) {
                     UIApplication.shared.open(url)
                 }
             })
