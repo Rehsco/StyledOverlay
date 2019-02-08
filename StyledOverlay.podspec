@@ -1,11 +1,12 @@
 Pod::Spec.new do |s|
   s.name             = 'StyledOverlay'
-  s.version          = '3.4.2'
+  s.version          = '3.4.3'
   s.license          = 'MIT'
   s.summary          = 'StyledOverlay is a UIView with styling options and preset action overlays'
   s.homepage         = 'https://github.com/Rehsco/StyledOverlay.git'
   s.authors          = { 'Martin Jacob Rehder' => 'gitrepocon01@rehsco.com' }
   s.source           = { :git => 'https://github.com/Rehsco/StyledOverlay.git', :tag => s.version }
+  s.swift_version    = '4.2'
   s.ios.deployment_target = '10.0'
 
   s.dependency 'StyledLabel'
