@@ -21,6 +21,8 @@
 		5B6E85EB1DBB6D8600741153 /* OverlayStyleAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6E85E91DBB6D8600741153 /* OverlayStyleAppearance.swift */; };
 		5B6E85ED1DBB795C00741153 /* StyledBase3Overlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6E85EC1DBB795C00741153 /* StyledBase3Overlay.swift */; };
 		5B6E85EE1DBB795C00741153 /* StyledBase3Overlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6E85EC1DBB795C00741153 /* StyledBase3Overlay.swift */; };
+		5B88E998220DB7AC002238CC /* StyledMenuCustomPopoverBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B88E997220DB7AC002238CC /* StyledMenuCustomPopoverBuilder.swift */; };
+		5B88E999220DB7AC002238CC /* StyledMenuCustomPopoverBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B88E997220DB7AC002238CC /* StyledMenuCustomPopoverBuilder.swift */; };
 		5B8C1CD41DBB7D6300A761C6 /* StyledLabelsOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8C1CD31DBB7D6300A761C6 /* StyledLabelsOverlay.swift */; };
 		5B8C1CD51DBB7D6300A761C6 /* StyledLabelsOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8C1CD31DBB7D6300A761C6 /* StyledLabelsOverlay.swift */; };
 		5B8C1CD71DBB857800A761C6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B8C1CD61DBB857800A761C6 /* Images.xcassets */; };
@@ -74,6 +76,7 @@
 		5B6E85E41DBB6BE600741153 /* StyledBaseOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyledBaseOverlay.swift; sourceTree = "<group>"; };
 		5B6E85E91DBB6D8600741153 /* OverlayStyleAppearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayStyleAppearance.swift; sourceTree = "<group>"; };
 		5B6E85EC1DBB795C00741153 /* StyledBase3Overlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyledBase3Overlay.swift; sourceTree = "<group>"; };
+		5B88E997220DB7AC002238CC /* StyledMenuCustomPopoverBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyledMenuCustomPopoverBuilder.swift; sourceTree = "<group>"; };
 		5B8C1CD31DBB7D6300A761C6 /* StyledLabelsOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyledLabelsOverlay.swift; sourceTree = "<group>"; };
 		5B8C1CD61DBB857800A761C6 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		5B8C1CDA1DBB881200A761C6 /* UIImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
@@ -222,6 +225,7 @@
 				5B8C1CDD1DBBD04000A761C6 /* StyledActionOverlay.swift */,
 				5BC11A3B1FFA45C900681B78 /* StyledMenuPopover.swift */,
 				5BE07AD41FFBB6E600A0FFA2 /* StyledMenuPopoverFactory.swift */,
+				5B88E997220DB7AC002238CC /* StyledMenuCustomPopoverBuilder.swift */,
 			);
 			name = Overlays;
 			sourceTree = "<group>";
@@ -460,6 +464,7 @@
 				5B8C1CDB1DBB881200A761C6 /* UIImageExtension.swift in Sources */,
 				5BD066ED2003955600AD6C80 /* TitleItemStyler.swift in Sources */,
 				5BD066F02003956800AD6C80 /* CloseButtonStyler.swift in Sources */,
+				5B88E998220DB7AC002238CC /* StyledMenuCustomPopoverBuilder.swift in Sources */,
 				5B8C1CE51DBBD1AE00A761C6 /* CGRectHelper.swift in Sources */,
 				5B6E85ED1DBB795C00741153 /* StyledBase3Overlay.swift in Sources */,
 				5BE07AD51FFBB6E600A0FFA2 /* StyledMenuPopoverFactory.swift in Sources */,
@@ -482,6 +487,7 @@
 				5B8C1CDF1DBBD04000A761C6 /* StyledActionOverlay.swift in Sources */,
 				5B6E85D71DBB641C00741153 /* ViewController.swift in Sources */,
 				5BD066E7200393D500AD6C80 /* StyledOverlayCellStyler.swift in Sources */,
+				5B88E999220DB7AC002238CC /* StyledMenuCustomPopoverBuilder.swift in Sources */,
 				5BE07AD31FFBB60600A0FFA2 /* StyledMenuDemoViewController.swift in Sources */,
 				5BD066F12003956800AD6C80 /* CloseButtonStyler.swift in Sources */,
 				5BBE1BD41FFE2D1E00AA1F79 /* NSAttributedStringExtension.swift in Sources */,
