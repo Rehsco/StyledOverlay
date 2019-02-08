@@ -113,7 +113,7 @@ open class StyledMenuPopoverFactory {
         }
     }
     
-    open class func showFailAlert(title: String, message: String, iconName: String, configuration: StyledMenuPopoverConfiguration = StyledMenuPopoverFactory.defaultConvenienceMenuConfiguration(), okHandler: (() -> Void)? = nil) {
+    open class func showFailAlert(title: String, message: String, iconName: String = "InfoAlertIcon_48pt", configuration: StyledMenuPopoverConfiguration = StyledMenuPopoverFactory.defaultConvenienceMenuConfiguration(), okHandler: (() -> Void)? = nil) {
         Thread.ensureOnAsyncMainThread {
             let image = (UIImage(named: iconName, in: Bundle(for: StyledMenuPopoverFactory.self), compatibleWith: nil) ?? UIImage(named: iconName))?.tint(configuration.headerIconTintColor)
             let thumbnailImage = image?.resized(newSize: image?.size)
