@@ -145,6 +145,12 @@ open class StyledMenuPopover: UIView {
         self.menuItems.append(item)
     }
     
+    open func show(title: String, subTitle: String?, topLeftPoint: CGPoint? = nil, icon: UIImage? = nil) {
+        let styledTitle = NSAttributedString(font: self.configuration.headerFont, color: self.configuration.headerTextColor, text: title)
+        let styledSubTitle = subTitle != nil ? NSAttributedString(font: self.configuration.menuSubtitleFont, color: self.configuration.menuSubtitleTextColor, text: subTitle!) : nil
+        show(title: styledTitle, subTitle: styledSubTitle, topLeftPoint: topLeftPoint, icon: icon)
+    }
+    
     open func show(title: NSAttributedString, subTitle: NSAttributedString?, topLeftPoint: CGPoint? = nil, icon: UIImage? = nil) {
         self.title = title
         self.subTitle = subTitle
@@ -177,10 +183,10 @@ open class StyledMenuPopover: UIView {
     // MARK: - Layout
     
     open func layoutMenuView() {
-        let ms = self.calculateMenuSize()
-        let mo = CGPoint(x: (self.frame.width - ms.width) * 0.5, y: (self.frame.height - ms.height) * 0.5)
+        let menuSize = self.calculateMenuSize()
+        let menuOriginPoint = CGPoint(x: (self.frame.width - menuSize.width) * 0.5, y: (self.frame.height - menuSize.height) * 0.5)
         if let mv = self.menuView {
-            mv.frame = CGRect(origin: mo, size: ms)
+            mv.frame = CGRect(origin: menuOriginPoint, size: menuSize)
             if self.configuration.showTitleInHeader && self.configuration.showHeader {
                 mv.headerAttributedText = title
             }
@@ -289,63 +295,69 @@ open class StyledMenuPopover: UIView {
     
     open func populateMenu(completion: @escaping (()->Void)) {
         DispatchQueue.main.async {
-            if let mv = self.menuView {
-                mv.removeAllSections()
+            if let menuView = self.menuView {
+                menuView.removeAllSections()
 
-                self.headerSectionRef = mv.addSection()
-                if let hsr = self.headerSectionRef {
-                    if let subTitle = self.subTitle {
-                        let nas = subTitle.applyParagraphStyle(textAlignment: self.configuration.menuSubTitleTextAlignment)
-                        let sti = FlexTextViewCollectionItem(reference: UUID().uuidString, text: nas)
-                        sti.textTitle = self.configuration.showTitleInHeader ? nil : self.title
-                        let collMargins = mv.viewMargins
-                        let width = self.preferredSize.width - (collMargins.left + collMargins.top + mv.itemCollectionView.contentInset.left + mv.itemCollectionView.contentInset.right)
-                        let height = nas.heightWithConstrainedWidth(width) + (self.configuration.showTitleInHeader ? 0 : self.configuration.titleHeightWhenNotInHeader)
-                        sti.preferredCellSize = CGSize(width: width, height: height + 10)
-                        self.assignDefaultMenuItemSettings(sti)
-                        sti.autodetectRTLTextAlignment = false
-                        sti.cellStyler = self.titleItemStyler
-                        mv.addItem(hsr, item: sti)
-                        self.headerItem = sti
-                    }
-                    else if !self.configuration.showTitleInHeader {
-                        let sti = FlexTextViewCollectionItem(reference: UUID().uuidString, text: NSAttributedString())
-                        sti.textTitle = self.title
-                        let collMargins = mv.viewMargins
-                        let width = self.preferredSize.width - (collMargins.left + collMargins.top + mv.itemCollectionView.contentInset.left + mv.itemCollectionView.contentInset.right)
-                        let height = self.title.heightWithConstrainedWidth(width)
-                        sti.preferredCellSize = CGSize(width: width, height: height + 10)
-                        self.assignDefaultMenuItemSettings(sti)
-                        sti.autodetectRTLTextAlignment = false
-                        sti.cellStyler = self.titleItemStyler
-                        mv.addItem(hsr, item: sti)
-                        self.headerItem = sti
-                    }
+                self.headerSectionRef = menuView.addSection()
+                if let headerSectionRef = self.headerSectionRef, let topCellItemWithTitle = self.createTopCellItemWithTitle() {
+                    menuView.addItem(headerSectionRef, item: topCellItemWithTitle)
+                    self.headerItem = topCellItemWithTitle
                 }
 
-                self.itemSectionRef = mv.addSection(nil, height: nil, insets: self.configuration.menuItemSectionMargins)
-                if let msr = self.itemSectionRef {
+                self.itemSectionRef = menuView.addSection(nil, height: nil, insets: self.configuration.menuItemSectionMargins)
+                if let itemSectionRef = self.itemSectionRef {
                     for mi in self.menuItems {
                         self.assignDefaultMenuItemSettings(mi)
                         mi.cellStyler = self.menuItemStyler
-                        mv.addItem(msr, item: mi)
+                        menuView.addItem(itemSectionRef, item: mi)
                     }
                     
                     if self.configuration.closeButtonEnabled {
-                        let closeMI = FlexBaseCollectionItem(reference: UUID().uuidString, text: self.configuration.closeButtonText)
-                        closeMI.itemSelectionActionHandler = {
-                            self.hide()
-                        }
-                        self.assignDefaultMenuItemSettings(closeMI)
-                        closeMI.cellStyler = self.closeButtonStyler
-                        mv.addItem(msr, item: closeMI)
+                        let closeMI = self.createCloseButtonMenuItem()
+                        menuView.addItem(itemSectionRef, item: closeMI)
                     }
                 }
 
-                mv.itemCollectionView.reloadData()
+                menuView.itemCollectionView.reloadData()
                 completion()
             }
         }
+    }
+    
+    private func createCloseButtonMenuItem() -> FlexBaseCollectionItem {
+        let closeMI = FlexBaseCollectionItem(reference: UUID().uuidString, text: self.configuration.closeButtonText)
+        closeMI.itemSelectionActionHandler = {
+            self.hide()
+        }
+        self.assignDefaultMenuItemSettings(closeMI)
+        closeMI.cellStyler = self.closeButtonStyler
+        return closeMI
+    }
+    
+    private func createTopCellItemWithTitle() -> FlexTextViewCollectionItem? {
+        let width = self.preferredSize.width
+        
+        var topCellItemWithTitle: FlexTextViewCollectionItem?
+        var topCellHeight: CGFloat = 0
+        if let subTitle = self.subTitle {
+            let styledSubTitle = subTitle.applyParagraphStyle(textAlignment: self.configuration.menuSubTitleTextAlignment)
+            topCellItemWithTitle = FlexTextViewCollectionItem(reference: UUID().uuidString, text: styledSubTitle)
+            topCellItemWithTitle?.textTitle = self.configuration.showTitleInHeader ? nil : self.title
+            topCellHeight = styledSubTitle.heightWithConstrainedWidth(width) + (self.configuration.showTitleInHeader ? 0 : self.configuration.titleHeightWhenNotInHeader)
+        }
+        else if !self.configuration.showTitleInHeader {
+            topCellItemWithTitle = FlexTextViewCollectionItem(reference: UUID().uuidString, text: NSAttributedString())
+            topCellItemWithTitle?.textTitle = self.title
+            topCellHeight = max(self.title.heightWithConstrainedWidth(width), self.configuration.titleHeightWhenNotInHeader)
+        }
+        
+        if let topCellItemWithTitle = topCellItemWithTitle {
+            topCellItemWithTitle.preferredCellSize = CGSize(width: width, height: topCellHeight + 10)
+            self.assignDefaultMenuItemSettings(topCellItemWithTitle)
+            topCellItemWithTitle.autodetectRTLTextAlignment = false
+            topCellItemWithTitle.cellStyler = self.titleItemStyler
+        }
+        return topCellItemWithTitle
     }
     
     open func assignDefaultMenuItemSettings(_ menuItem: FlexCollectionItem) {

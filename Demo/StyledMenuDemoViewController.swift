@@ -67,23 +67,23 @@ class StyledMenuDemoViewController: UIViewController {
     }
     
     @IBAction func showSimpleMenu(_ sender: Any) {
-        StyledMenuPopoverFactory.showSimpleMenu(title: NSAttributedString(string: "Simple Menu"), subTitle: NSAttributedString(string: "Select any of the following options (Demo only)\nNew line just before!"), items: self.demoSimpleItems)
+        StyledMenuPopoverFactory.showSimpleMenu(title: "Simple Menu", subTitle: "Select any of the following options (Demo only)\nNew line just before!", items: self.demoSimpleItems)
     }
 
     @IBAction func showMenuWithIcon(_ sender: Any) {
-        StyledMenuPopoverFactory.showMenuWithIcon(title: NSAttributedString(string: "Menu With Icon"), subTitle: NSAttributedString(string: "Select any of the following options (Demo only)\nNew line just before!"), items: self.demoSimpleItems, icon: UIImage(named: "popMenuImage1")!)
+        StyledMenuPopoverFactory.showMenuWithIcon(title: "Menu With Icon", subTitle: "Select any of the following options (Demo only)\nNew line just before!", items: self.demoSimpleItems, icon: UIImage(named: "popMenuImage1")!)
     }
     
     @IBAction func showMenuWithoutDetail(_ sender: Any) {
-        StyledMenuPopoverFactory.showSimpleMenu(title: NSAttributedString(string: "No Details"), items: self.demoSimpleItems)
+        StyledMenuPopoverFactory.showSimpleMenu(title: "No Details", items: self.demoSimpleItems)
     }
     
     @IBAction func showIconMenu(_ sender: Any) {
-        StyledMenuPopoverFactory.showIconMenu(title: NSAttributedString(string: "Icon"), items: self.demoIconItems, preferredSize: CGSize(width: 320, height: 200))
+        StyledMenuPopoverFactory.showIconMenu(title: "Icon", items: self.demoIconItems, preferredSize: CGSize(width: 320, height: 200))
     }
     
     @IBAction func showInputMenu(_ sender: Any) {
-        StyledMenuPopoverFactory.showSimpleMenu(title: NSAttributedString(string: "Input Text"), subTitle: NSAttributedString(string: "Enter some text below"), items: self.demoInputItems)
+        StyledMenuPopoverFactory.showSimpleMenu(title: "Input Text", subTitle: "Enter some text below", items: self.demoInputItems)
     }
     
     @IBAction func showMenuWithoutHeader(_ sender: Any) {
@@ -92,7 +92,7 @@ class StyledMenuDemoViewController: UIViewController {
         conf.menuItemSize = CGSize(width: 200, height: 40)
         conf.displayType = .normal
         conf.showTitleInHeader = false
-        StyledMenuPopoverFactory.showCustomMenu(title: NSAttributedString(string: "No Header"), configuration: conf, items: self.demoSimpleItems)
+        StyledMenuPopoverFactory.showCustomMenu(title: "No Header", configuration: conf, items: self.demoSimpleItems)
     }
     
     @IBAction func showMenuWithIconsAndWithoutHeader(_ sender: Any) {
@@ -101,7 +101,7 @@ class StyledMenuDemoViewController: UIViewController {
         conf.menuItemSize = CGSize(width: 200, height: 40)
         conf.displayType = .normal
         conf.showTitleInHeader = false
-        StyledMenuPopoverFactory.showCustomMenu(title: NSAttributedString(string: "With Icon, No Header"), configuration: conf, items: self.demoSimpleItems, icon: UIImage(named: "popMenuImage1")!)
+        StyledMenuPopoverFactory.showCustomMenu(title: "With Icon, No Header", configuration: conf, items: self.demoSimpleItems, icon: UIImage(named: "popMenuImage1")!)
     }
 
     @IBAction func showMenuWithLargeIcon(_ sender: Any) {
@@ -111,7 +111,7 @@ class StyledMenuDemoViewController: UIViewController {
         conf.displayType = .normal
         conf.showTitleInHeader = false
         conf.headerIconSize = CGSize(width: 64, height: 64)
-        StyledMenuPopoverFactory.showCustomMenu(title: NSAttributedString(string: "With Large Icon"), configuration: conf, items: self.demoSimpleItems, icon: UIImage(named: "popMenuImage1")!)
+        StyledMenuPopoverFactory.showCustomMenu(title: "With Large Icon", configuration: conf, items: self.demoSimpleItems, icon: UIImage(named: "popMenuImage1")!)
     }
     @IBAction func confirmMenu(_ sender: Any) {
         StyledMenuPopoverFactory.confirmation(title: "Confirm", subTitle: "Please confirm this", buttonText: "Confirm") { confirmed in

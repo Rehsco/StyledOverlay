@@ -34,7 +34,7 @@ open class StyledMenuPopoverFactory {
 
     // MARK: - Simple Menu Creations
     
-    open class func showSimpleMenu(title: NSAttributedString, subTitle: NSAttributedString? = nil, items: [FlexCollectionItem], preferredSize: CGSize = CGSize(width: 200, height: 200)) {
+    open class func showSimpleMenu(title: String, subTitle: String? = nil, items: [FlexCollectionItem], preferredSize: CGSize = CGSize(width: 200, height: 200)) {
         DispatchQueue.main.async {
             let simpleConfig = StyledMenuPopoverConfiguration()
             simpleConfig.menuItemSize = CGSize(width: 200, height: 40)
@@ -48,7 +48,7 @@ open class StyledMenuPopoverFactory {
         }
     }
     
-    open class func showMenuWithIcon(title: NSAttributedString, subTitle: NSAttributedString? = nil, items: [FlexCollectionItem], icon: UIImage, preferredSize: CGSize = CGSize(width: 200, height: 200)) {
+    open class func showMenuWithIcon(title: String, subTitle: String? = nil, items: [FlexCollectionItem], icon: UIImage, preferredSize: CGSize = CGSize(width: 200, height: 200)) {
         DispatchQueue.main.async {
             let simpleConfig = StyledMenuPopoverConfiguration()
             simpleConfig.menuItemSize = CGSize(width: 200, height: 40)
@@ -63,7 +63,7 @@ open class StyledMenuPopoverFactory {
         }
     }
 
-    open class func showIconMenu(title: NSAttributedString, subTitle: NSAttributedString? = nil, items: [FlexCollectionItem], preferredSize: CGSize = CGSize(width: 200, height: 200)) {
+    open class func showIconMenu(title: String, subTitle: String? = nil, items: [FlexCollectionItem], preferredSize: CGSize = CGSize(width: 200, height: 200)) {
         DispatchQueue.main.async {
             let simpleConfig = StyledMenuPopoverConfiguration()
             simpleConfig.closeButtonEnabled = false
@@ -170,7 +170,7 @@ open class StyledMenuPopoverFactory {
     
     // MARK: - Full Custom Menu Creation
     
-    open class func showCustomMenu(title: NSAttributedString, subTitle: NSAttributedString? = nil, configuration: StyledMenuPopoverConfiguration = StyledMenuPopoverConfiguration(), items: [FlexCollectionItem], icon: UIImage? = nil, preferredSize: CGSize = CGSize(width: 200, height: 200), inFrame frame: CGRect = UIScreen.main.bounds) {
+    open class func showCustomMenu(title: String, subTitle: String? = nil, configuration: StyledMenuPopoverConfiguration = StyledMenuPopoverConfiguration(), items: [FlexCollectionItem], icon: UIImage? = nil, preferredSize: CGSize = CGSize(width: 200, height: 200), inFrame frame: CGRect = UIScreen.main.bounds) {
         DispatchQueue.main.async {
             let menu = StyledMenuPopover(frame: frame, configuration: configuration)
             menu.preferredSize = preferredSize
