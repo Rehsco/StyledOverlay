@@ -23,16 +23,19 @@ open class StyledMenuCustomPopoverBuilder {
         self.popover = StyledMenuPopover(frame: UIScreen.main.bounds, configuration: configuration)
     }
     
+    @discardableResult
     public func addButton(text: String, tapHandler: (() -> Void)? = nil) -> StyledMenuCustomPopoverBuilder {
         StyledMenuPopoverFactory.addStandardButton(popover: popover, text: text, configuration: configuration, tapHandler: tapHandler)
         return self
     }
 
+    @discardableResult
     public func addStandardCancelButton(tapHandler: (() -> Void)? = nil) -> StyledMenuCustomPopoverBuilder {
         StyledMenuPopoverFactory.addStandardCancelButton(popover: popover, configuration: configuration, tapHandler: tapHandler)
         return self
     }
     
+    @discardableResult
     public func show(title: NSAttributedString, subTitle: NSAttributedString?, topLeftPoint: CGPoint? = nil, icon: UIImage? = nil) -> StyledMenuCustomPopoverBuilder {
         popover.show(title: title, subTitle: subTitle, topLeftPoint: topLeftPoint, icon: icon)
         return self
@@ -40,12 +43,7 @@ open class StyledMenuCustomPopoverBuilder {
 
     @discardableResult
     public func show(title: String, subTitle: String?, topLeftPoint: CGPoint? = nil, icon: UIImage? = nil) -> StyledMenuCustomPopoverBuilder {
-        let atitle = NSAttributedString(font: configuration.headerFont, color: configuration.headerTextColor, text: title)
-        var asubtitle: NSAttributedString? = nil
-        if let st = subTitle {
-            asubtitle = NSAttributedString(font: configuration.menuSubtitleFont, color: configuration.menuSubtitleTextColor, text: st)
-        }
-        popover.show(title: atitle, subTitle: asubtitle, topLeftPoint: topLeftPoint, icon: icon)
+        popover.show(title: title, subTitle: subTitle, topLeftPoint: topLeftPoint, icon: icon)
         return self
     }
 
