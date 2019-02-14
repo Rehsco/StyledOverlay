@@ -226,21 +226,19 @@ open class StyledMenuPopover: UIView {
     
     open func calculateMenuSize() -> CGSize {
         if let mv = self.menuView {
-            let size = self.preferredSize
             let headerSize = self.getHeaderSectionSize()
             
             let collMargins = mv.viewMargins
             let totalCells = mv.itemCollectionView.numberOfItems(inSection: 1)
             let itemSize = self.configuration.menuItemSize
-            
-            let widthPerItem = itemSize.width + self.getInterItemSpacing()
-            let rowWidth = size.width - (collMargins.left + collMargins.right) - self.getInterItemSpacing()
-            let numRowItems = max(Int(floor(rowWidth / widthPerItem)), 1)
+
+            let numRowItems = min(calculateFittingCellsPerRow(), totalCells)
             let itemsHorizontally = max(min(self.numCellsHorizontal, numRowItems), 1)
             
-            let totalWidth = max(CGFloat(itemsHorizontally) * itemSize.width + self.getHorizontalSectionInset(1), headerSize.width) + (collMargins.left + collMargins.right) + mv.itemCollectionView.contentInset.left + mv.itemCollectionView.contentInset.right
+            let totalItemSpacing = (self.getHorizontalSpacing() * CGFloat(itemsHorizontally-1) )
+            let totalWidth = max(CGFloat(itemsHorizontally) * itemSize.width + totalItemSpacing + self.getHorizontalSectionInset(1), headerSize.width) + (collMargins.left + collMargins.right) + mv.itemCollectionView.contentInset.left + mv.itemCollectionView.contentInset.right
             
-            let numRows = max(1, totalCells / numRowItems)
+            let numRows = totalCells < itemsHorizontally ? 1 : Int(ceil(Double(totalCells) / Double(itemsHorizontally)))
             
             let headerAndFooterHeight = (self.configuration.showHeader || self.menuIcon != nil ? self.configuration.headerHeight : 0) + (self.configuration.showFooter ? self.configuration.footerHeight : 0)
             let totalHeight = (CGFloat(numRows) * (itemSize.height + self.getItemLineSpacing()) + (collMargins.top + collMargins.bottom) + headerAndFooterHeight + headerSize.height) - self.getItemLineSpacing() + self.getVerticalSectionInset(1)
@@ -248,6 +246,35 @@ open class StyledMenuPopover: UIView {
             return CGSize(width: totalWidth, height: totalHeight)
         }
         return self.preferredSize
+    }
+    
+    private func calculateFittingCellsPerRow() -> Int {
+        if let mv = self.menuView {
+            let size = self.preferredSize
+            let collMargins = mv.viewMargins
+            let itemWidth = self.configuration.menuItemSize.width
+            let horizontalSpacing = self.getHorizontalSpacing()
+
+            var rowWidth: CGFloat = 0
+            if #available(iOS 11.0, *) {
+                rowWidth = size.width - (collMargins.left + collMargins.right + mv.itemCollectionView.safeAreaInsets.left + mv.itemCollectionView.safeAreaInsets.right)
+            } else {
+                rowWidth = size.width - (collMargins.left + collMargins.right)
+            }
+            rowWidth -= self.getHorizontalSectionInset(1)
+
+            var cellsFittingInRow = 0
+            if rowWidth >= itemWidth {
+                cellsFittingInRow = 1
+                var rowSpaceLeft = rowWidth - itemWidth
+                while rowSpaceLeft >= itemWidth + horizontalSpacing {
+                    rowSpaceLeft -= itemWidth + horizontalSpacing
+                    cellsFittingInRow += 1
+                }
+            }
+            return cellsFittingInRow
+        }
+        return 0
     }
     
     private func getHeaderSectionSize() -> CGSize {
@@ -290,7 +317,14 @@ open class StyledMenuPopover: UIView {
         }
         return 0
     }
-
+    
+    private func getHorizontalSpacing() -> CGFloat {
+        if let layout = self.menuView?.itemCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            return layout.scrollDirection == .vertical ? layout.minimumInteritemSpacing : layout.minimumLineSpacing
+        }
+        return 0
+    }
+    
     // MARK: - View Model
     
     open func populateMenu(completion: @escaping (()->Void)) {

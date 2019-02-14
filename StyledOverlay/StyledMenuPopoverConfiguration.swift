@@ -34,7 +34,7 @@ import MJRFlexStyleComponents
 open class StyledMenuPopoverConfiguration {
     
     public init() {}
-    
+
     /// Features
     open var tapOutsideViewToClose: Bool = true
     

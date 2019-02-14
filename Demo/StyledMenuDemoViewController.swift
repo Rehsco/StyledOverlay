@@ -21,40 +21,22 @@ class StyledMenuDemoViewController: UIViewController {
     }
 
     func createDemoMenuItems() {
-        let item1 = FlexBaseCollectionItem(reference: "item1", text: NSAttributedString(string: "Item 1"))
-        item1.itemSelectionActionHandler = {
-            NSLog("Item 1 pressed.")
+        for i: Int in 1...3 {
+            let item = FlexBaseCollectionItem(reference: "item\(i)", text: NSAttributedString(string: "Item \(i)"))
+            item.itemSelectionActionHandler = {
+                NSLog("Item \(i) pressed.")
+            }
+            self.demoSimpleItems.append(item)
         }
-        self.demoSimpleItems.append(item1)
-        let item2 = FlexBaseCollectionItem(reference: "item2", text: NSAttributedString(string: "Item 2"))
-        item2.itemSelectionActionHandler = {
-            NSLog("Item 2 pressed.")
+
+        for i: Int in 1...9 {
+            let icitem = FlexBaseCollectionItem(reference: "item\(i)", icon: UIImage(named: "testIcon\((i-1)%3+1)"))
+            icitem.subTitle = NSAttributedString(string: "Item \(i)")
+            icitem.itemSelectionActionHandler = {
+                NSLog("Item \(i) pressed.")
+            }
+            self.demoIconItems.append(icitem)
         }
-        self.demoSimpleItems.append(item2)
-        let item3 = FlexBaseCollectionItem(reference: "item3", text: NSAttributedString(string: "Item 3"))
-        item3.itemSelectionActionHandler = {
-            NSLog("Item 3 pressed.")
-        }
-        self.demoSimpleItems.append(item3)
-        
-        let icitem1 = FlexBaseCollectionItem(reference: "item1", icon: UIImage(named: "testIcon1"))
-        icitem1.subTitle = NSAttributedString(string: "Item 1")
-        icitem1.itemSelectionActionHandler = {
-            NSLog("Item 1 pressed.")
-        }
-        self.demoIconItems.append(icitem1)
-        let icitem2 = FlexBaseCollectionItem(reference: "item2", icon: UIImage(named: "testIcon2"))
-        icitem2.subTitle = NSAttributedString(string: "Item 2")
-        icitem2.itemSelectionActionHandler = {
-            NSLog("Item 2 pressed.")
-        }
-        self.demoIconItems.append(icitem2)
-        let icitem3 = FlexBaseCollectionItem(reference: "item3", icon: UIImage(named: "testIcon3"))
-        icitem3.subTitle = NSAttributedString(string: "Item 3")
-        icitem3.itemSelectionActionHandler = {
-            NSLog("Item 3 pressed.")
-        }
-        self.demoIconItems.append(icitem3)
 
         let imenu = FlexTextFieldCollectionItem(reference: "textInput", text: NSAttributedString(string: ""))
         imenu.placeholderText = NSAttributedString(string: "Text")
@@ -79,7 +61,7 @@ class StyledMenuDemoViewController: UIViewController {
     }
     
     @IBAction func showIconMenu(_ sender: Any) {
-        StyledMenuPopoverFactory.showIconMenu(title: "Icon", items: self.demoIconItems, preferredSize: CGSize(width: 320, height: 200))
+        StyledMenuPopoverFactory.showIconMenu(title: "Icon", items: self.demoIconItems, preferredSize: CGSize(width: 250, height: 200))
     }
     
     @IBAction func showInputMenu(_ sender: Any) {
