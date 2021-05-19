@@ -28,7 +28,7 @@
  */
 
 import UIKit
-import MJRFlexStyleComponents
+import FlexCollections
 
 open class TitleItemStyler: StyledOverlayCellStyler {
     open override func prepareStyle(forCell cell: FlexCollectionViewCell) {

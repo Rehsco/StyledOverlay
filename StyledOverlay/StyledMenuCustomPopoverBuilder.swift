@@ -27,7 +27,7 @@
  *
  */
 import UIKit
-import MJRFlexStyleComponents
+import FlexMenu
 
 open class StyledMenuCustomPopoverBuilder {
     private let configuration: StyledMenuPopoverConfiguration

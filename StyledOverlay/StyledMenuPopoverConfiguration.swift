@@ -29,7 +29,8 @@
 
 import UIKit
 import StyledLabel
-import MJRFlexStyleComponents
+import FlexCollections
+import FlexControls
 
 open class StyledMenuPopoverConfiguration {
     

@@ -28,7 +28,7 @@
  */
 
 import UIKit
-import MJRFlexStyleComponents
+import FlexCollections
 
 open class StyledOverlayCellStyler: FlexCellStyler {
     private(set) var configuration: StyledMenuPopoverConfiguration = StyledMenuPopoverConfiguration()

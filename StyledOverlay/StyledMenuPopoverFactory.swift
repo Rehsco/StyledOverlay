@@ -28,7 +28,9 @@
  */
 
 import UIKit
-import MJRFlexStyleComponents
+import FlexMenu
+import FlexCollections
+import ThreadExtension
 
 open class StyledMenuPopoverFactory {
 

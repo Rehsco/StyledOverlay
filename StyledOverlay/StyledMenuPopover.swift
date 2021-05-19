@@ -28,7 +28,7 @@
  */
 
 import UIKit
-import MJRFlexStyleComponents
+import FlexCollections
 
 open class StyledMenuPopover: UIView {
     public var configuration: StyledMenuPopoverConfiguration = StyledMenuPopoverConfiguration()

@@ -1,8 +1,8 @@
-platform :ios, '10.0'
+platform :ios, '12.0'
 use_frameworks!
 
-pod 'StyledLabel'
-pod 'MJRFlexStyleComponents'
+pod 'FlexCollections'
+pod 'ThreadExtension'
 
 target 'StyledOverlay' do
 end
