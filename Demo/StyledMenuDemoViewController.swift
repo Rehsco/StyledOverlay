@@ -8,7 +8,7 @@
 
 import UIKit
 import StyledOverlay
-import MJRFlexStyleComponents
+import FlexCollections
 
 class StyledMenuDemoViewController: UIViewController {
     var demoSimpleItems: [FlexCollectionItem] = []
